@@ -16,12 +16,16 @@ const inter = Inter({
 
 export const metadata: Metadata = {
   title: {
-    default: "Crystal Estates | Premium Plots & Properties in Solapur & Pune",
+    default: "Crystal Estates | Premium Properties in Mumbai, Pune & Solapur",
     template: "%s | Crystal Estates",
   },
   description:
-    "Find RERA-verified plots, row houses, and investment properties in Solapur, Pune-Solapur Highway, and PMRDA belt. Title-verified, transparent pricing, tech-powered search.",
+    "Find RERA-verified plots, row houses, flats, and investment properties across Mumbai, Thane, Navi Mumbai, Pune, and Solapur. Title-verified, transparent pricing, tech-powered search.",
   keywords: [
+    "real estate Mumbai",
+    "properties Thane",
+    "flats Navi Mumbai",
+    "plots Panvel",
     "real estate Solapur",
     "plots Solapur",
     "properties Pune Solapur highway",
@@ -31,11 +35,13 @@ export const metadata: Metadata = {
     "flats Wagholi Pune",
     "Crystal Estates",
     "investment property Maharashtra",
+    "Navi Mumbai airport property",
+    "Kharghar commercial",
   ],
   openGraph: {
-    title: "Crystal Estates | Premium Plots & Properties in Solapur & Pune",
+    title: "Crystal Estates | Premium Properties in Mumbai, Pune & Solapur",
     description:
-      "Find RERA-verified plots, row houses, and investment properties in Solapur, Pune-Solapur Highway, and PMRDA belt.",
+      "Find RERA-verified plots, row houses, flats, and investment properties across Mumbai, Thane, Navi Mumbai, Pune, and Solapur.",
     type: "website",
     locale: "en_IN",
     siteName: "Crystal Estates",
@@ -65,7 +71,7 @@ export default function RootLayout({
               "@type": "RealEstateAgent",
               name: "Crystal Estates",
               description:
-                "Premium real estate consultancy in Solapur, Maharashtra. RERA-verified plots, row houses, flats, and investment properties.",
+                "Premium real estate consultancy in Maharashtra. RERA-verified plots, row houses, flats, and investment properties across Mumbai, Pune & Solapur.",
               url: "https://crystalestates.in",
               telephone: "+919887073904",
               email: "info@crystalestates.in",
@@ -78,8 +84,11 @@ export default function RootLayout({
                 addressCountry: "IN",
               },
               areaServed: [
-                "Solapur",
+                "Mumbai",
+                "Thane",
+                "Navi Mumbai",
                 "Pune",
+                "Solapur",
                 "PMRDA",
                 "Pune-Solapur Highway Corridor",
               ],

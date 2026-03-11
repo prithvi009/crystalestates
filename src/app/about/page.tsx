@@ -64,9 +64,9 @@ function AnimatedCounter({
 /* ------------------------------------------------------------------ */
 
 const stats = [
-  { target: 50, suffix: "+", label: "Properties Listed" },
-  { target: 200, suffix: "+", label: "Happy Clients" },
-  { target: 100, prefix: "\u20B9", suffix: "Cr+", label: "Transactions" },
+  { target: 75, suffix: "+", label: "Properties Listed" },
+  { target: 300, suffix: "+", label: "Happy Clients" },
+  { target: 150, prefix: "\u20B9", suffix: "Cr+", label: "Transactions" },
   { target: 4.8, suffix: "\u2605", label: "Google Rating", isDecimal: true },
 ];
 
@@ -145,8 +145,8 @@ export default function AboutPage() {
             transition={{ duration: 0.6, delay: 0.3 }}
             className="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-gray-400"
           >
-            Crystal Estates is Solapur&apos;s most trusted real estate
-            consultancy, combining technology with transparency.
+            Crystal Estates is Maharashtra&apos;s trusted real estate
+            consultancy, combining technology with transparency across Mumbai, Pune &amp; Solapur.
           </motion.p>
         </div>
       </section>
@@ -183,8 +183,8 @@ export default function AboutPage() {
               >
                 Crystal Estates was founded with a simple mission: make real
                 estate transparent, accessible, and tech-forward. Based in
-                Solapur, Maharashtra, we serve buyers and investors across the
-                Solapur-Pune corridor.
+                Pune, Maharashtra, we serve buyers and investors across
+                Mumbai, Pune, and Solapur — the state&apos;s most dynamic growth corridors.
               </motion.p>
 
               <motion.p
@@ -308,9 +308,10 @@ export default function AboutPage() {
             <p className="mt-5 text-base leading-relaxed text-gray-600">
               With over 8 years in real estate and a background in technology,
               Rahul founded Crystal Estates to bring transparency and
-              data-driven decision making to Solapur&apos;s property market. A
-              Solapur native with deep knowledge of the region&apos;s growth
-              corridors.
+              data-driven decision making to Maharashtra&apos;s property market.
+              With deep knowledge of growth corridors across Mumbai, Pune, and
+              Solapur, he leads a team that has helped 200+ families find their
+              dream properties.
             </p>
 
             {/* Social placeholder */}

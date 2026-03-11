@@ -14,6 +14,22 @@ interface Corridor {
 
 const corridors: Corridor[] = [
   {
+    name: "Navi Mumbai Airport Belt",
+    appreciation: "18-25% annual appreciation",
+    priceRange: "\u20B96,000\u2013\u20B912,000/sqft",
+    description:
+      "The upcoming Navi Mumbai International Airport is driving massive appreciation in Panvel, Kharghar, and Ulwe. Early investors are seeing 2-3x returns.",
+    listings: "6 available",
+  },
+  {
+    name: "Thane-Ghodbunder Corridor",
+    appreciation: "12-18% annual appreciation",
+    priceRange: "\u20B98,000\u2013\u20B914,000/sqft",
+    description:
+      "Mumbai\u2019s fastest-growing suburban corridor with metro connectivity, IT parks, and premium residential demand.",
+    listings: "5 available",
+  },
+  {
     name: "Pune-Solapur Highway (NH65)",
     appreciation: "12-15% annual appreciation",
     priceRange: "\u20B92,500\u2013\u20B94,000/sqft",
@@ -82,7 +98,7 @@ export default function InvestmentCorridors() {
 
         {/* Corridors grid */}
         <motion.div
-          className="grid grid-cols-1 lg:grid-cols-2 gap-6"
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
           variants={containerVariants}
           initial="hidden"
           whileInView="visible"

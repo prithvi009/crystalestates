@@ -97,7 +97,7 @@ export default function Footer() {
             <p className="text-white/60 text-sm leading-relaxed mb-6">
               Your trusted partner in finding the perfect property investment.
               We bring transparency, expertise, and value to every real estate
-              transaction in Solapur and beyond.
+              transaction across Mumbai, Pune &amp; Solapur.
             </p>
             <div className="flex items-center gap-4">
               {socialLinks.map((social) => (

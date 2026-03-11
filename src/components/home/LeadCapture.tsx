@@ -47,9 +47,12 @@ const budgetOptions = [
 ];
 
 const locationOptions = [
-  "Solapur City",
-  "Pune-Solapur Highway",
+  "Mumbai - Thane",
+  "Mumbai - Navi Mumbai",
+  "Pune City",
   "PMRDA Belt",
+  "Pune-Solapur Highway",
+  "Solapur City",
   "Solapur Outskirts",
   "Other",
 ];
@@ -320,9 +323,9 @@ export default function LeadCapture() {
               </h3>
               <p className="text-gray-400 text-sm leading-relaxed mb-8">
                 Crystal Estates has been helping families find their dream
-                properties across Solapur and Pune for over 5 years. With RERA
-                verified listings, transparent pricing, and end-to-end support,
-                we make property buying simple, safe, and stress-free.
+                properties across Mumbai, Pune and Solapur for over 5 years.
+                With RERA verified listings, transparent pricing, and end-to-end
+                support, we make property buying simple, safe, and stress-free.
               </p>
 
               {/* Trust badges */}

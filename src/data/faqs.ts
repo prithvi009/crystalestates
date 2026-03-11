@@ -22,7 +22,7 @@ export const faqs: FAQ[] = [
   {
     question: "What is the stamp duty in Maharashtra?",
     answer:
-      "Stamp duty in Maharashtra varies by location. For Solapur municipal areas, it is typically 6% of the property value (5% stamp duty + 1% metro cess for applicable areas). Additional 1% Local Body Tax may apply. Registration charges are 1% of the property value (capped at ₹30,000). We provide detailed cost breakdowns for every property.",
+      "Stamp duty in Maharashtra varies by location. In Mumbai and MMR (Thane, Navi Mumbai), it is 6% for men and 5% for women (5% stamp duty + 1% metro cess). In Pune municipal areas, it is 7% (5% stamp duty + 1% LBT + 1% metro cess). For Solapur, it is typically 6%. Registration charges are 1% of the property value (capped at ₹30,000). We provide detailed cost breakdowns for every property across all our locations.",
   },
   {
     question: "Do you help with home loans?",

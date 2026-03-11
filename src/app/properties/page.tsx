@@ -106,8 +106,8 @@ export default function PropertiesPage() {
             Explore Properties
           </h1>
           <p className="mt-2 text-gray-400 max-w-xl">
-            Discover premium plots, homes, and commercial spaces across Solapur
-            and Pune.
+            Discover premium plots, homes, and commercial spaces across Mumbai,
+            Pune &amp; Solapur.
           </p>
         </div>
       </div>

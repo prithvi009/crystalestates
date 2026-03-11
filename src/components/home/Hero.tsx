@@ -26,9 +26,9 @@ const itemVariants = {
 
 const trustItems = [
   "RERA Registered",
-  "50+ Properties",
-  "\u20B9100Cr+ Transactions",
-  "200+ Happy Families",
+  "75+ Properties",
+  "\u20B9150Cr+ Transactions",
+  "300+ Happy Families",
 ];
 
 export default function Hero() {
@@ -74,8 +74,8 @@ export default function Hero() {
           variants={itemVariants}
           className="mt-6 text-base sm:text-lg text-gray-300 max-w-2xl mx-auto leading-relaxed"
         >
-          Premium plots, row houses, and investment properties across Solapur and
-          Pune&apos;s fastest-growing corridors.
+          Premium plots, row houses, and investment properties across Mumbai,
+          Pune &amp; Solapur&apos;s fastest-growing corridors.
         </motion.p>
 
         {/* CTA buttons */}

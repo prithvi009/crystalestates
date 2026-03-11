@@ -62,6 +62,24 @@ export const testimonials: Testimonial[] = [
       "Invested in farmland near Saswad on Crystal Estates' recommendation. Their investment report was spot-on. Already seeing great returns.",
     rating: 5,
   },
+  {
+    id: 7,
+    name: "Ankit & Neha D.",
+    location: "Thane",
+    propertyType: "2 BHK Flat",
+    quote:
+      "We were searching for flats in Thane for months. Crystal Estates showed us options we hadn't found on any portal. Got a great deal on a 2 BHK with hill views!",
+    rating: 5,
+  },
+  {
+    id: 8,
+    name: "Sanjay M.",
+    location: "Navi Mumbai",
+    propertyType: "Commercial Space",
+    quote:
+      "Bought a commercial shop in Kharghar through Crystal Estates. Their knowledge of the Navi Mumbai market and upcoming airport impact was incredibly helpful.",
+    rating: 5,
+  },
 ];
 
 export const socialProofMessages = [
@@ -71,4 +89,7 @@ export const socialProofMessages = [
   { name: "Sneha", city: "Dubai", action: "scheduled a virtual consultation" },
   { name: "Amit", city: "Pune", action: "booked a site visit for Crystal Heights Wagholi" },
   { name: "Dr. Sandeep", city: "Solapur", action: "inquired about Crystal Commerce shops" },
+  { name: "Ankit", city: "Thane", action: "inquired about Crystal Towers 2 BHK flat" },
+  { name: "Neha", city: "Navi Mumbai", action: "booked a site visit for Crystal Plaza Kharghar" },
+  { name: "Sanjay", city: "Mumbai", action: "downloaded Navi Mumbai airport investment report" },
 ];
