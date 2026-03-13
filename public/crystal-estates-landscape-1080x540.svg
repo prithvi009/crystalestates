@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="540" viewBox="0 0 1080 540">
+  <defs>
+    <radialGradient id="glow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#C6A962" stop-opacity="0.06"/>
+      <stop offset="70%" stop-color="#C6A962" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="1080" height="540" fill="#000000"/>
+  <rect width="1080" height="540" fill="url(#glow)"/>
+  <rect x="180" y="180" width="180" height="180" rx="16" ry="16" fill="none" stroke="#C6A962" stroke-width="2.5"/>
+  <rect x="188" y="188" width="164" height="164" rx="10" ry="10" fill="none" stroke="#C6A962" stroke-width="1" opacity="0.3"/>
+  <path d="M 250 235 C 237 235 222 248 222 270 C 222 292 237 305 250 305" fill="none" stroke="#C6A962" stroke-width="5" stroke-linecap="round"/>
+  <path d="M 275 235 L 315 235 M 275 270 L 305 270 M 275 305 L 315 305 M 275 235 L 275 305" fill="none" stroke="#C6A962" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="430" y="268" font-family="Inter, -apple-system, Helvetica Neue, Arial, sans-serif" font-size="52" font-weight="700" letter-spacing="16" fill="#FFFFFF">CRYSTAL ESTATES</text>
+  <rect x="430" y="295" width="60" height="2" rx="1" fill="#C6A962"/>
+  <text x="430" y="330" font-family="Inter, -apple-system, Helvetica Neue, Arial, sans-serif" font-size="16" font-weight="500" letter-spacing="4" fill="#C6A962">PREMIUM REAL ESTATE CONSULTANCY</text>
+</svg>

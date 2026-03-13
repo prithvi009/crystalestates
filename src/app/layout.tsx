@@ -1,12 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import Header from "@/components/layout/Header";
-import Footer from "@/components/layout/Footer";
-import WhatsAppButton from "@/components/ui/WhatsAppButton";
-import CallButton from "@/components/ui/CallButton";
-import SocialProof from "@/components/ui/SocialProof";
-import ExitIntentPopup from "@/components/ui/ExitIntentPopup";
+import SiteShell from "@/components/layout/SiteShell";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -102,13 +97,7 @@ export default function RootLayout({
         />
       </head>
       <body className="font-[family-name:var(--font-inter)] antialiased">
-        <Header />
-        <main>{children}</main>
-        <Footer />
-        <WhatsAppButton />
-        <CallButton />
-        <SocialProof />
-        <ExitIntentPopup />
+        <SiteShell>{children}</SiteShell>
       </body>
     </html>
   );
