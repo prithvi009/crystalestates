@@ -10,7 +10,7 @@ const containerVariants = {
     opacity: 1,
     transition: {
       staggerChildren: 0.15,
-      delayChildren: 0.3,
+      delayChildren: 0.4,
     },
   },
 };
@@ -20,7 +20,7 @@ const itemVariants = {
   visible: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.6, ease: "easeOut" as const },
+    transition: { duration: 0.7, ease: "easeOut" as const },
   },
 };
 
@@ -34,18 +34,77 @@ const trustItems = [
 export default function Hero() {
   return (
     <section className="relative min-h-screen flex items-center justify-center bg-black overflow-hidden">
-      {/* Geometric pattern overlay */}
+      {/* Animated gradient orbs */}
+      <div className="absolute inset-0">
+        <motion.div
+          className="absolute w-[800px] h-[800px] rounded-full opacity-[0.07]"
+          style={{
+            background:
+              "radial-gradient(circle, #C6A962 0%, transparent 70%)",
+            top: "-20%",
+            right: "-10%",
+          }}
+          animate={{
+            x: [0, 40, -20, 0],
+            y: [0, -30, 20, 0],
+            scale: [1, 1.1, 0.95, 1],
+          }}
+          transition={{
+            duration: 20,
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
+        />
+        <motion.div
+          className="absolute w-[600px] h-[600px] rounded-full opacity-[0.05]"
+          style={{
+            background:
+              "radial-gradient(circle, #C6A962 0%, transparent 70%)",
+            bottom: "-15%",
+            left: "-5%",
+          }}
+          animate={{
+            x: [0, -30, 20, 0],
+            y: [0, 40, -20, 0],
+            scale: [1, 0.9, 1.1, 1],
+          }}
+          transition={{
+            duration: 25,
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
+        />
+        <motion.div
+          className="absolute w-[500px] h-[500px] rounded-full opacity-[0.04]"
+          style={{
+            background:
+              "radial-gradient(circle, #FAFAFA 0%, transparent 70%)",
+            top: "40%",
+            left: "30%",
+          }}
+          animate={{
+            x: [0, 50, -30, 0],
+            y: [0, -40, 30, 0],
+          }}
+          transition={{
+            duration: 30,
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
+        />
+      </div>
+
+      {/* Noise/grain texture overlay */}
       <div
-        className="absolute inset-0 opacity-[0.04]"
+        className="absolute inset-0 opacity-[0.03] pointer-events-none"
         style={{
-          backgroundImage: `linear-gradient(rgba(198,169,98,0.3) 1px, transparent 1px),
-            linear-gradient(90deg, rgba(198,169,98,0.3) 1px, transparent 1px)`,
-          backgroundSize: "60px 60px",
+          backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E")`,
+          backgroundSize: "128px 128px",
         }}
       />
 
-      {/* Radial gradient accent */}
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(198,169,98,0.08)_0%,transparent_70%)]" />
+      {/* Subtle vignette */}
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_0%,rgba(10,10,10,0.6)_100%)]" />
 
       <motion.div
         className="relative z-10 text-center px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto"
@@ -53,26 +112,57 @@ export default function Hero() {
         initial="hidden"
         animate="visible"
       >
+        {/* Floating trust badge */}
+        <motion.div variants={itemVariants} className="flex justify-center mb-10">
+          <div className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-white/[0.08] bg-white/[0.03] backdrop-blur-sm">
+            <span className="relative flex h-2 w-2">
+              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-gold opacity-75" />
+              <span className="relative inline-flex h-2 w-2 rounded-full bg-gold" />
+            </span>
+            <span className="text-white/70 text-xs sm:text-sm tracking-wide font-light">
+              Trusted by 300+ families across Maharashtra
+            </span>
+          </div>
+        </motion.div>
+
+        {/* Gold accent line that draws in */}
+        <motion.div
+          className="flex justify-center mb-8"
+          variants={itemVariants}
+        >
+          <motion.div
+            className="h-[1px] bg-gradient-to-r from-transparent via-gold to-transparent"
+            initial={{ width: 0, opacity: 0 }}
+            animate={{ width: 120, opacity: 1 }}
+            transition={{ duration: 1.2, delay: 0.8, ease: "easeOut" as const }}
+          />
+        </motion.div>
+
         {/* Gold label */}
         <motion.p
           variants={itemVariants}
-          className="text-gold text-xs sm:text-sm tracking-[0.3em] font-medium mb-6"
+          className="text-gold/80 text-xs sm:text-sm tracking-[0.35em] font-light mb-8 uppercase"
         >
-          PREMIUM REAL ESTATE CONSULTANCY
+          Premium Real Estate Consultancy
         </motion.p>
 
         {/* Main headline */}
         <motion.h1
           variants={itemVariants}
-          className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white max-w-4xl mx-auto leading-tight"
+          className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold text-white max-w-5xl mx-auto leading-[0.95] tracking-tight"
         >
-          Your Future Address Starts Here
+          Your Future{" "}
+          <span className="bg-gradient-to-b from-white to-gray-400 bg-clip-text text-transparent">
+            Address
+          </span>
+          <br />
+          Starts Here
         </motion.h1>
 
         {/* Subheadline */}
         <motion.p
           variants={itemVariants}
-          className="mt-6 text-base sm:text-lg text-gray-300 max-w-2xl mx-auto leading-relaxed"
+          className="mt-8 text-lg sm:text-xl text-white/50 max-w-2xl mx-auto leading-relaxed font-light"
         >
           Premium plots, row houses, and investment properties across Mumbai,
           Pune &amp; Solapur&apos;s fastest-growing corridors.
@@ -81,19 +171,20 @@ export default function Hero() {
         {/* CTA buttons */}
         <motion.div
           variants={itemVariants}
-          className="mt-10 flex flex-wrap items-center justify-center gap-4"
+          className="mt-12 flex flex-wrap items-center justify-center gap-5"
         >
           <Link
             href="#properties"
-            className="inline-flex items-center px-8 py-3.5 bg-gold text-black font-semibold rounded-lg hover:bg-gold-light transition-colors duration-300 text-sm sm:text-base"
+            className="group relative inline-flex items-center px-9 py-4 bg-gold text-black font-semibold rounded-xl text-sm sm:text-base transition-all duration-500 hover:shadow-[0_0_40px_rgba(198,169,98,0.3)] hover:scale-[1.02] active:scale-[0.98]"
           >
-            Explore Properties
+            <span className="relative z-10">Explore Properties</span>
+            <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-gold-light to-gold opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
           </Link>
           <a
             href="https://wa.me/919887073904?text=Hi%2C%20I%27d%20like%20to%20book%20a%20free%20consultation%20with%20Crystal%20Estates."
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center px-8 py-3.5 border border-white text-white font-semibold rounded-lg hover:bg-white/10 transition-colors duration-300 text-sm sm:text-base"
+            className="inline-flex items-center px-9 py-4 rounded-xl text-sm sm:text-base font-semibold text-white border border-white/[0.12] bg-white/[0.04] backdrop-blur-md transition-all duration-500 hover:bg-white/[0.08] hover:border-white/[0.2] hover:scale-[1.02] active:scale-[0.98]"
           >
             Book a Free Consultation
           </a>
@@ -102,12 +193,12 @@ export default function Hero() {
         {/* Trust strip */}
         <motion.div
           variants={itemVariants}
-          className="mt-12 flex flex-wrap items-center justify-center gap-3 sm:gap-0"
+          className="mt-16 flex flex-wrap items-center justify-center gap-4 sm:gap-0"
         >
           {trustItems.map((item, index) => (
-            <span key={item} className="flex items-center text-gray-400 text-xs sm:text-sm">
+            <span key={item} className="flex items-center text-white/35 text-sm sm:text-[15px] font-light tracking-wide">
               {index > 0 && (
-                <span className="hidden sm:inline mx-3 text-gold/40">|</span>
+                <span className="hidden sm:inline-block mx-5 w-[1px] h-4 bg-white/10" />
               )}
               {item}
             </span>
@@ -117,11 +208,20 @@ export default function Hero() {
 
       {/* Scroll indicator */}
       <motion.div
-        className="absolute bottom-8 left-1/2 -translate-x-1/2"
-        animate={{ y: [0, 10, 0] }}
-        transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }}
+        className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 2, duration: 1 }}
       >
-        <ChevronDown className="w-6 h-6 text-gold/60" />
+        <span className="text-[10px] tracking-[0.3em] text-white/20 uppercase font-light">
+          Scroll
+        </span>
+        <motion.div
+          animate={{ y: [0, 6, 0] }}
+          transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+        >
+          <ChevronDown className="w-4 h-4 text-white/20" />
+        </motion.div>
       </motion.div>
     </section>
   );
