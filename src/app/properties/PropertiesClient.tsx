@@ -94,7 +94,7 @@ export default function PropertiesClient({ properties }: PropertiesClientProps) 
     <section className="min-h-screen bg-offwhite">
       {/* Header / Breadcrumb */}
       <div className="bg-charcoal text-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 md:py-14">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 pb-10 md:pt-28 md:pb-14">
           <nav className="flex items-center gap-2 text-sm text-gray-400 mb-4">
             <Link
               href="/"

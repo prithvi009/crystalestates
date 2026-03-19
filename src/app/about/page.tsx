@@ -119,7 +119,7 @@ export default function AboutPage() {
   return (
     <main className="min-h-screen overflow-hidden">
       {/* ========== HERO ========== */}
-      <section className="relative bg-black py-28 md:py-40">
+      <section className="relative bg-black pt-36 pb-28 md:pt-48 md:pb-40">
         <div className="mx-auto max-w-4xl px-6 text-center">
           <motion.span
             initial={{ opacity: 0, y: 10 }}

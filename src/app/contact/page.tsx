@@ -115,7 +115,7 @@ export default function ContactPage() {
   return (
     <main className="min-h-screen overflow-hidden">
       {/* ========== HERO ========== */}
-      <section className="relative bg-black py-24 md:py-36">
+      <section className="relative bg-black pt-32 pb-24 md:pt-44 md:pb-36">
         <div className="mx-auto max-w-4xl px-6 text-center">
           <motion.h1
             initial={{ opacity: 0, y: 20 }}
