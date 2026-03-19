@@ -1,17 +1,16 @@
-import { properties } from "@/data/properties";
 import { notFound } from "next/navigation";
+import { getPropertyBySlug, getRelatedProperties } from "@/lib/db/queries";
+import type { Property } from "@/lib/db/schema";
 import PropertyDetail from "@/components/properties/PropertyDetail";
 import type { Metadata } from "next";
 
-type Props = { params: Promise<{ slug: string }> };
+export const dynamic = "force-dynamic";
 
-export async function generateStaticParams() {
-  return properties.map((p) => ({ slug: p.slug }));
-}
+type Props = { params: Promise<{ slug: string }> };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
-  const property = properties.find((p) => p.slug === slug);
+  const property = await getPropertyBySlug(slug);
 
   if (!property) {
     return {
@@ -19,33 +18,48 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     };
   }
 
+  const desc = (property.description || "").slice(0, 160);
+  const title = `${property.name} - ${property.price} | ${property.type} in ${property.locationArea}`;
+
   return {
-    title: `${property.name} | Crystal Estates`,
-    description: property.description.slice(0, 160),
+    title,
+    description: desc,
+    keywords: [
+      property.type,
+      property.locationArea,
+      property.location,
+      "real estate",
+      "property",
+      property.builderName || "",
+      "Crystal Estates",
+    ].filter(Boolean),
     openGraph: {
       title: `${property.name} — ${property.price}`,
-      description: property.description.slice(0, 160),
+      description: desc,
       type: "website",
+      siteName: "Crystal Estates",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `${property.name} — ${property.price}`,
+      description: desc,
     },
   };
 }
 
 export default async function PropertyPage({ params }: Props) {
   const { slug } = await params;
-  const property = properties.find((p) => p.slug === slug);
+  const property = await getPropertyBySlug(slug);
 
   if (!property) {
     notFound();
   }
 
-  // Find related properties: same type or same location, exclude current
-  const related = properties
-    .filter(
-      (p) =>
-        p.id !== property.id &&
-        (p.type === property.type || p.locationArea === property.locationArea)
-    )
-    .slice(0, 3);
+  const related = await getRelatedProperties(
+    property.id,
+    property.locationArea,
+    3
+  );
 
   return <PropertyDetail property={property} relatedProperties={related} />;
 }

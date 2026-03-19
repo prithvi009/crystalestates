@@ -4,8 +4,8 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { MapPin, Bed, Maximize2, Building2, MessageCircle } from "lucide-react";
 import Link from "next/link";
-import { properties, propertyTypes } from "@/data/properties";
-import type { Property } from "@/data/properties";
+import { propertyTypes } from "@/lib/constants";
+import type { Property } from "@/lib/db/schema";
 
 const tabs = propertyTypes;
 
@@ -137,7 +137,11 @@ function PropertyCard({ property }: { property: Property }) {
   );
 }
 
-export default function FeaturedProperties() {
+interface FeaturedPropertiesProps {
+  properties: Property[];
+}
+
+export default function FeaturedProperties({ properties }: FeaturedPropertiesProps) {
   const [activeTab, setActiveTab] = useState<string>("All");
 
   const filtered =

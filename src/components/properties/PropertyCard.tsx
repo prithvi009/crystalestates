@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { MapPin, Bed, Maximize2, Building2 } from "lucide-react";
-import type { Property } from "@/data/properties";
+import type { Property } from "@/lib/db/schema";
 
 interface PropertyCardProps {
   property: Property;

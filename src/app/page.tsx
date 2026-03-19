@@ -5,14 +5,19 @@ import InvestmentCorridors from "@/components/home/InvestmentCorridors";
 import HowItWorks from "@/components/home/HowItWorks";
 import Testimonials from "@/components/home/Testimonials";
 import LeadCapture from "@/components/home/LeadCapture";
+import { getAllProperties } from "@/lib/db/queries";
 
-export default function Home() {
+export const dynamic = "force-dynamic";
+
+export default async function Home() {
+  const properties = await getAllProperties();
+
   return (
     <>
       <Hero />
       <WhyUs />
       <section id="properties">
-        <FeaturedProperties />
+        <FeaturedProperties properties={properties} />
       </section>
       <InvestmentCorridors />
       <HowItWorks />

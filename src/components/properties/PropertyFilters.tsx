@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { SlidersHorizontal, X, ChevronDown } from "lucide-react";
-import { propertyTypes, locations, budgetRanges } from "@/data/properties";
+import { propertyTypes, locations, budgetRanges } from "@/lib/constants";
 
 interface PropertyFiltersProps {
   selectedType: string;
