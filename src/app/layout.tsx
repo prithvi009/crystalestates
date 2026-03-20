@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import SiteShell from "@/components/layout/SiteShell";
+import GoogleAds from "@/components/analytics/GoogleAds";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -183,6 +184,7 @@ export default function RootLayout({
         />
       </head>
       <body className="font-[family-name:var(--font-inter)] antialiased">
+        <GoogleAds />
         <SiteShell>{children}</SiteShell>
       </body>
     </html>

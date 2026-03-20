@@ -118,6 +118,12 @@ export default function LeadCapture() {
 
       if (!res.ok) throw new Error("Failed to submit");
 
+      // Track conversion
+      try {
+        const { trackLeadConversion } = await import("@/components/analytics/GoogleAds");
+        trackLeadConversion("lead_capture");
+      } catch {}
+
       setSubmitted(true);
       reset();
       setTimeout(() => setSubmitted(false), 5000);

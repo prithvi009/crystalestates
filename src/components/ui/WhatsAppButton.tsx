@@ -34,6 +34,9 @@ export default function WhatsAppButton() {
         aria-label="Chat on WhatsApp"
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
+        onClick={() => {
+          import("@/components/analytics/GoogleAds").then(({ trackContactClick }) => trackContactClick("whatsapp")).catch(() => {});
+        }}
         className="flex h-14 w-14 items-center justify-center rounded-full bg-[#25D366] text-white shadow-lg transition-transform duration-300 hover:scale-110"
         style={{ animation: "whatsapp-pulse 2s infinite" }}
       >

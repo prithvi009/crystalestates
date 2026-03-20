@@ -104,6 +104,12 @@ export default function ContactPage() {
 
       if (!res.ok) throw new Error("Failed to submit");
 
+      // Track conversion
+      try {
+        const { trackLeadConversion } = await import("@/components/analytics/GoogleAds");
+        trackLeadConversion("contact_form");
+      } catch {}
+
       setSubmitted(true);
       reset();
       setTimeout(() => setSubmitted(false), 5000);
