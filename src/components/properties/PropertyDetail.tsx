@@ -456,7 +456,7 @@ export default function PropertyDetail({
       {/* ============================================================ */}
       {/*  SECTION 1: HERO / GALLERY AREA                              */}
       {/* ============================================================ */}
-      <div className="relative h-[420px] md:h-[520px] bg-charcoal overflow-hidden">
+      <div className="relative h-[320px] sm:h-[420px] md:h-[520px] bg-charcoal overflow-hidden">
         {/* Actual property image or fallback pattern */}
         {hasRealImages ? (
           <>
@@ -499,9 +499,9 @@ export default function PropertyDetail({
                 {heroImageIndex + 1} / {images.length} — View All
               </button>
             )}
-            {/* Thumbnail strip */}
+            {/* Thumbnail strip — hidden on mobile */}
             {images.length > 1 && (
-              <div className="absolute bottom-6 left-6 z-20 flex gap-2 max-w-[60%] overflow-x-auto scrollbar-hide">
+              <div className="absolute bottom-6 left-6 z-20 hidden sm:flex gap-2 max-w-[60%] overflow-x-auto scrollbar-hide">
                 {images.slice(0, 6).map((img, i) => (
                   <button
                     key={i}
@@ -584,67 +584,66 @@ export default function PropertyDetail({
         </motion.button>
 
         {/* Hero content */}
-        <div className="absolute bottom-0 left-0 right-0 z-20 p-6 md:p-10 max-w-7xl mx-auto">
+        <div className="absolute bottom-0 left-0 right-0 z-20 p-4 sm:p-6 md:p-10 max-w-7xl mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
           >
-            <span className="inline-block text-xs tracking-[0.25em] uppercase text-gold-light font-semibold mb-3 bg-gold/10 px-3 py-1 rounded-full backdrop-blur-sm">
+            <span className="inline-block text-[10px] sm:text-xs tracking-[0.2em] sm:tracking-[0.25em] uppercase text-gold-light font-semibold mb-2 sm:mb-3 bg-gold/10 px-2.5 py-0.5 sm:px-3 sm:py-1 rounded-full backdrop-blur-sm">
               {property.type}
             </span>
-            <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold text-white mb-3 leading-tight">
+            <h1 className="text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-bold text-white mb-1.5 sm:mb-3 leading-tight">
               {property.name}
             </h1>
-            <p className="flex items-center gap-2 text-gray-300 text-sm md:text-base mb-6">
-              <MapPin className="w-4 h-4 text-gold" />
-              {property.location}
+            <p className="flex items-center gap-1.5 sm:gap-2 text-gray-300 text-xs sm:text-sm md:text-base mb-3 sm:mb-6">
+              <MapPin className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-gold shrink-0" />
+              <span className="truncate">{property.location}</span>
             </p>
 
-            {/* Quick specs bar */}
-            <div className="flex flex-wrap items-center gap-3 md:gap-5">
-              {/* Price - prominent */}
-              <div className="bg-gold/20 backdrop-blur-sm border border-gold/30 rounded-xl px-5 py-3">
-                <p className="text-xs text-gold-light uppercase tracking-wider font-medium">
+            {/* Price + key specs — mobile-optimized */}
+            <div className="flex flex-wrap items-center gap-2 sm:gap-3 md:gap-5">
+              <div className="bg-gold/20 backdrop-blur-sm border border-gold/30 rounded-lg sm:rounded-xl px-3 sm:px-5 py-2 sm:py-3">
+                <p className="text-[10px] sm:text-xs text-gold-light uppercase tracking-wider font-medium">
                   Price
                 </p>
-                <p className="text-2xl md:text-3xl font-bold text-white">
+                <p className="text-xl sm:text-2xl md:text-3xl font-bold text-white">
                   {property.price}
                 </p>
               </div>
 
-              {/* Other specs */}
-              <div className="flex flex-wrap items-center gap-3 text-sm text-gray-300">
-                <span className="flex items-center gap-1.5 bg-white/5 backdrop-blur-sm rounded-lg px-3 py-2 border border-white/10">
-                  <Maximize2 className="w-4 h-4 text-gold-light" />
+              {/* Specs — horizontal scroll on mobile */}
+              <div className="flex items-center gap-1.5 sm:gap-3 text-xs sm:text-sm text-gray-300 overflow-x-auto scrollbar-hide max-w-full">
+                <span className="flex items-center gap-1 sm:gap-1.5 bg-white/5 backdrop-blur-sm rounded-md sm:rounded-lg px-2 sm:px-3 py-1.5 sm:py-2 border border-white/10 whitespace-nowrap shrink-0">
+                  <Maximize2 className="w-3 h-3 sm:w-4 sm:h-4 text-gold-light" />
                   {property.area}
                 </span>
                 {property.bedrooms && (
-                  <span className="flex items-center gap-1.5 bg-white/5 backdrop-blur-sm rounded-lg px-3 py-2 border border-white/10">
-                    <Bed className="w-4 h-4 text-gold-light" />
+                  <span className="flex items-center gap-1 sm:gap-1.5 bg-white/5 backdrop-blur-sm rounded-md sm:rounded-lg px-2 sm:px-3 py-1.5 sm:py-2 border border-white/10 whitespace-nowrap shrink-0">
+                    <Bed className="w-3 h-3 sm:w-4 sm:h-4 text-gold-light" />
                     {property.bedrooms} BHK
                   </span>
                 )}
                 {property.bathrooms && (
-                  <span className="flex items-center gap-1.5 bg-white/5 backdrop-blur-sm rounded-lg px-3 py-2 border border-white/10">
+                  <span className="hidden sm:flex items-center gap-1.5 bg-white/5 backdrop-blur-sm rounded-lg px-3 py-2 border border-white/10 whitespace-nowrap shrink-0">
                     <Bath className="w-4 h-4 text-gold-light" />
                     {property.bathrooms} Bath
                   </span>
                 )}
                 {property.floor && (
-                  <span className="flex items-center gap-1.5 bg-white/5 backdrop-blur-sm rounded-lg px-3 py-2 border border-white/10">
+                  <span className="hidden md:flex items-center gap-1.5 bg-white/5 backdrop-blur-sm rounded-lg px-3 py-2 border border-white/10 whitespace-nowrap shrink-0">
                     <Building2 className="w-4 h-4 text-gold-light" />
                     {property.floor}
                   </span>
                 )}
                 {property.facing && (
-                  <span className="flex items-center gap-1.5 bg-white/5 backdrop-blur-sm rounded-lg px-3 py-2 border border-white/10">
+                  <span className="hidden md:flex items-center gap-1.5 bg-white/5 backdrop-blur-sm rounded-lg px-3 py-2 border border-white/10 whitespace-nowrap shrink-0">
                     <Compass className="w-4 h-4 text-gold-light" />
                     {property.facing}
                   </span>
                 )}
-                <span className="flex items-center gap-1.5 bg-white/5 backdrop-blur-sm rounded-lg px-3 py-2 border border-white/10">
-                  <Calendar className="w-4 h-4 text-gold-light" />
+                <span className="flex items-center gap-1 sm:gap-1.5 bg-white/5 backdrop-blur-sm rounded-md sm:rounded-lg px-2 sm:px-3 py-1.5 sm:py-2 border border-white/10 whitespace-nowrap shrink-0">
+                  <Calendar className="w-3 h-3 sm:w-4 sm:h-4 text-gold-light" />
                   {property.possession}
                 </span>
               </div>
@@ -656,9 +655,9 @@ export default function PropertyDetail({
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.5 }}
-                className="mt-4 inline-flex items-center gap-2 bg-emerald/20 backdrop-blur-sm border border-emerald/30 text-white text-sm font-medium px-4 py-2 rounded-full"
+                className="mt-2 sm:mt-4 inline-flex items-center gap-1.5 sm:gap-2 bg-emerald/20 backdrop-blur-sm border border-emerald/30 text-white text-xs sm:text-sm font-medium px-3 sm:px-4 py-1.5 sm:py-2 rounded-full"
               >
-                <CheckCircle className="w-4 h-4 text-green-400" />
+                <CheckCircle className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-green-400" />
                 RERA: {property.rera}
               </motion.div>
             )}
@@ -684,14 +683,15 @@ export default function PropertyDetail({
                 <button
                   key={section.id}
                   onClick={() => scrollToSection(section.id)}
-                  className={`flex items-center gap-2 whitespace-nowrap px-5 py-4 text-sm font-medium transition-all relative border-b-2 ${
+                  className={`flex items-center gap-1.5 sm:gap-2 whitespace-nowrap px-3 sm:px-5 py-3 sm:py-4 text-xs sm:text-sm font-medium transition-all relative border-b-2 ${
                     isActive
                       ? "text-gold border-gold"
                       : "text-gray-500 border-transparent hover:text-charcoal hover:border-gray-300"
                   }`}
                 >
-                  <Icon className="w-4 h-4" />
-                  {section.label}
+                  <Icon className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+                  <span className="hidden sm:inline">{section.label}</span>
+                  <span className="sm:hidden">{section.label.split(" ")[0]}</span>
                 </button>
               );
             })}
@@ -716,7 +716,7 @@ export default function PropertyDetail({
               id="overview"
             >
               <FadeIn>
-                <div className="bg-white rounded-2xl p-6 md:p-8 shadow-sm border border-gray-100">
+                <div className="bg-white rounded-xl sm:rounded-2xl p-4 sm:p-6 md:p-8 shadow-sm border border-gray-100">
                   <h2 className="text-2xl font-bold text-charcoal mb-4 flex items-center gap-3">
                     <div className="w-10 h-10 rounded-xl bg-gold/10 flex items-center justify-center">
                       <Eye className="w-5 h-5 text-gold" />
@@ -835,7 +835,7 @@ export default function PropertyDetail({
                 id="gallery"
               >
                 <FadeIn>
-                  <div className="bg-white rounded-2xl p-6 md:p-8 shadow-sm border border-gray-100">
+                  <div className="bg-white rounded-xl sm:rounded-2xl p-4 sm:p-6 md:p-8 shadow-sm border border-gray-100">
                     <h2 className="text-2xl font-bold text-charcoal mb-6 flex items-center gap-3">
                       <div className="w-10 h-10 rounded-xl bg-gold/10 flex items-center justify-center">
                         <ImageIcon className="w-5 h-5 text-gold" />
@@ -856,8 +856,8 @@ export default function PropertyDetail({
                           viewport={{ once: true }}
                           transition={{ delay: i * 0.05 }}
                           onClick={() => { setLightboxIndex(i); setLightboxOpen(true); }}
-                          className={`relative overflow-hidden rounded-xl border border-gray-100 group cursor-pointer ${
-                            i === 0 ? "md:col-span-2 md:row-span-2" : ""
+                          className={`relative overflow-hidden rounded-lg sm:rounded-xl border border-gray-100 group cursor-pointer ${
+                            i === 0 ? "col-span-2 row-span-2" : ""
                           }`}
                         >
                           <div className={`${i === 0 ? "aspect-[4/3]" : "aspect-square"}`}>
@@ -888,7 +888,7 @@ export default function PropertyDetail({
               id="floorplans"
             >
               <FadeIn>
-                <div className="bg-white rounded-2xl p-6 md:p-8 shadow-sm border border-gray-100">
+                <div className="bg-white rounded-xl sm:rounded-2xl p-4 sm:p-6 md:p-8 shadow-sm border border-gray-100">
                   <h2 className="text-2xl font-bold text-charcoal mb-6 flex items-center gap-3">
                     <div className="w-10 h-10 rounded-xl bg-gold/10 flex items-center justify-center">
                       <Maximize2 className="w-5 h-5 text-gold" />
@@ -945,74 +945,85 @@ export default function PropertyDetail({
                       <FileText className="w-5 h-5 text-gold" />
                       Area & Configuration
                     </h3>
+                    {/* Config card — stacked on mobile, table on desktop */}
                     <div className="rounded-xl border border-gray-100 overflow-hidden">
-                      <table className="w-full text-sm">
-                        <thead>
-                          <tr className="bg-gradient-to-r from-charcoal to-charcoal/90 text-white">
-                            <th className="px-5 py-3.5 text-left text-xs font-semibold uppercase tracking-wider">
-                              Configuration
-                            </th>
-                            <th className="px-5 py-3.5 text-left text-xs font-semibold uppercase tracking-wider">
-                              Area
-                            </th>
-                            <th className="px-5 py-3.5 text-right text-xs font-semibold uppercase tracking-wider">
-                              Price (Approx.)
-                            </th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <tr className="border-b border-gray-100 hover:bg-gold/5 transition-colors">
-                            <td className="px-5 py-4">
-                              <div className="flex items-center gap-2">
-                                <span className="w-2 h-2 rounded-full bg-gold" />
-                                <span className="font-medium text-charcoal">
-                                  {property.bedrooms ? `${property.bedrooms} BHK` : property.type}
-                                  {property.facing ? ` — ${property.facing} Facing` : ""}
-                                </span>
-                              </div>
-                            </td>
-                            <td className="px-5 py-4">
-                              <div className="text-charcoal">
-                                {property.carpetArea && (
-                                  <p className="font-medium">
-                                    Carpet: {property.carpetArea}
-                                  </p>
-                                )}
-                                {property.superBuiltUpArea && (
-                                  <p className="text-xs text-gray-500 mt-0.5">
-                                    Super Built-up: {property.superBuiltUpArea}
-                                  </p>
-                                )}
-                                {!property.carpetArea && !property.superBuiltUpArea && (
-                                  <p className="font-medium">{property.area}</p>
-                                )}
-                              </div>
-                            </td>
-                            <td className="px-5 py-4 text-right">
-                              <span className="text-lg font-bold text-gold">
-                                {property.price}
-                              </span>
-                              {property.bookingAmount && (
-                                <p className="text-xs text-gray-500 mt-0.5">
-                                  Booking: {property.bookingAmount}
-                                </p>
-                              )}
-                            </td>
-                          </tr>
-                          {/* If area range suggests multiple configs, show the range */}
-                          {property.areaRange && property.areaRange !== property.area && (
-                            <tr className="bg-gold/5">
-                              <td
-                                colSpan={3}
-                                className="px-5 py-3 text-xs text-gray-500"
-                              >
-                                <span className="font-medium text-charcoal">Available sizes:</span>{" "}
-                                {property.areaRange}
+                      {/* Desktop table */}
+                      <div className="hidden sm:block">
+                        <table className="w-full text-sm">
+                          <thead>
+                            <tr className="bg-gradient-to-r from-charcoal to-charcoal/90 text-white">
+                              <th className="px-5 py-3.5 text-left text-xs font-semibold uppercase tracking-wider">Configuration</th>
+                              <th className="px-5 py-3.5 text-left text-xs font-semibold uppercase tracking-wider">Area</th>
+                              <th className="px-5 py-3.5 text-right text-xs font-semibold uppercase tracking-wider">Price (Approx.)</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr className="border-b border-gray-100 hover:bg-gold/5 transition-colors">
+                              <td className="px-5 py-4">
+                                <div className="flex items-center gap-2">
+                                  <span className="w-2 h-2 rounded-full bg-gold" />
+                                  <span className="font-medium text-charcoal">
+                                    {property.bedrooms ? `${property.bedrooms} BHK` : property.type}
+                                    {property.facing ? ` — ${property.facing} Facing` : ""}
+                                  </span>
+                                </div>
+                              </td>
+                              <td className="px-5 py-4">
+                                <div className="text-charcoal">
+                                  {property.carpetArea && <p className="font-medium">Carpet: {property.carpetArea}</p>}
+                                  {property.superBuiltUpArea && <p className="text-xs text-gray-500 mt-0.5">Super Built-up: {property.superBuiltUpArea}</p>}
+                                  {!property.carpetArea && !property.superBuiltUpArea && <p className="font-medium">{property.area}</p>}
+                                </div>
+                              </td>
+                              <td className="px-5 py-4 text-right">
+                                <span className="text-lg font-bold text-gold">{property.price}</span>
+                                {property.bookingAmount && <p className="text-xs text-gray-500 mt-0.5">Booking: {property.bookingAmount}</p>}
                               </td>
                             </tr>
-                          )}
-                        </tbody>
-                      </table>
+                            {property.areaRange && property.areaRange !== property.area && (
+                              <tr className="bg-gold/5">
+                                <td colSpan={3} className="px-5 py-3 text-xs text-gray-500">
+                                  <span className="font-medium text-charcoal">Available sizes:</span> {property.areaRange}
+                                </td>
+                              </tr>
+                            )}
+                          </tbody>
+                        </table>
+                      </div>
+
+                      {/* Mobile stacked card */}
+                      <div className="sm:hidden p-4 space-y-3">
+                        <div className="flex items-center gap-2">
+                          <span className="w-2 h-2 rounded-full bg-gold" />
+                          <span className="font-semibold text-charcoal text-sm">
+                            {property.bedrooms ? `${property.bedrooms} BHK` : property.type}
+                            {property.facing ? ` — ${property.facing}` : ""}
+                          </span>
+                        </div>
+                        <div className="grid grid-cols-2 gap-3">
+                          <div className="bg-gray-50 rounded-lg p-3">
+                            <p className="text-[10px] text-gray-400 uppercase tracking-wider mb-0.5">Area</p>
+                            <p className="text-sm font-semibold text-charcoal">
+                              {property.carpetArea || property.area}
+                            </p>
+                            {property.superBuiltUpArea && (
+                              <p className="text-[10px] text-gray-400 mt-0.5">SBU: {property.superBuiltUpArea}</p>
+                            )}
+                          </div>
+                          <div className="bg-gold/5 rounded-lg p-3">
+                            <p className="text-[10px] text-gold-dark uppercase tracking-wider mb-0.5">Price</p>
+                            <p className="text-sm font-bold text-gold">{property.price}</p>
+                            {property.bookingAmount && (
+                              <p className="text-[10px] text-gray-400 mt-0.5">Booking: {property.bookingAmount}</p>
+                            )}
+                          </div>
+                        </div>
+                        {property.areaRange && property.areaRange !== property.area && (
+                          <p className="text-xs text-gray-500 bg-gold/5 rounded-lg px-3 py-2">
+                            <span className="font-medium text-charcoal">Available sizes:</span> {property.areaRange}
+                          </p>
+                        )}
+                      </div>
                     </div>
                     <p className="text-xs text-gray-400 mt-3 flex items-center gap-1.5">
                       <Shield className="w-3 h-3" />
@@ -1056,7 +1067,7 @@ export default function PropertyDetail({
               id="pricing"
             >
               <FadeIn>
-                <div className="bg-white rounded-2xl p-6 md:p-8 shadow-sm border border-gray-100">
+                <div className="bg-white rounded-xl sm:rounded-2xl p-4 sm:p-6 md:p-8 shadow-sm border border-gray-100">
                   <h2 className="text-2xl font-bold text-charcoal mb-6 flex items-center gap-3">
                     <div className="w-10 h-10 rounded-xl bg-gold/10 flex items-center justify-center">
                       <BadgeIndianRupee className="w-5 h-5 text-gold" />
@@ -1280,7 +1291,7 @@ export default function PropertyDetail({
                 id="amenities"
               >
                 <FadeIn>
-                  <div className="bg-white rounded-2xl p-6 md:p-8 shadow-sm border border-gray-100">
+                  <div className="bg-white rounded-xl sm:rounded-2xl p-4 sm:p-6 md:p-8 shadow-sm border border-gray-100">
                     <h2 className="text-2xl font-bold text-charcoal mb-6 flex items-center gap-3">
                       <div className="w-10 h-10 rounded-xl bg-gold/10 flex items-center justify-center">
                         <ShieldCheck className="w-5 h-5 text-gold" />
@@ -1322,7 +1333,7 @@ export default function PropertyDetail({
               id="location"
             >
               <FadeIn>
-                <div className="bg-white rounded-2xl p-6 md:p-8 shadow-sm border border-gray-100">
+                <div className="bg-white rounded-xl sm:rounded-2xl p-4 sm:p-6 md:p-8 shadow-sm border border-gray-100">
                   <h2 className="text-2xl font-bold text-charcoal mb-6 flex items-center gap-3">
                     <div className="w-10 h-10 rounded-xl bg-gold/10 flex items-center justify-center">
                       <MapPinned className="w-5 h-5 text-gold" />
@@ -1449,7 +1460,7 @@ export default function PropertyDetail({
                 id="documents"
               >
                 <FadeIn>
-                  <div className="bg-white rounded-2xl p-6 md:p-8 shadow-sm border border-gray-100">
+                  <div className="bg-white rounded-xl sm:rounded-2xl p-4 sm:p-6 md:p-8 shadow-sm border border-gray-100">
                     <h2 className="text-2xl font-bold text-charcoal mb-6 flex items-center gap-3">
                       <div className="w-10 h-10 rounded-xl bg-gold/10 flex items-center justify-center">
                         <FileCheck className="w-5 h-5 text-gold" />
@@ -1693,6 +1704,54 @@ export default function PropertyDetail({
         </div>
 
         {/* ============================================================ */}
+        {/*  MOBILE LEAD CAPTURE (visible only on mobile)                */}
+        {/* ============================================================ */}
+        <div className="lg:hidden mt-8">
+          <div className="bg-charcoal rounded-xl sm:rounded-2xl p-4 sm:p-6 shadow-xl">
+            <div className="flex items-center gap-3 mb-1">
+              <Heart className="w-5 h-5 text-gold" />
+              <h3 className="text-lg font-bold text-white">Interested?</h3>
+            </div>
+            <p className="text-sm text-gray-400 mb-4">
+              Fill in your details for a callback or site visit.
+            </p>
+
+            {formSubmitted ? (
+              <div className="text-center py-6">
+                <CheckCircle className="w-12 h-12 text-emerald mx-auto mb-3" />
+                <p className="text-white font-bold">Thank you!</p>
+                <p className="text-sm text-gray-400 mt-1">We&apos;ll contact you shortly.</p>
+              </div>
+            ) : (
+              <form onSubmit={handleBookVisit} className="space-y-3">
+                <input
+                  type="text"
+                  placeholder="Your Name"
+                  value={formName}
+                  onChange={(e) => setFormName(e.target.value)}
+                  required
+                  className="w-full rounded-xl bg-white/10 border border-white/20 px-4 py-3 text-sm text-white placeholder:text-gray-500 focus:border-gold focus:outline-none focus:ring-1 focus:ring-gold transition-colors"
+                />
+                <input
+                  type="tel"
+                  placeholder="Phone Number"
+                  value={formPhone}
+                  onChange={(e) => setFormPhone(e.target.value)}
+                  required
+                  className="w-full rounded-xl bg-white/10 border border-white/20 px-4 py-3 text-sm text-white placeholder:text-gray-500 focus:border-gold focus:outline-none focus:ring-1 focus:ring-gold transition-colors"
+                />
+                <button
+                  type="submit"
+                  className="w-full rounded-xl bg-gradient-to-r from-gold to-gold-light py-3.5 text-sm font-bold text-charcoal hover:opacity-90 transition-opacity shadow-lg shadow-gold/20"
+                >
+                  Schedule Site Visit
+                </button>
+              </form>
+            )}
+          </div>
+        </div>
+
+        {/* ============================================================ */}
         {/*  SECTION 9: SIMILAR PROPERTIES                               */}
         {/* ============================================================ */}
         {relatedProperties.length > 0 && (
@@ -1801,13 +1860,13 @@ export default function PropertyDetail({
             </div>
 
             {/* Main image */}
-            <div className="flex-1 flex items-center justify-center px-4 relative min-h-0">
+            <div className="flex-1 flex items-center justify-center px-2 sm:px-4 relative min-h-0">
               {/* Prev */}
               <button
                 onClick={() => setLightboxIndex((i) => (i - 1 + images.length) % images.length)}
-                className="absolute left-4 z-10 w-12 h-12 rounded-full bg-white/10 flex items-center justify-center text-white hover:bg-white/20 transition-colors"
+                className="absolute left-1 sm:left-4 z-10 w-9 h-9 sm:w-12 sm:h-12 rounded-full bg-white/10 flex items-center justify-center text-white hover:bg-white/20 transition-colors"
               >
-                <ChevronLeft className="w-6 h-6" />
+                <ChevronLeft className="w-5 h-5 sm:w-6 sm:h-6" />
               </button>
 
               <AnimatePresence mode="wait">
@@ -1819,16 +1878,16 @@ export default function PropertyDetail({
                   animate={{ opacity: 1, scale: 1 }}
                   exit={{ opacity: 0, scale: 0.95 }}
                   transition={{ duration: 0.2 }}
-                  className="max-w-full max-h-full object-contain rounded-lg"
+                  className="max-w-[calc(100%-80px)] sm:max-w-full max-h-full object-contain rounded-lg"
                 />
               </AnimatePresence>
 
               {/* Next */}
               <button
                 onClick={() => setLightboxIndex((i) => (i + 1) % images.length)}
-                className="absolute right-4 z-10 w-12 h-12 rounded-full bg-white/10 flex items-center justify-center text-white hover:bg-white/20 transition-colors"
+                className="absolute right-1 sm:right-4 z-10 w-9 h-9 sm:w-12 sm:h-12 rounded-full bg-white/10 flex items-center justify-center text-white hover:bg-white/20 transition-colors"
               >
-                <ChevronRight className="w-6 h-6" />
+                <ChevronRight className="w-5 h-5 sm:w-6 sm:h-6" />
               </button>
             </div>
 

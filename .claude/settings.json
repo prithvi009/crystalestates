@@ -9,7 +9,9 @@
       "Bash(vercel --version)",
       "Bash(vercel env:*)",
       "Bash(git -C /Users/prithvirajawatade/Desktop/crystal-estate add -A)",
-      "Bash(git -C /Users/prithvirajawatade/Desktop/crystal-estate status --short)"
+      "Bash(git -C /Users/prithvirajawatade/Desktop/crystal-estate status --short)",
+      "Bash(git -C:*)",
+      "Bash(curl -s -X POST \"https://www.crystalestates.in/api/admin/upload\" -H \"Authorization: Bearer crystal2026\" -F \"file=@/Users/prithvirajawatade/Desktop/crystal-estate/public/crystal-estates-logo-1080x1080.svg\")"
     ],
     "additionalDirectories": [
       "/Users/prithvirajawatade/Desktop/crystal-estate/src/app/blog"
