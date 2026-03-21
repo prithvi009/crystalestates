@@ -2,10 +2,10 @@ export const propertyTypes = ["All", "Plot", "Row House", "Flat", "Commercial", 
 
 export const locations = [
   "All",
-  "Solapur City",
-  "Pune-Solapur Highway",
   "PMRDA Belt",
-  "Solapur Outskirts",
+  "Pune City",
+  "Hinjewadi-Wakad",
+  "Wagholi",
   "Mumbai - Thane",
   "Mumbai - Navi Mumbai",
 ] as const;

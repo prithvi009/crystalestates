@@ -26,10 +26,8 @@ const propertyTypes = [
 ];
 
 const locations = [
-  { href: "/properties?location=solapur", label: "Solapur" },
   { href: "/properties?location=pune", label: "Pune" },
   { href: "/properties?location=mumbai", label: "Mumbai" },
-  { href: "/properties?location=pune-solapur-highway", label: "Pune-Solapur Highway" },
   { href: "/properties?location=pmrda-belt", label: "PMRDA Belt" },
   { href: "/properties?location=talegaon", label: "Talegaon" },
 ];

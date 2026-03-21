@@ -60,10 +60,10 @@ const blogPosts: BlogPost[] = [
     readTime: "12 min",
   },
   {
-    slug: "best-areas-invest-solapur-2026",
-    title: "Best Areas to Invest in Solapur in 2026",
+    slug: "best-areas-invest-pune-2026",
+    title: "Best Areas to Invest in Pune in 2026",
     excerpt:
-      "Solapur is emerging as a real estate hotspot in Maharashtra. Discover the top localities for residential and commercial property investment this year.",
+      "Pune is one of Maharashtra's top real estate markets. Discover the best localities for residential and commercial property investment this year.",
     category: "Investment",
     date: "2026-02-01",
     readTime: "10 min",

@@ -6,7 +6,7 @@ import { ShieldCheck, CheckCircle, MapPin, BarChart3, Lock } from "lucide-react"
 const trustItems = [
   { label: "RERA Registered", icon: ShieldCheck },
   { label: "Title-Verified Properties", icon: CheckCircle },
-  { label: "3 Cities, 1 Standard", icon: MapPin },
+  { label: "2 Cities, 1 Standard", icon: MapPin },
   { label: "Data-Powered Search", icon: BarChart3 },
   { label: "\u20B90 Hidden Charges", icon: Lock },
 ];

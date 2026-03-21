@@ -28,19 +28,16 @@ const jetbrainsMono = JetBrains_Mono({
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.crystalestates.in"),
   title: {
-    default: "Crystal Estates | Premium Properties in Solapur, Pune & Mumbai",
+    default: "Crystal Estates | Premium Properties in Pune & Mumbai",
     template: "%s | Crystal Estates",
   },
   description:
-    "Premium real estate consultancy offering RERA-verified plots, flats, row houses & investment properties across Solapur, Pune & Mumbai. Title-verified, transparent pricing. Data-driven approach. Call +91 95117 50686.",
+    "Premium real estate consultancy offering RERA-verified plots, flats, row houses & investment properties across Pune & Mumbai. Title-verified, transparent pricing. Data-driven approach. Call +91 95117 50686.",
   keywords: [
-    "real estate Solapur",
+    "real estate Pune",
     "property for sale Pune",
-    "plots Solapur",
     "real estate consultancy Maharashtra",
     "RERA verified properties",
-    "plots Pune-Solapur highway",
-    "row houses Solapur",
     "flats Pune",
     "property investment Maharashtra",
     "Crystal Estates",
@@ -48,7 +45,6 @@ export const metadata: Metadata = {
     "Yash Evana Talegaon",
     "PMRDA approved plots",
     "real estate consultant Pune",
-    "property dealer Solapur",
     "Mumbai property",
     "Andheri East flats",
     "Talegaon row houses",
@@ -58,7 +54,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Crystal Estates | Decoding Value in Real Estate",
     description:
-      "RERA-verified plots, flats, row houses & investment properties across Solapur, Pune & Mumbai. Data-driven consultancy with transparent pricing.",
+      "RERA-verified plots, flats, row houses & investment properties across Pune & Mumbai. Data-driven consultancy with transparent pricing.",
     url: "https://www.crystalestates.in",
     type: "website",
     locale: "en_IN",
@@ -66,7 +62,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Crystal Estates | Properties in Solapur, Pune & Mumbai",
+    title: "Crystal Estates | Properties in Pune & Mumbai",
     description:
       "RERA-verified properties across Maharashtra. Data-driven real estate consultancy. Transparent pricing.",
   },
@@ -111,7 +107,7 @@ export default function RootLayout({
               name: "Crystal Estates",
               legalName: "Crystal Estates Real Estate Consultancy",
               description:
-                "Premium real estate consultancy in Maharashtra offering RERA-verified plots, row houses, flats, and investment properties across Solapur, Pune & Mumbai. Data-driven approach to real estate.",
+                "Premium real estate consultancy in Maharashtra offering RERA-verified plots, row houses, flats, and investment properties across Pune & Mumbai. Data-driven approach to real estate.",
               url: "https://www.crystalestates.in",
               telephone: "+919511750686",
               email: "info@crystalestates.in",
@@ -119,7 +115,6 @@ export default function RootLayout({
               currenciesAccepted: "INR",
               paymentAccepted: "Cash, Bank Transfer, Cheque, Home Loan",
               areaServed: [
-                { "@type": "City", name: "Solapur" },
                 { "@type": "City", name: "Pune" },
                 { "@type": "City", name: "Mumbai" },
               ],

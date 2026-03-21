@@ -42,11 +42,11 @@ const budgetOptions = [
 ];
 
 const locationOptions = [
-  "Solapur",
-  "Pune-Solapur Highway",
+  "Pune",
   "PMRDA Belt",
   "Talegaon",
   "Mumbai-Andheri",
+  "Mumbai-Thane",
   "Other",
 ];
 

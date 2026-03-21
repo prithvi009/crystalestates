@@ -5,16 +5,13 @@ import PropertiesClient from "./PropertiesClient";
 export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
-  title: "Properties for Sale in Solapur, Pune & Mumbai — Plots, Flats, Row Houses",
+  title: "Properties for Sale in Pune & Mumbai — Plots, Flats, Row Houses",
   description:
-    "Browse RERA-verified properties for sale across Solapur, Pune & Mumbai. Plots, flats, row houses & commercial spaces. Filter by location, type & budget. Crystal Estates.",
+    "Browse RERA-verified properties for sale across Pune & Mumbai. Plots, flats, row houses & commercial spaces. Filter by location, type & budget. Crystal Estates.",
   keywords: [
-    "property for sale Solapur",
     "flats for sale Pune",
-    "plots for sale Solapur",
     "RERA verified properties",
-    "row house Solapur",
-    "plots Pune Solapur highway",
+    "plots Pune",
     "flats Pune",
     "Mumbai property",
     "Andheri East flats",
@@ -24,9 +21,9 @@ export const metadata: Metadata = {
     canonical: "https://www.crystalestates.in/properties",
   },
   openGraph: {
-    title: "Properties for Sale — Mumbai, Pune & Solapur | Crystal Estates",
+    title: "Properties for Sale — Pune & Mumbai | Crystal Estates",
     description:
-      "Browse RERA-verified plots, flats, row houses & commercial properties across Mumbai, Pune & Solapur.",
+      "Browse RERA-verified plots, flats, row houses & commercial properties across Pune & Mumbai.",
     url: "https://www.crystalestates.in/properties",
     type: "website",
   },
@@ -45,7 +42,7 @@ export default async function PropertiesPage() {
             "@type": "CollectionPage",
             name: "Properties for Sale — Crystal Estates",
             description:
-              "Browse RERA-verified plots, flats, row houses & commercial properties across Mumbai, Pune & Solapur.",
+              "Browse RERA-verified plots, flats, row houses & commercial properties across Pune & Mumbai.",
             url: "https://www.crystalestates.in/properties",
             mainEntity: {
               "@type": "ItemList",

@@ -124,8 +124,8 @@ export default function PropertiesClient({
             transition={{ duration: 0.5, delay: 0.1 }}
             className="mt-4 text-text-muted text-lg max-w-xl"
           >
-            Discover premium plots, homes, and commercial spaces across Mumbai,
-            Pune &amp; Solapur.
+            Discover premium plots, homes, and commercial spaces across Pune &amp;
+            Mumbai.
           </motion.p>
         </div>
       </div>

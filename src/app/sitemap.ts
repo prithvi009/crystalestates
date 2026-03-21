@@ -19,7 +19,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const blogSlugs = [
     "how-to-check-7-12-extract-online-maharashtra",
     "crest-oaks-marol-andheri-east-review",
-    "best-areas-invest-solapur-2026",
+    "best-areas-invest-pune-2026",
     "na-conversion-maharashtra-process",
     "stamp-duty-maharashtra-2026-calculator",
     "rera-agent-registration-maharashtra",

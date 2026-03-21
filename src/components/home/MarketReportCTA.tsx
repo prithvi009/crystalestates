@@ -147,7 +147,7 @@ export default function MarketReportCTA() {
             <p className="text-text-dark-muted text-base leading-relaxed">
               Get exclusive insights into property price trends, upcoming
               infrastructure developments, and investment opportunities across
-              Solapur, Pune, and Mumbai corridors. Data-driven analysis to help
+              Pune and Mumbai corridors. Data-driven analysis to help
               you make smarter buying decisions.
             </p>
 

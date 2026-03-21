@@ -11,16 +11,16 @@ export const testimonials: Testimonial[] = [
   {
     id: 1,
     name: "Rajesh P.",
-    location: "Solapur",
-    propertyType: "Highway Corridor Plot",
+    location: "Pune",
+    propertyType: "PMRDA Plot",
     quote:
-      "Crystal Estates found us a plot near the highway corridor that has already appreciated 20% in just 8 months. Their market knowledge is unmatched.",
+      "Crystal Estates found us a plot in the PMRDA belt that has already appreciated 20% in just 8 months. Their market knowledge is unmatched.",
     rating: 5,
   },
   {
     id: 2,
     name: "Sneha M.",
-    location: "Dubai / Solapur",
+    location: "Dubai / Pune",
     propertyType: "Residential Plot",
     quote:
       "As an NRI, buying property in India was my biggest fear. Crystal Estates handled everything — from title check to registration — while I was in Dubai.",
@@ -38,7 +38,7 @@ export const testimonials: Testimonial[] = [
   {
     id: 4,
     name: "Priya & Vikram S.",
-    location: "Solapur",
+    location: "Pune",
     propertyType: "2 BHK Row House",
     quote:
       "We were first-time home buyers and completely clueless. Crystal Estates walked us through every step. Our dream home is now a reality!",
@@ -56,7 +56,7 @@ export const testimonials: Testimonial[] = [
   {
     id: 6,
     name: "Meena T.",
-    location: "Mumbai / Solapur",
+    location: "Mumbai / Pune",
     propertyType: "Agricultural Land",
     quote:
       "Invested in farmland near Saswad on Crystal Estates' recommendation. Their investment report was spot-on. Already seeing great returns.",
@@ -85,10 +85,10 @@ export const testimonials: Testimonial[] = [
 export const socialProofMessages = [
   { name: "Rajesh", city: "Pune", action: "booked a site visit for Highway Corridor Plot" },
   { name: "Priya", city: "Mumbai", action: "inquired about Crystal Greens PMRDA plots" },
-  { name: "Vikram", city: "Solapur", action: "downloaded the investment report" },
+  { name: "Vikram", city: "Pune", action: "downloaded the investment report" },
   { name: "Sneha", city: "Dubai", action: "scheduled a virtual consultation" },
   { name: "Amit", city: "Pune", action: "booked a site visit for Crystal Heights Wagholi" },
-  { name: "Dr. Sandeep", city: "Solapur", action: "inquired about Crystal Commerce shops" },
+  { name: "Dr. Sandeep", city: "Pune", action: "inquired about Crystal Commerce shops" },
   { name: "Ankit", city: "Thane", action: "inquired about Crystal Towers 2 BHK flat" },
   { name: "Neha", city: "Navi Mumbai", action: "booked a site visit for Crystal Plaza Kharghar" },
   { name: "Sanjay", city: "Mumbai", action: "downloaded Navi Mumbai airport investment report" },

@@ -3,10 +3,9 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "About Crystal Estates — Technology-Powered Real Estate Consultancy",
   description:
-    "Crystal Estates is a technology-powered real estate consultancy founded by Prithviraj. RERA-registered, serving Solapur, Pune & Mumbai with data-driven property recommendations.",
+    "Crystal Estates is a technology-powered real estate consultancy founded by Prithviraj. RERA-registered, serving Pune & Mumbai with data-driven property recommendations.",
   keywords: [
     "about Crystal Estates",
-    "real estate consultancy Solapur",
     "real estate consultancy Pune",
     "trusted property consultant Maharashtra",
     "RERA registered agent",
@@ -19,7 +18,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "About Crystal Estates — Built Different",
     description:
-      "Technology-powered real estate consultancy. Data-driven approach to property in Solapur, Pune & Mumbai.",
+      "Technology-powered real estate consultancy. Data-driven approach to property in Pune & Mumbai.",
     url: "https://www.crystalestates.in/about",
     type: "website",
   },
@@ -34,7 +33,7 @@ export default function AboutLayout({ children }: { children: React.ReactNode })
     mainEntity: {
       "@type": "Organization",
       name: "Crystal Estates",
-      areaServed: ["Solapur", "Pune", "Mumbai"],
+      areaServed: ["Pune", "Mumbai"],
       knowsAbout: [
         "Real Estate Investment",
         "RERA Compliance",

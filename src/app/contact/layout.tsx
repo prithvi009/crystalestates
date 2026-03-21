@@ -4,10 +4,10 @@ import { faqs } from "@/data/faqs";
 export const metadata: Metadata = {
   title: "Contact Crystal Estates — Free Property Consultation",
   description:
-    "Get a free property consultation from Crystal Estates. Call +91 95117 50686 or WhatsApp us. Expert advice on plots, flats & properties across Solapur, Pune & Mumbai.",
+    "Get a free property consultation from Crystal Estates. Call +91 95117 50686 or WhatsApp us. Expert advice on plots, flats & properties across Pune & Mumbai.",
   keywords: [
     "contact Crystal Estates",
-    "property consultation Solapur",
+    "property consultation Pune",
     "real estate agent contact Pune",
     "free property advice",
     "property dealer phone number",
@@ -19,7 +19,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Contact Crystal Estates — Free Property Consultation",
     description:
-      "Call +91 95117 50686 for expert property advice across Solapur, Pune & Mumbai. We respond within 30 minutes.",
+      "Call +91 95117 50686 for expert property advice across Pune & Mumbai. We respond within 30 minutes.",
     url: "https://www.crystalestates.in/contact",
     type: "website",
   },
@@ -44,7 +44,7 @@ export default function ContactLayout({ children }: { children: React.ReactNode 
     "@type": "ContactPage",
     name: "Contact Crystal Estates",
     description:
-      "Get a free property consultation from Crystal Estates for properties in Solapur, Pune & Mumbai.",
+      "Get a free property consultation from Crystal Estates for properties in Pune & Mumbai.",
     url: "https://www.crystalestates.in/contact",
     mainEntity: {
       "@type": "RealEstateAgent",

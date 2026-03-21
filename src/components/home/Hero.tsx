@@ -4,10 +4,10 @@ import { motion } from "framer-motion";
 import { ChevronDown } from "lucide-react";
 import Link from "next/link";
 
-const cities = ["Solapur", "Pune", "Mumbai"];
+const cities = ["Pune", "Mumbai"];
 
 const stats = [
-  { value: "3 Cities" },
+  { value: "2 Cities" },
   { value: "RERA Registered" },
   { value: "Tech-Powered" },
 ];
@@ -132,7 +132,7 @@ export default function Hero() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.8, ease: "easeOut" }}
           >
-            Premium plots, row houses, and apartments across Solapur, Pune &amp;
+            Premium plots, row houses, and apartments across Pune &amp;
             Mumbai. Title-verified. RERA compliant. Data-driven.
           </motion.p>
 

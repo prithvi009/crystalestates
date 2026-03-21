@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef, DragEvent } from "react";
 
 /* ------------------------------------------------------------------ */
 /*  Types                                                              */
@@ -49,6 +49,7 @@ interface Property {
   badge?: string | null;
   images: string[];
   floorPlanUrl?: string | null;
+  brochureUrl?: string | null;
   videoUrl?: string | null;
   latitude?: string | null;
   longitude?: string | null;
@@ -68,12 +69,24 @@ interface Property {
 
 const PROPERTY_TYPES = ["Plot", "Row House", "Flat", "Commercial", "Land"];
 const LOCATION_AREAS = [
-  "Solapur City",
-  "Pune-Solapur Highway",
+  "Pune City",
   "PMRDA Belt",
-  "Solapur Outskirts",
+  "Talegaon-Chakan",
+  "Hinjewadi-Wakad",
+  "Baner-Balewadi",
+  "Kharadi-Viman Nagar",
+  "Wagholi",
+  "Loni Kalbhor",
+  "Mumbai - Andheri",
   "Mumbai - Thane",
   "Mumbai - Navi Mumbai",
+  "Mumbai - Panvel",
+  "Mumbai - Kharghar",
+  "Mumbai - Ulwe",
+  "Nashik",
+  "Aurangabad",
+  "Kolhapur",
+  "Nagpur",
 ];
 const BADGES = ["", "High Demand", "New Listing", "Price Rising"];
 const DOC_STATUSES = ["Available", "Applied", "Pending", "Not Available"];
@@ -103,6 +116,7 @@ interface FormData {
   badge: string;
   images: string[];
   floorPlanUrl: string;
+  brochureUrl: string;
   videoUrl: string;
   latitude: string;
   longitude: string;
@@ -118,7 +132,7 @@ const emptyForm: FormData = {
   slug: "",
   name: "",
   location: "",
-  locationArea: "Solapur City",
+  locationArea: "",
   type: "Plot",
   price: "",
   priceNumeric: 0,
@@ -139,6 +153,7 @@ const emptyForm: FormData = {
   badge: "",
   images: [],
   floorPlanUrl: "",
+  brochureUrl: "",
   videoUrl: "",
   latitude: "",
   longitude: "",
@@ -180,6 +195,7 @@ function propertyToForm(p: Property): FormData {
     badge: p.badge ?? "",
     images: Array.isArray(p.images) ? p.images : [],
     floorPlanUrl: p.floorPlanUrl ?? "",
+    brochureUrl: p.brochureUrl ?? "",
     videoUrl: p.videoUrl ?? "",
     latitude: p.latitude ?? "",
     longitude: p.longitude ?? "",
@@ -227,6 +243,129 @@ function Input({
 }
 
 /* ------------------------------------------------------------------ */
+/*  FileUploadZone                                                     */
+/* ------------------------------------------------------------------ */
+
+function FileUploadZone({
+  onUpload,
+  accept,
+  label,
+  currentUrl,
+  multiple,
+  authToken,
+}: {
+  onUpload: (url: string) => void;
+  accept: string;
+  label: string;
+  currentUrl?: string;
+  multiple?: boolean;
+  authToken: string;
+}) {
+  const [uploading, setUploading] = useState(false);
+  const [dragOver, setDragOver] = useState(false);
+  const [error, setError] = useState("");
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  const uploadFile = async (file: File) => {
+    setError("");
+    setUploading(true);
+    try {
+      const fd = new globalThis.FormData();
+      fd.append("file", file);
+
+      const res = await fetch("/api/admin/upload", {
+        method: "POST",
+        headers: { Authorization: `Bearer ${authToken}` },
+        body: fd,
+      });
+
+      const data = await res.json();
+      if (!res.ok) {
+        throw new Error(data.error || "Upload failed");
+      }
+      onUpload(data.url);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Upload failed");
+    } finally {
+      setUploading(false);
+    }
+  };
+
+  const handleFiles = (files: FileList | null) => {
+    if (!files) return;
+    const fileArray = Array.from(files);
+    if (multiple) {
+      fileArray.forEach((f) => uploadFile(f));
+    } else if (fileArray.length > 0) {
+      uploadFile(fileArray[0]);
+    }
+  };
+
+  const handleDrop = (e: DragEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    setDragOver(false);
+    handleFiles(e.dataTransfer.files);
+  };
+
+  const handleDragOver = (e: DragEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    setDragOver(true);
+  };
+
+  const handleDragLeave = (e: DragEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    setDragOver(false);
+  };
+
+  return (
+    <div>
+      <div
+        onClick={() => inputRef.current?.click()}
+        onDrop={handleDrop}
+        onDragOver={handleDragOver}
+        onDragLeave={handleDragLeave}
+        className={`relative border-2 border-dashed rounded-lg p-6 text-center cursor-pointer transition-colors ${
+          dragOver
+            ? "border-amber-500 bg-amber-50"
+            : "border-gray-300 hover:border-gray-400 bg-gray-50 hover:bg-gray-100"
+        }`}
+      >
+        <input
+          ref={inputRef}
+          type="file"
+          accept={accept}
+          multiple={multiple}
+          onChange={(e) => handleFiles(e.target.files)}
+          className="hidden"
+        />
+        {uploading ? (
+          <div className="flex flex-col items-center gap-2">
+            <div className="w-6 h-6 border-2 border-amber-500 border-t-transparent rounded-full animate-spin" />
+            <span className="text-sm text-gray-500">Uploading...</span>
+          </div>
+        ) : (
+          <div className="flex flex-col items-center gap-2">
+            <svg className="w-8 h-8 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5" />
+            </svg>
+            <span className="text-sm text-gray-600 font-medium">{label}</span>
+            <span className="text-xs text-gray-400">Drag & drop or click to browse</span>
+          </div>
+        )}
+      </div>
+      {error && (
+        <p className="mt-1 text-xs text-red-600">{error}</p>
+      )}
+      {currentUrl && !multiple && (
+        <div className="mt-2 flex items-center gap-2 text-xs text-gray-500">
+          <span className="truncate max-w-xs">{currentUrl}</span>
+        </div>
+      )}
+    </div>
+  );
+}
+
+/* ------------------------------------------------------------------ */
 /*  Component                                                          */
 /* ------------------------------------------------------------------ */
 
@@ -245,6 +384,10 @@ export default function AdminPage() {
   const [formData, setFormData] = useState<FormData>(emptyForm);
 
   const [deleteConfirm, setDeleteConfirm] = useState<number | null>(null);
+
+  // Media section: toggle between upload and URL input for images
+  const [imageInputMode, setImageInputMode] = useState<"upload" | "url">("upload");
+  const [imageUrlInput, setImageUrlInput] = useState("");
 
   /* ---------- Fetch ---------- */
 
@@ -376,6 +519,33 @@ export default function AdminPage() {
 
   const updateField = (field: keyof FormData, value: unknown) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
+  };
+
+  /* ---------- Image helpers ---------- */
+
+  const addImageUrl = (url: string) => {
+    if (!url.trim()) return;
+    setFormData((prev) => ({
+      ...prev,
+      images: [...prev.images, url.trim()],
+    }));
+  };
+
+  const removeImage = (idx: number) => {
+    setFormData((prev) => ({
+      ...prev,
+      images: prev.images.filter((_, i) => i !== idx),
+    }));
+  };
+
+  const moveImage = (idx: number, direction: "up" | "down") => {
+    setFormData((prev) => {
+      const imgs = [...prev.images];
+      const targetIdx = direction === "up" ? idx - 1 : idx + 1;
+      if (targetIdx < 0 || targetIdx >= imgs.length) return prev;
+      [imgs[idx], imgs[targetIdx]] = [imgs[targetIdx], imgs[idx]];
+      return { ...prev, images: imgs };
+    });
   };
 
   /* ---------- Dynamic row helpers ---------- */
@@ -577,16 +747,20 @@ export default function AdminPage() {
                   />
                 </div>
                 <div>
-                  <Label>Location Area (filter)</Label>
-                  <select
+                  <Label>Location Area (filter) — type or pick</Label>
+                  <input
+                    type="text"
+                    list="location-area-options"
                     value={formData.locationArea}
                     onChange={(e) => updateField("locationArea", e.target.value)}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-amber-500"
-                  >
+                    placeholder="Type or select a location area"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500"
+                  />
+                  <datalist id="location-area-options">
                     {LOCATION_AREAS.map((l) => (
-                      <option key={l} value={l}>{l}</option>
+                      <option key={l} value={l} />
                     ))}
-                  </select>
+                  </datalist>
                 </div>
                 <div>
                   <Label>Price (display) *</Label>
@@ -802,44 +976,236 @@ export default function AdminPage() {
               </div>
             </fieldset>
 
-            {/* ---- Section: Media ---- */}
+            {/* ---- Section: Media (UPGRADED) ---- */}
             <fieldset className="mb-6">
               <legend className="text-sm font-semibold text-gray-800 mb-3 pb-1 border-b border-gray-200 w-full">
                 Media
               </legend>
-              <div className="space-y-4">
+              <div className="space-y-6">
+
+                {/* 1. Property Images */}
                 <div>
-                  <Label>Images (one URL per line)</Label>
-                  <textarea
-                    value={formData.images.join("\n")}
-                    onChange={(e) =>
-                      updateField(
-                        "images",
-                        e.target.value.split("\n").filter(Boolean)
-                      )
-                    }
-                    rows={4}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-amber-500 resize-none"
-                    placeholder={"/images/property1.jpg\n/images/property2.jpg"}
-                  />
+                  <div className="flex items-center justify-between mb-2">
+                    <Label>Property Images</Label>
+                    <div className="flex items-center gap-1 bg-gray-100 rounded-lg p-0.5">
+                      <button
+                        type="button"
+                        onClick={() => setImageInputMode("upload")}
+                        className={`px-3 py-1 text-xs rounded-md transition-colors ${
+                          imageInputMode === "upload"
+                            ? "bg-white text-gray-900 shadow-sm font-medium"
+                            : "text-gray-500 hover:text-gray-700"
+                        }`}
+                      >
+                        Upload
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => setImageInputMode("url")}
+                        className={`px-3 py-1 text-xs rounded-md transition-colors ${
+                          imageInputMode === "url"
+                            ? "bg-white text-gray-900 shadow-sm font-medium"
+                            : "text-gray-500 hover:text-gray-700"
+                        }`}
+                      >
+                        URL
+                      </button>
+                    </div>
+                  </div>
+
+                  {imageInputMode === "upload" ? (
+                    <FileUploadZone
+                      onUpload={(url) => addImageUrl(url)}
+                      accept="image/*"
+                      label="Drop images here"
+                      multiple
+                      authToken={password}
+                    />
+                  ) : (
+                    <div className="flex gap-2">
+                      <input
+                        type="text"
+                        value={imageUrlInput}
+                        onChange={(e) => setImageUrlInput(e.target.value)}
+                        onKeyDown={(e) => {
+                          if (e.key === "Enter") {
+                            e.preventDefault();
+                            addImageUrl(imageUrlInput);
+                            setImageUrlInput("");
+                          }
+                        }}
+                        placeholder="Paste image URL and press Enter"
+                        className="flex-1 px-3 py-2 border border-gray-300 rounded-lg text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-amber-500"
+                      />
+                      <button
+                        type="button"
+                        onClick={() => {
+                          addImageUrl(imageUrlInput);
+                          setImageUrlInput("");
+                        }}
+                        className="px-4 py-2 text-sm font-medium text-amber-700 bg-amber-50 rounded-lg hover:bg-amber-100 transition-colors"
+                      >
+                        Add
+                      </button>
+                    </div>
+                  )}
+
+                  {/* Image preview grid */}
+                  {formData.images.length > 0 && (
+                    <div className="mt-3 space-y-2">
+                      {formData.images.map((img, idx) => (
+                        <div
+                          key={idx}
+                          className="flex items-center gap-3 bg-gray-50 rounded-lg p-2 border border-gray-200"
+                        >
+                          <div className="w-16 h-12 rounded overflow-hidden bg-gray-200 flex-shrink-0">
+                            {/* eslint-disable-next-line @next/next/no-img-element */}
+                            <img
+                              src={img}
+                              alt={`Image ${idx + 1}`}
+                              className="w-full h-full object-cover"
+                              onError={(e) => {
+                                (e.target as HTMLImageElement).style.display = "none";
+                              }}
+                            />
+                          </div>
+                          <span className="flex-1 text-xs text-gray-600 truncate">{img}</span>
+                          <div className="flex items-center gap-1 flex-shrink-0">
+                            <button
+                              type="button"
+                              onClick={() => moveImage(idx, "up")}
+                              disabled={idx === 0}
+                              className="p-1 text-gray-400 hover:text-gray-700 disabled:opacity-30 disabled:cursor-not-allowed"
+                              title="Move up"
+                            >
+                              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M5 15l7-7 7 7" />
+                              </svg>
+                            </button>
+                            <button
+                              type="button"
+                              onClick={() => moveImage(idx, "down")}
+                              disabled={idx === formData.images.length - 1}
+                              className="p-1 text-gray-400 hover:text-gray-700 disabled:opacity-30 disabled:cursor-not-allowed"
+                              title="Move down"
+                            >
+                              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+                              </svg>
+                            </button>
+                            <button
+                              type="button"
+                              onClick={() => removeImage(idx)}
+                              className="p-1 text-red-400 hover:text-red-600"
+                              title="Remove"
+                            >
+                              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                              </svg>
+                            </button>
+                          </div>
+                        </div>
+                      ))}
+                      <p className="text-xs text-gray-400">{formData.images.length} image{formData.images.length !== 1 ? "s" : ""}</p>
+                    </div>
+                  )}
                 </div>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div>
-                    <Label>Floor Plan URL</Label>
-                    <Input
+
+                {/* 2. Floor Plan */}
+                <div>
+                  <Label>Floor Plan (image or PDF)</Label>
+                  <FileUploadZone
+                    onUpload={(url) => updateField("floorPlanUrl", url)}
+                    accept="image/*,.pdf"
+                    label="Drop floor plan here"
+                    currentUrl={formData.floorPlanUrl}
+                    authToken={password}
+                  />
+                  <div className="mt-2">
+                    <input
+                      type="text"
                       value={formData.floorPlanUrl}
-                      onChange={(v) => updateField("floorPlanUrl", v)}
-                      placeholder="/images/floorplan.jpg"
+                      onChange={(e) => updateField("floorPlanUrl", e.target.value)}
+                      placeholder="Or paste floor plan URL"
+                      className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-amber-500"
                     />
                   </div>
-                  <div>
-                    <Label>Video URL</Label>
-                    <Input
-                      value={formData.videoUrl}
-                      onChange={(v) => updateField("videoUrl", v)}
-                      placeholder="https://youtube.com/watch?v=..."
+                  {formData.floorPlanUrl && (
+                    <div className="mt-2 flex items-center gap-2">
+                      <div className="w-20 h-14 rounded overflow-hidden bg-gray-200 flex-shrink-0">
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        <img
+                          src={formData.floorPlanUrl}
+                          alt="Floor plan preview"
+                          className="w-full h-full object-cover"
+                          onError={(e) => {
+                            (e.target as HTMLImageElement).style.display = "none";
+                          }}
+                        />
+                      </div>
+                      <span className="text-xs text-gray-500 truncate">{formData.floorPlanUrl}</span>
+                      <button
+                        type="button"
+                        onClick={() => updateField("floorPlanUrl", "")}
+                        className="ml-auto text-xs text-red-500 hover:text-red-700"
+                      >
+                        Clear
+                      </button>
+                    </div>
+                  )}
+                </div>
+
+                {/* 3. Brochure / PDF */}
+                <div>
+                  <Label>Brochure / PDF</Label>
+                  <FileUploadZone
+                    onUpload={(url) => updateField("brochureUrl", url)}
+                    accept=".pdf"
+                    label="Drop brochure PDF here"
+                    currentUrl={formData.brochureUrl}
+                    authToken={password}
+                  />
+                  <div className="mt-2">
+                    <input
+                      type="text"
+                      value={formData.brochureUrl}
+                      onChange={(e) => updateField("brochureUrl", e.target.value)}
+                      placeholder="Or paste brochure URL"
+                      className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-amber-500"
                     />
                   </div>
+                  {formData.brochureUrl && (
+                    <div className="mt-2 flex items-center gap-2 bg-gray-50 rounded-lg p-2 border border-gray-200">
+                      <svg className="w-5 h-5 text-red-500 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m2.25 0H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z" />
+                      </svg>
+                      <a
+                        href={formData.brochureUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-xs text-blue-600 hover:underline truncate"
+                      >
+                        {formData.brochureUrl}
+                      </a>
+                      <button
+                        type="button"
+                        onClick={() => updateField("brochureUrl", "")}
+                        className="ml-auto text-xs text-red-500 hover:text-red-700 flex-shrink-0"
+                      >
+                        Clear
+                      </button>
+                    </div>
+                  )}
+                </div>
+
+                {/* 4. Video */}
+                <div>
+                  <Label>Video URL (YouTube / external link)</Label>
+                  <Input
+                    value={formData.videoUrl}
+                    onChange={(v) => updateField("videoUrl", v)}
+                    placeholder="https://youtube.com/watch?v=..."
+                  />
                 </div>
               </div>
             </fieldset>
@@ -849,6 +1215,9 @@ export default function AdminPage() {
               <legend className="text-sm font-semibold text-gray-800 mb-3 pb-1 border-b border-gray-200 w-full">
                 Location Coordinates
               </legend>
+              <p className="text-xs text-gray-400 mb-3">
+                Get coordinates from Google Maps: right-click a location and copy the lat/lng values.
+              </p>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
                   <Label>Latitude</Label>

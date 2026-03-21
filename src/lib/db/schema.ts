@@ -58,6 +58,7 @@ export const properties = pgTable("properties", {
   images: jsonb("images").notNull().default([]),
   // Extended fields for world-class detail page
   floorPlanUrl: text("floor_plan_url"),
+  brochureUrl: text("brochure_url"),
   videoUrl: text("video_url"),
   latitude: varchar("latitude", { length: 20 }),
   longitude: varchar("longitude", { length: 20 }),

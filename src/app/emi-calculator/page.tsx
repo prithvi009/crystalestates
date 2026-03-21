@@ -400,7 +400,7 @@ export default function EMICalculatorPage() {
               <div className="space-y-4 font-body text-sm text-text-muted leading-relaxed">
                 <p>
                   Maharashtra remains one of India&rsquo;s most active real estate markets,
-                  with cities like Mumbai, Pune, Nashik, and Solapur seeing consistent
+                  with cities like Mumbai, Pune, and Nashik seeing consistent
                   demand. In 2026, home loan interest rates in India range from 8.25% to
                   9.5% depending on the lender, CIBIL score, and loan amount.
                 </p>
@@ -421,7 +421,7 @@ export default function EMICalculatorPage() {
                   you compare interest rates across banks to completing documentation and
                   coordinating with the lender for quick disbursement. Our service covers
                   properties across Maharashtra including Mumbai, Thane, Navi Mumbai, Pune,
-                  Nashik, Aurangabad, and Solapur.
+                  Nashik, and Aurangabad.
                 </p>
               </div>
             </motion.div>

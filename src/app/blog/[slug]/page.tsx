@@ -51,19 +51,19 @@ const blogPosts: BlogPost[] = [
     ],
   },
   {
-    slug: "best-areas-invest-solapur-2026",
-    title: "Best Areas to Invest in Solapur in 2026",
+    slug: "best-areas-invest-pune-2026",
+    title: "Best Areas to Invest in Pune in 2026",
     excerpt:
-      "Solapur is emerging as a real estate hotspot in Maharashtra. Discover the top localities for residential and commercial property investment this year.",
+      "Pune is one of Maharashtra's top real estate markets. Discover the best localities for residential and commercial property investment this year.",
     category: "Investment",
     date: "2026-02-01",
     readTime: "10 min",
     body: [
-      "Solapur, located in southeastern Maharashtra, has been steadily rising on the real estate investment radar. With the government's Smart City initiative, improved industrial connectivity via the Solapur-Pune Expressway, and expanding educational and healthcare infrastructure, Solapur offers some of the most affordable yet high-growth property options in Maharashtra. In 2026, several localities stand out for their investment potential.",
-      "Vijapur Road is perhaps the most sought-after residential corridor in Solapur. With multiple RERA-approved projects, proximity to the railway station, and excellent social infrastructure including schools, hospitals, and shopping centers, property prices here have appreciated 12-15% over the past two years. A 2 BHK apartment on Vijapur Road currently ranges from ₹35 lakh to ₹55 lakh, making it accessible for first-time homebuyers.",
-      "Akkalkot Road is another rapidly developing area, especially for budget-conscious investors. The stretch from Kumatha Naka to Akkalkot Road junction has seen numerous new township projects. With land prices still under ₹1,500 per sq. ft. for plots, early investors stand to benefit significantly as infrastructure development catches up. The upcoming ring road project will further boost connectivity in this corridor.",
-      "For commercial investment, the Hotgi Road industrial area and the new MIDC extension near Chincholi offer opportunities in warehousing and industrial plots. With Solapur's textile and sugar industries expanding, demand for commercial real estate is on the rise. The proposed dry port and logistics park near Solapur will further enhance the city's position as a trade hub.",
-      "Crystal Estates has a dedicated team in Solapur covering both residential and commercial properties. Whether you're looking for a plot, apartment, or commercial space, our local experts can guide you to the best deals with verified documentation and RERA compliance. Reach out for a free investment consultation.",
+      "Pune, Maharashtra's tech and education capital, continues to be one of the most attractive real estate investment destinations in India. With booming IT corridors, expanding metro connectivity, PMRDA-driven infrastructure growth, and a steady influx of working professionals, Pune offers a wide range of high-growth property options. In 2026, several localities stand out for their investment potential.",
+      "Hinjewadi-Wakad remains one of the most sought-after residential corridors in Pune. With proximity to the Rajiv Gandhi Infotech Park, multiple RERA-approved projects, and excellent social infrastructure including schools, hospitals, and shopping centers, property prices here have appreciated 10-15% over the past two years. A 2 BHK apartment in Wakad currently ranges from ₹55 lakh to ₹85 lakh.",
+      "Wagholi and the PMRDA Eastern Belt are rapidly developing areas, especially for budget-conscious investors. With new township projects, proximity to Kharadi IT hub, and improving road connectivity, land prices offer excellent value. The upcoming ring road and metro extension will further boost connectivity in this corridor.",
+      "For commercial investment, areas like Baner-Balewadi and Kharadi-Viman Nagar offer opportunities in office spaces and retail shops. With Pune's IT and services industries expanding, demand for commercial real estate is on the rise. The proposed metro lines and improved road infrastructure will further enhance connectivity across the city.",
+      "Crystal Estates has a dedicated team in Pune covering both residential and commercial properties. Whether you're looking for a plot, apartment, or commercial space, our local experts can guide you to the best deals with verified documentation and RERA compliance. Reach out for a free investment consultation.",
     ],
   },
   {
@@ -280,8 +280,7 @@ export default async function BlogPostPage({ params }: Props) {
                 Prithviraj is a RERA-certified real estate consultant with deep
                 expertise in the Maharashtra property market. With a focus on
                 transparency and client-first service, he has helped hundreds of
-                families find their dream homes across Mumbai, Pune, Nashik, and
-                Solapur.
+                families find their dream homes across Mumbai and Pune.
               </p>
               <a
                 href="https://wa.me/919511750686?text=Hi%20Prithviraj%2C%20I%20would%20like%20to%20book%20a%20consultation."

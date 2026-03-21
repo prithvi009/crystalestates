@@ -14,13 +14,6 @@ interface Corridor {
 
 const corridors: Corridor[] = [
   {
-    name: "Pune-Solapur Highway (NH65)",
-    tag: "High-Growth Corridor",
-    priceRange: "\u20B92,500\u2013\u20B94,000/sqft",
-    appreciation: "12-15%",
-    properties: 8,
-  },
-  {
     name: "PMRDA Eastern Belt",
     tag: "Loni Kalbhor, Wagholi, Kedgaon",
     priceRange: "\u20B93,500\u2013\u20B96,000/sqft",
@@ -35,6 +28,13 @@ const corridors: Corridor[] = [
     properties: 4,
   },
   {
+    name: "Hinjewadi-Wakad",
+    tag: "IT Hub Corridor",
+    priceRange: "\u20B96,000\u2013\u20B910,000/sqft",
+    appreciation: "8-12%",
+    properties: 5,
+  },
+  {
     name: "Mumbai \u2013 Andheri East",
     tag: "Crest Oaks Territory",
     priceRange: "\u20B915,000\u2013\u20B925,000/sqft",
@@ -42,18 +42,18 @@ const corridors: Corridor[] = [
     properties: 3,
   },
   {
-    name: "Solapur MIDC Corridor",
-    tag: "Industrial Growth Zone",
-    priceRange: "\u20B91,500\u2013\u20B93,000/sqft",
-    appreciation: "8-12%",
-    properties: 5,
+    name: "Mumbai \u2013 Navi Mumbai",
+    tag: "Airport Growth Zone",
+    priceRange: "\u20B97,000\u2013\u20B912,000/sqft",
+    appreciation: "10-15%",
+    properties: 4,
   },
   {
-    name: "Solapur Smart City Zone",
-    tag: "Govt-Backed Infrastructure",
-    priceRange: "\u20B92,000\u2013\u20B93,500/sqft",
-    appreciation: "10-14%",
-    properties: 4,
+    name: "Mumbai \u2013 Thane",
+    tag: "Premium Suburban Living",
+    priceRange: "\u20B98,000\u2013\u20B915,000/sqft",
+    appreciation: "8-10%",
+    properties: 3,
   },
 ];
 

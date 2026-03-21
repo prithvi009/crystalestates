@@ -61,10 +61,6 @@ const values = [
 
 const cities = [
   {
-    name: "Solapur",
-    desc: "Emerging investment hub with rapid infrastructure growth along the Pune-Solapur expressway. Plots, farmhouses, and residential developments.",
-  },
-  {
     name: "Pune",
     desc: "Maharashtra\u2019s tech capital. Premium apartments, township plots, and commercial spaces across Hinjewadi, Wakad, Baner, and beyond.",
   },

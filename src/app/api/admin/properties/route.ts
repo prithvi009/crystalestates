@@ -74,6 +74,7 @@ export async function POST(request: NextRequest) {
       badge: body.badge || null,
       images: body.images && body.images.length > 0 ? body.images : ["/placeholder-property.jpg"],
       floorPlanUrl: body.floorPlanUrl || null,
+      brochureUrl: body.brochureUrl || null,
       videoUrl: body.videoUrl || null,
       latitude: body.latitude || null,
       longitude: body.longitude || null,
@@ -148,6 +149,7 @@ export async function PUT(request: NextRequest) {
     if (updates.badge !== undefined) data.badge = updates.badge || null;
     if (updates.images !== undefined) data.images = updates.images;
     if (updates.floorPlanUrl !== undefined) data.floorPlanUrl = updates.floorPlanUrl || null;
+    if (updates.brochureUrl !== undefined) data.brochureUrl = updates.brochureUrl || null;
     if (updates.videoUrl !== undefined) data.videoUrl = updates.videoUrl || null;
     if (updates.latitude !== undefined) data.latitude = updates.latitude || null;
     if (updates.longitude !== undefined) data.longitude = updates.longitude || null;

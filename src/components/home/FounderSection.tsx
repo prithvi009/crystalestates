@@ -6,8 +6,8 @@ import { ArrowRight } from "lucide-react";
 const credentials = [
   "RERA Registered",
   "Tech Background",
-  "3 Cities",
-  "Solapur \u00B7 Pune \u00B7 Mumbai",
+  "2 Cities",
+  "Pune \u00B7 Mumbai",
 ];
 
 const containerVariants = {

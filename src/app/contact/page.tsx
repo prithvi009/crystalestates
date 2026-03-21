@@ -375,7 +375,7 @@ export default function ContactPage() {
                           Office Address
                         </p>
                         <p className="mt-1 text-sm leading-relaxed text-text-muted">
-                          Solapur, Maharashtra
+                          Pune, Maharashtra
                         </p>
                       </div>
                     </div>

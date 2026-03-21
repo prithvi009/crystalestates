@@ -1,7 +1,8 @@
 {
   "permissions": {
     "allow": [
-      "Bash(npx tsc:*)"
+      "Bash(npx tsc:*)",
+      "Bash(npx drizzle-kit:*)"
     ],
     "additionalDirectories": [
       "/Users/prithvirajawatade/Desktop/crystal-estate/src/app/blog"
