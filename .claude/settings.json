@@ -2,7 +2,10 @@
   "permissions": {
     "allow": [
       "Bash(npx tsc:*)",
-      "Bash(npx drizzle-kit:*)"
+      "Bash(npx drizzle-kit:*)",
+      "Bash(git -C /Users/prithvirajawatade/Desktop/crystal-estate status -u)",
+      "Bash(git -C /Users/prithvirajawatade/Desktop/crystal-estate log --oneline -5)",
+      "Bash(git -C /Users/prithvirajawatade/Desktop/crystal-estate diff --stat)"
     ],
     "additionalDirectories": [
       "/Users/prithvirajawatade/Desktop/crystal-estate/src/app/blog"

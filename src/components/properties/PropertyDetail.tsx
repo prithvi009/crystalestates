@@ -53,9 +53,29 @@ import {
   TrendingUp,
   Heart,
   Eye,
+  ChevronLeft,
+  ChevronDown,
+  ChevronUp,
+  X,
+  Download,
+  ImageIcon,
 } from "lucide-react";
 import type { Property } from "@/lib/db/schema";
 import PropertyCard from "./PropertyCard";
+
+/* ------------------------------------------------------------------ */
+/*  Cloudinary URL optimization helper                                 */
+/* ------------------------------------------------------------------ */
+
+function optimizeImg(url: string, opts: { w?: number; h?: number; q?: string } = {}): string {
+  if (!url || !url.includes("cloudinary.com")) return url;
+  const { w, h, q = "auto" } = opts;
+  const parts = [`f_auto`, `q_${q}`];
+  if (w) parts.push(`w_${w}`);
+  if (h) parts.push(`h_${h}`);
+  if (w || h) parts.push("c_fill");
+  return url.replace("/upload/", `/upload/${parts.join(",")}/`);
+}
 
 /* ------------------------------------------------------------------ */
 /*  Types                                                              */
@@ -90,6 +110,7 @@ interface DocItem {
 
 const SECTIONS = [
   { id: "overview", label: "Overview", icon: List },
+  { id: "gallery", label: "Gallery", icon: Eye },
   { id: "floorplans", label: "Floor Plans", icon: Maximize2 },
   { id: "pricing", label: "Price & EMI", icon: IndianRupee },
   { id: "amenities", label: "Amenities", icon: ShieldCheck },
@@ -223,6 +244,12 @@ export default function PropertyDetail({
   );
   const [formSubmitted, setFormSubmitted] = useState(false);
 
+  // Image gallery state
+  const [heroImageIndex, setHeroImageIndex] = useState(0);
+  const [lightboxOpen, setLightboxOpen] = useState(false);
+  const [lightboxIndex, setLightboxIndex] = useState(0);
+  const [descriptionExpanded, setDescriptionExpanded] = useState(false);
+
   // EMI calculator state
   const defaultLoan = Math.round(property.priceNumeric * 0.8);
   const [loanAmount, setLoanAmount] = useState(defaultLoan);
@@ -238,6 +265,26 @@ export default function PropertyDetail({
   const nearbyPlaces = (property.nearbyPlaces ?? []) as NearbyPlace[];
   const priceBreakdown = (property.priceBreakdown ?? {}) as PriceBreakdown;
   const documents = (property.documents ?? []) as DocItem[];
+  const images = (property.images ?? []) as string[];
+  const hasRealImages = images.length > 0 && images[0] !== "/placeholder-property.jpg";
+
+  /* ---- Description formatting ---- */
+  const DESCRIPTION_WORD_LIMIT = 80;
+  const descriptionText = property.description || "";
+  const descriptionWords = descriptionText.split(/\s+/).filter(Boolean);
+  const isLongDescription = descriptionWords.length > DESCRIPTION_WORD_LIMIT;
+  const descriptionParagraphs = descriptionText
+    .split(/\n{2,}|\r\n{2,}/)
+    .map((p) => p.trim())
+    .filter(Boolean);
+  // If no paragraph breaks, try splitting on single newlines
+  const formattedParagraphs =
+    descriptionParagraphs.length <= 1
+      ? descriptionText.split(/\n/).map((p) => p.trim()).filter(Boolean)
+      : descriptionParagraphs;
+  const truncatedDescription = isLongDescription && !descriptionExpanded
+    ? descriptionWords.slice(0, DESCRIPTION_WORD_LIMIT).join(" ") + "..."
+    : null;
 
   const monthlyEMI = useMemo(
     () => calculateEMI(loanAmount, interestRate, tenure),
@@ -410,26 +457,96 @@ export default function PropertyDetail({
       {/*  SECTION 1: HERO / GALLERY AREA                              */}
       {/* ============================================================ */}
       <div className="relative h-[420px] md:h-[520px] bg-charcoal overflow-hidden">
-        {/* Grid pattern */}
-        <div
-          className="absolute inset-0 opacity-[0.05]"
-          style={{
-            backgroundImage: `linear-gradient(rgba(198,169,98,0.4) 1px, transparent 1px),
-              linear-gradient(90deg, rgba(198,169,98,0.4) 1px, transparent 1px)`,
-            backgroundSize: "50px 50px",
-          }}
-        />
-        {/* Animated shimmer */}
-        <motion.div
-          className="absolute inset-0 opacity-[0.03]"
-          style={{
-            background:
-              "linear-gradient(135deg, transparent 30%, rgba(198,169,98,0.3) 50%, transparent 70%)",
-            backgroundSize: "200% 200%",
-          }}
-          animate={{ backgroundPosition: ["0% 0%", "100% 100%"] }}
-          transition={{ duration: 8, repeat: Infinity, repeatType: "reverse" }}
-        />
+        {/* Actual property image or fallback pattern */}
+        {hasRealImages ? (
+          <>
+            <AnimatePresence mode="wait">
+              <motion.img
+                key={heroImageIndex}
+                src={optimizeImg(images[heroImageIndex], { w: 1400, h: 700 })}
+                alt={`${property.name} - Image ${heroImageIndex + 1}`}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.4 }}
+                className="absolute inset-0 w-full h-full object-cover"
+              />
+            </AnimatePresence>
+            {/* Image nav arrows */}
+            {images.length > 1 && (
+              <>
+                <button
+                  onClick={() => setHeroImageIndex((i) => (i - 1 + images.length) % images.length)}
+                  className="absolute left-4 top-1/2 -translate-y-1/2 z-20 w-10 h-10 rounded-full bg-black/40 backdrop-blur-sm flex items-center justify-center text-white hover:bg-black/60 transition-colors"
+                >
+                  <ChevronLeft className="w-5 h-5" />
+                </button>
+                <button
+                  onClick={() => setHeroImageIndex((i) => (i + 1) % images.length)}
+                  className="absolute right-4 top-1/2 -translate-y-1/2 z-20 w-10 h-10 rounded-full bg-black/40 backdrop-blur-sm flex items-center justify-center text-white hover:bg-black/60 transition-colors"
+                >
+                  <ChevronRight className="w-5 h-5" />
+                </button>
+              </>
+            )}
+            {/* Image counter + view all */}
+            {images.length > 1 && (
+              <button
+                onClick={() => { setLightboxIndex(0); setLightboxOpen(true); }}
+                className="absolute bottom-6 right-6 z-20 flex items-center gap-2 bg-black/50 backdrop-blur-sm text-white text-sm px-4 py-2 rounded-full hover:bg-black/70 transition-colors"
+              >
+                <ImageIcon className="w-4 h-4" />
+                {heroImageIndex + 1} / {images.length} — View All
+              </button>
+            )}
+            {/* Thumbnail strip */}
+            {images.length > 1 && (
+              <div className="absolute bottom-6 left-6 z-20 flex gap-2 max-w-[60%] overflow-x-auto scrollbar-hide">
+                {images.slice(0, 6).map((img, i) => (
+                  <button
+                    key={i}
+                    onClick={() => setHeroImageIndex(i)}
+                    className={`shrink-0 w-16 h-12 rounded-lg overflow-hidden border-2 transition-all ${
+                      heroImageIndex === i ? "border-gold shadow-lg" : "border-white/30 opacity-70 hover:opacity-100"
+                    }`}
+                  >
+                    <img src={optimizeImg(img, { w: 128, h: 96 })} alt="" className="w-full h-full object-cover" />
+                  </button>
+                ))}
+                {images.length > 6 && (
+                  <button
+                    onClick={() => { setLightboxIndex(0); setLightboxOpen(true); }}
+                    className="shrink-0 w-16 h-12 rounded-lg bg-black/60 backdrop-blur-sm flex items-center justify-center text-white text-xs font-bold border-2 border-white/30"
+                  >
+                    +{images.length - 6}
+                  </button>
+                )}
+              </div>
+            )}
+          </>
+        ) : (
+          <>
+            {/* Fallback geometric pattern */}
+            <div
+              className="absolute inset-0 opacity-[0.05]"
+              style={{
+                backgroundImage: `linear-gradient(rgba(198,169,98,0.4) 1px, transparent 1px),
+                  linear-gradient(90deg, rgba(198,169,98,0.4) 1px, transparent 1px)`,
+                backgroundSize: "50px 50px",
+              }}
+            />
+            <motion.div
+              className="absolute inset-0 opacity-[0.03]"
+              style={{
+                background:
+                  "linear-gradient(135deg, transparent 30%, rgba(198,169,98,0.3) 50%, transparent 70%)",
+                backgroundSize: "200% 200%",
+              }}
+              animate={{ backgroundPosition: ["0% 0%", "100% 100%"] }}
+              transition={{ duration: 8, repeat: Infinity, repeatType: "reverse" }}
+            />
+          </>
+        )}
         {/* Gradient overlay */}
         <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-black/10 z-10" />
 
@@ -606,9 +723,49 @@ export default function PropertyDetail({
                     </div>
                     About This Property
                   </h2>
-                  <p className="text-gray-600 leading-relaxed text-[15px] mb-8">
-                    {property.description}
-                  </p>
+
+                  {/* Auto-formatted description with Show More */}
+                  <div className="mb-8">
+                    {truncatedDescription ? (
+                      <>
+                        <p className="text-gray-600 leading-relaxed text-[15px]">
+                          {truncatedDescription}
+                        </p>
+                        <button
+                          onClick={() => setDescriptionExpanded(true)}
+                          className="mt-3 inline-flex items-center gap-1.5 text-sm font-semibold text-gold hover:text-gold-light transition-colors"
+                        >
+                          Show more
+                          <ChevronDown className="w-4 h-4" />
+                        </button>
+                      </>
+                    ) : (
+                      <>
+                        <div className="space-y-4">
+                          {formattedParagraphs.length > 1 ? (
+                            formattedParagraphs.map((para, i) => (
+                              <p key={i} className="text-gray-600 leading-relaxed text-[15px]">
+                                {para}
+                              </p>
+                            ))
+                          ) : (
+                            <p className="text-gray-600 leading-relaxed text-[15px]">
+                              {descriptionText}
+                            </p>
+                          )}
+                        </div>
+                        {isLongDescription && descriptionExpanded && (
+                          <button
+                            onClick={() => setDescriptionExpanded(false)}
+                            className="mt-3 inline-flex items-center gap-1.5 text-sm font-semibold text-gold hover:text-gold-light transition-colors"
+                          >
+                            Show less
+                            <ChevronUp className="w-4 h-4" />
+                          </button>
+                        )}
+                      </>
+                    )}
+                  </div>
 
                   {/* Key Highlights */}
                   {highlights.length > 0 && (
@@ -668,6 +825,60 @@ export default function PropertyDetail({
                 </div>
               </FadeIn>
             </section>
+
+            {/* ====================================================== */}
+            {/*  SECTION: IMAGE GALLERY                                */}
+            {/* ====================================================== */}
+            {hasRealImages && images.length > 1 && (
+              <section
+                ref={setSectionRef("gallery")}
+                id="gallery"
+              >
+                <FadeIn>
+                  <div className="bg-white rounded-2xl p-6 md:p-8 shadow-sm border border-gray-100">
+                    <h2 className="text-2xl font-bold text-charcoal mb-6 flex items-center gap-3">
+                      <div className="w-10 h-10 rounded-xl bg-gold/10 flex items-center justify-center">
+                        <ImageIcon className="w-5 h-5 text-gold" />
+                      </div>
+                      Gallery
+                      <span className="ml-auto text-sm font-normal text-gray-400">
+                        {images.length} photos
+                      </span>
+                    </h2>
+
+                    {/* Masonry-style grid */}
+                    <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+                      {images.map((img, i) => (
+                        <motion.button
+                          key={i}
+                          initial={{ opacity: 0, scale: 0.95 }}
+                          whileInView={{ opacity: 1, scale: 1 }}
+                          viewport={{ once: true }}
+                          transition={{ delay: i * 0.05 }}
+                          onClick={() => { setLightboxIndex(i); setLightboxOpen(true); }}
+                          className={`relative overflow-hidden rounded-xl border border-gray-100 group cursor-pointer ${
+                            i === 0 ? "md:col-span-2 md:row-span-2" : ""
+                          }`}
+                        >
+                          <div className={`${i === 0 ? "aspect-[4/3]" : "aspect-square"}`}>
+                            <img
+                              src={optimizeImg(img, i === 0 ? { w: 800, h: 600 } : { w: 400, h: 400 })}
+                              alt={`${property.name} - Photo ${i + 1}`}
+                              className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                            />
+                          </div>
+                          <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors flex items-center justify-center">
+                            <div className="opacity-0 group-hover:opacity-100 transition-opacity bg-white/90 rounded-full p-2">
+                              <Eye className="w-5 h-5 text-charcoal" />
+                            </div>
+                          </div>
+                        </motion.button>
+                      ))}
+                    </div>
+                  </div>
+                </FadeIn>
+              </section>
+            )}
 
             {/* ====================================================== */}
             {/*  SECTION: FLOOR PLANS & PRICING TABLE                  */}
@@ -1553,6 +1764,95 @@ export default function PropertyDetail({
 
       {/* Spacer for mobile bottom bar */}
       <div className="h-20 lg:hidden" />
+
+      {/* ============================================================ */}
+      {/*  LIGHTBOX MODAL                                               */}
+      {/* ============================================================ */}
+      <AnimatePresence>
+        {lightboxOpen && hasRealImages && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[60] bg-black/95 flex flex-col"
+          >
+            {/* Lightbox header */}
+            <div className="flex items-center justify-between px-4 py-3 shrink-0">
+              <span className="text-white/70 text-sm font-medium">
+                {lightboxIndex + 1} of {images.length}
+              </span>
+              <div className="flex items-center gap-3">
+                <a
+                  href={images[lightboxIndex]}
+                  download
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-white/60 hover:text-white transition-colors p-2"
+                >
+                  <Download className="w-5 h-5" />
+                </a>
+                <button
+                  onClick={() => setLightboxOpen(false)}
+                  className="text-white/60 hover:text-white transition-colors p-2"
+                >
+                  <X className="w-6 h-6" />
+                </button>
+              </div>
+            </div>
+
+            {/* Main image */}
+            <div className="flex-1 flex items-center justify-center px-4 relative min-h-0">
+              {/* Prev */}
+              <button
+                onClick={() => setLightboxIndex((i) => (i - 1 + images.length) % images.length)}
+                className="absolute left-4 z-10 w-12 h-12 rounded-full bg-white/10 flex items-center justify-center text-white hover:bg-white/20 transition-colors"
+              >
+                <ChevronLeft className="w-6 h-6" />
+              </button>
+
+              <AnimatePresence mode="wait">
+                <motion.img
+                  key={lightboxIndex}
+                  src={images[lightboxIndex]}
+                  alt={`${property.name} - Photo ${lightboxIndex + 1}`}
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.95 }}
+                  transition={{ duration: 0.2 }}
+                  className="max-w-full max-h-full object-contain rounded-lg"
+                />
+              </AnimatePresence>
+
+              {/* Next */}
+              <button
+                onClick={() => setLightboxIndex((i) => (i + 1) % images.length)}
+                className="absolute right-4 z-10 w-12 h-12 rounded-full bg-white/10 flex items-center justify-center text-white hover:bg-white/20 transition-colors"
+              >
+                <ChevronRight className="w-6 h-6" />
+              </button>
+            </div>
+
+            {/* Thumbnail strip */}
+            <div className="shrink-0 py-3 px-4">
+              <div className="flex gap-2 justify-center overflow-x-auto scrollbar-hide max-w-3xl mx-auto">
+                {images.map((img, i) => (
+                  <button
+                    key={i}
+                    onClick={() => setLightboxIndex(i)}
+                    className={`shrink-0 w-16 h-12 rounded-lg overflow-hidden border-2 transition-all ${
+                      lightboxIndex === i
+                        ? "border-gold opacity-100"
+                        : "border-transparent opacity-50 hover:opacity-80"
+                    }`}
+                  >
+                    <img src={optimizeImg(img, { w: 128, h: 96 })} alt="" className="w-full h-full object-cover" />
+                  </button>
+                ))}
+              </div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }

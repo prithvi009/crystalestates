@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { uploadToCloudinary } from "@/lib/cloudinary";
 import { writeFile, mkdir } from "node:fs/promises";
 import { join } from "node:path";
 
@@ -35,7 +36,6 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Validate file size
     if (file.size > MAX_FILE_SIZE) {
       return NextResponse.json(
         { error: "File too large. Maximum size is 50MB." },
@@ -43,7 +43,6 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Extract and validate extension
     const originalName = file.name;
     const ext = originalName.split(".").pop()?.toLowerCase() || "";
 
@@ -54,23 +53,58 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Generate unique filename
+    const buffer = Buffer.from(await file.arrayBuffer());
+
+    // Determine resource type for Cloudinary
+    const isVideo = ["mp4", "webm", "mov"].includes(ext);
+    const isPdf = ext === "pdf";
+    const resourceType = isVideo ? "video" : isPdf ? "raw" : "image";
+
+    // Determine folder
+    const folderHint = formData.get("folder") as string | null;
+    const folder = folderHint
+      ? `crystal-estates/${folderHint}`
+      : "crystal-estates/properties";
+
+    // Try Cloudinary first, fall back to local storage
+    const useCloudinary =
+      process.env.CLOUDINARY_CLOUD_NAME &&
+      process.env.CLOUDINARY_API_KEY &&
+      process.env.CLOUDINARY_API_SECRET;
+
+    if (useCloudinary) {
+      const result = await uploadToCloudinary(buffer, {
+        folder,
+        resourceType: resourceType as "image" | "video" | "raw",
+      });
+
+      return NextResponse.json({
+        success: true,
+        url: result.url,
+        publicId: result.publicId,
+        width: result.width,
+        height: result.height,
+        format: result.format,
+        bytes: result.bytes,
+        provider: "cloudinary",
+      });
+    }
+
+    // Fallback: save locally to public/uploads/
     const timestamp = Date.now();
     const randomStr = Math.random().toString(36).substring(2, 10);
     const uniqueName = `${timestamp}-${randomStr}.${ext}`;
 
-    // Ensure uploads directory exists
     const uploadsDir = join(process.cwd(), "public", "uploads");
     await mkdir(uploadsDir, { recursive: true });
 
-    // Write file
-    const buffer = Buffer.from(await file.arrayBuffer());
     const filePath = join(uploadsDir, uniqueName);
     await writeFile(filePath, buffer);
 
     return NextResponse.json({
       success: true,
       url: `/uploads/${uniqueName}`,
+      provider: "local",
     });
   } catch (error) {
     console.error("[Upload API] Error:", error);
