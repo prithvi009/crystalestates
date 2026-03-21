@@ -1,7 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
 import { uploadToCloudinary } from "@/lib/cloudinary";
-import { writeFile, mkdir } from "node:fs/promises";
-import { join } from "node:path";
 
 const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || "crystal2026";
 
@@ -12,6 +10,16 @@ const ALLOWED_EXTENSIONS = new Set([
 ]);
 
 const MAX_FILE_SIZE = 50 * 1024 * 1024; // 50MB
+
+// Increase body size limit for Vercel serverless (default is 4.5MB)
+export const config = {
+  api: {
+    bodyParser: false,
+  },
+};
+
+// Vercel body size limit — set to 50MB
+export const maxDuration = 60; // allow up to 60s for large uploads
 
 function authorize(request: NextRequest): boolean {
   const authHeader = request.headers.get("authorization");
@@ -53,6 +61,18 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    // Check Cloudinary is configured
+    if (
+      !process.env.CLOUDINARY_CLOUD_NAME ||
+      !process.env.CLOUDINARY_API_KEY ||
+      !process.env.CLOUDINARY_API_SECRET
+    ) {
+      return NextResponse.json(
+        { error: "Image storage not configured. Please set Cloudinary environment variables." },
+        { status: 500 }
+      );
+    }
+
     const buffer = Buffer.from(await file.arrayBuffer());
 
     // Determine resource type for Cloudinary
@@ -66,50 +86,24 @@ export async function POST(request: NextRequest) {
       ? `crystal-estates/${folderHint}`
       : "crystal-estates/properties";
 
-    // Try Cloudinary first, fall back to local storage
-    const useCloudinary =
-      process.env.CLOUDINARY_CLOUD_NAME &&
-      process.env.CLOUDINARY_API_KEY &&
-      process.env.CLOUDINARY_API_SECRET;
-
-    if (useCloudinary) {
-      const result = await uploadToCloudinary(buffer, {
-        folder,
-        resourceType: resourceType as "image" | "video" | "raw",
-      });
-
-      return NextResponse.json({
-        success: true,
-        url: result.url,
-        publicId: result.publicId,
-        width: result.width,
-        height: result.height,
-        format: result.format,
-        bytes: result.bytes,
-        provider: "cloudinary",
-      });
-    }
-
-    // Fallback: save locally to public/uploads/
-    const timestamp = Date.now();
-    const randomStr = Math.random().toString(36).substring(2, 10);
-    const uniqueName = `${timestamp}-${randomStr}.${ext}`;
-
-    const uploadsDir = join(process.cwd(), "public", "uploads");
-    await mkdir(uploadsDir, { recursive: true });
-
-    const filePath = join(uploadsDir, uniqueName);
-    await writeFile(filePath, buffer);
+    const result = await uploadToCloudinary(buffer, {
+      folder,
+      resourceType: resourceType as "image" | "video" | "raw",
+    });
 
     return NextResponse.json({
       success: true,
-      url: `/uploads/${uniqueName}`,
-      provider: "local",
+      url: result.url,
+      publicId: result.publicId,
+      width: result.width,
+      height: result.height,
+      format: result.format,
+      bytes: result.bytes,
     });
   } catch (error) {
-    console.error("[Upload API] Error:", error);
+    console.error("[Upload API] Error:", error instanceof Error ? error.message : error);
     return NextResponse.json(
-      { error: "Failed to upload file" },
+      { error: error instanceof Error ? error.message : "Failed to upload file" },
       { status: 500 }
     );
   }

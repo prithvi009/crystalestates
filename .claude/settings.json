@@ -5,7 +5,11 @@
       "Bash(npx drizzle-kit:*)",
       "Bash(git -C /Users/prithvirajawatade/Desktop/crystal-estate status -u)",
       "Bash(git -C /Users/prithvirajawatade/Desktop/crystal-estate log --oneline -5)",
-      "Bash(git -C /Users/prithvirajawatade/Desktop/crystal-estate diff --stat)"
+      "Bash(git -C /Users/prithvirajawatade/Desktop/crystal-estate diff --stat)",
+      "Bash(vercel --version)",
+      "Bash(vercel env:*)",
+      "Bash(git -C /Users/prithvirajawatade/Desktop/crystal-estate add -A)",
+      "Bash(git -C /Users/prithvirajawatade/Desktop/crystal-estate status --short)"
     ],
     "additionalDirectories": [
       "/Users/prithvirajawatade/Desktop/crystal-estate/src/app/blog"

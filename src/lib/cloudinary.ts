@@ -9,46 +9,36 @@ cloudinary.config({
 export default cloudinary;
 
 /**
- * Upload a buffer to Cloudinary.
- * Returns the secure URL and public_id.
+ * Upload a buffer to Cloudinary using base64 data URI.
+ * Works reliably on Vercel serverless functions (no streams needed).
  */
 export async function uploadToCloudinary(
   buffer: Buffer,
   options: {
     folder?: string;
     resourceType?: "image" | "video" | "raw" | "auto";
-    transformation?: Record<string, unknown>[];
   } = {}
 ): Promise<{ url: string; publicId: string; width?: number; height?: number; format?: string; bytes?: number }> {
   const { folder = "crystal-estates", resourceType = "auto" } = options;
 
-  return new Promise((resolve, reject) => {
-    cloudinary.uploader
-      .upload_stream(
-        {
-          folder,
-          resource_type: resourceType,
-          // Auto-quality + auto-format for optimal delivery
-          quality: "auto",
-          fetch_format: "auto",
-        },
-        (error, result) => {
-          if (error || !result) {
-            reject(error || new Error("Upload failed"));
-            return;
-          }
-          resolve({
-            url: result.secure_url,
-            publicId: result.public_id,
-            width: result.width,
-            height: result.height,
-            format: result.format,
-            bytes: result.bytes,
-          });
-        }
-      )
-      .end(buffer);
+  const base64 = buffer.toString("base64");
+  const dataUri = `data:application/octet-stream;base64,${base64}`;
+
+  const result = await cloudinary.uploader.upload(dataUri, {
+    folder,
+    resource_type: resourceType,
+    quality: "auto",
+    fetch_format: "auto",
   });
+
+  return {
+    url: result.secure_url,
+    publicId: result.public_id,
+    width: result.width,
+    height: result.height,
+    format: result.format,
+    bytes: result.bytes,
+  };
 }
 
 /**
@@ -60,18 +50,15 @@ export async function deleteFromCloudinary(publicId: string, resourceType: "imag
 
 /**
  * Generate an optimized URL with transformations.
- * Usage: getOptimizedUrl(url, { width: 800, height: 600, crop: "fill" })
  */
 export function getOptimizedUrl(
   url: string,
   transforms: { width?: number; height?: number; crop?: string; quality?: string | number; format?: string } = {}
 ): string {
-  // If it's not a Cloudinary URL, return as-is
   if (!url.includes("cloudinary.com")) return url;
 
   const { width, height, crop = "fill", quality = "auto", format = "auto" } = transforms;
 
-  // Build transformation string
   const parts: string[] = [`q_${quality}`, `f_${format}`];
   if (width) parts.push(`w_${width}`);
   if (height) parts.push(`h_${height}`);
@@ -79,8 +66,5 @@ export function getOptimizedUrl(
 
   const transformStr = parts.join(",");
 
-  // Insert transformation into URL
-  // Cloudinary URLs: https://res.cloudinary.com/CLOUD/image/upload/EXISTING/path.jpg
-  // We insert our transforms after /upload/
   return url.replace("/upload/", `/upload/${transformStr}/`);
 }
