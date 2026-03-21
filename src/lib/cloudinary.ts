@@ -1,16 +1,20 @@
 import { v2 as cloudinary } from "cloudinary";
 
-cloudinary.config({
-  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
-  api_key: process.env.CLOUDINARY_API_KEY,
-  api_secret: process.env.CLOUDINARY_API_SECRET,
-});
-
-export default cloudinary;
+/**
+ * Configure Cloudinary lazily (env vars may not be ready at module load on Vercel).
+ */
+function getCloudinary() {
+  cloudinary.config({
+    cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+    api_key: process.env.CLOUDINARY_API_KEY,
+    api_secret: process.env.CLOUDINARY_API_SECRET,
+  });
+  return cloudinary;
+}
 
 /**
  * Upload a buffer to Cloudinary using base64 data URI.
- * Works reliably on Vercel serverless functions (no streams needed).
+ * Works reliably on Vercel serverless functions.
  */
 export async function uploadToCloudinary(
   buffer: Buffer,
@@ -21,14 +25,22 @@ export async function uploadToCloudinary(
 ): Promise<{ url: string; publicId: string; width?: number; height?: number; format?: string; bytes?: number }> {
   const { folder = "crystal-estates", resourceType = "auto" } = options;
 
+  const cld = getCloudinary();
+
+  // Verify config is set
+  const cfg = cld.config();
+  if (!cfg.cloud_name || !cfg.api_key || !cfg.api_secret) {
+    throw new Error(
+      `Cloudinary not configured. cloud_name=${cfg.cloud_name ? "set" : "MISSING"}, api_key=${cfg.api_key ? "set" : "MISSING"}, api_secret=${cfg.api_secret ? "set" : "MISSING"}`
+    );
+  }
+
   const base64 = buffer.toString("base64");
   const dataUri = `data:application/octet-stream;base64,${base64}`;
 
-  const result = await cloudinary.uploader.upload(dataUri, {
+  const result = await cld.uploader.upload(dataUri, {
     folder,
     resource_type: resourceType,
-    quality: "auto",
-    fetch_format: "auto",
   });
 
   return {
@@ -45,7 +57,8 @@ export async function uploadToCloudinary(
  * Delete a file from Cloudinary by public_id.
  */
 export async function deleteFromCloudinary(publicId: string, resourceType: "image" | "video" | "raw" = "image") {
-  return cloudinary.uploader.destroy(publicId, { resource_type: resourceType });
+  const cld = getCloudinary();
+  return cld.uploader.destroy(publicId, { resource_type: resourceType });
 }
 
 /**

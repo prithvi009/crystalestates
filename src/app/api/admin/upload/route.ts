@@ -100,10 +100,11 @@ export async function POST(request: NextRequest) {
       format: result.format,
       bytes: result.bytes,
     });
-  } catch (error) {
-    console.error("[Upload API] Error:", error instanceof Error ? error.message : error);
+  } catch (error: unknown) {
+    const message = error instanceof Error ? error.message : String(error);
+    console.error("[Upload API] Error:", message, error);
     return NextResponse.json(
-      { error: error instanceof Error ? error.message : "Failed to upload file" },
+      { error: `Upload failed: ${message}` },
       { status: 500 }
     );
   }
