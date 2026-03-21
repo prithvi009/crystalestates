@@ -90,6 +90,7 @@ interface DocItem {
 
 const SECTIONS = [
   { id: "overview", label: "Overview", icon: List },
+  { id: "floorplans", label: "Floor Plans", icon: Maximize2 },
   { id: "pricing", label: "Price & EMI", icon: IndianRupee },
   { id: "amenities", label: "Amenities", icon: ShieldCheck },
   { id: "location", label: "Location", icon: MapPinned },
@@ -249,7 +250,7 @@ export default function PropertyDetail({
   const whatsappMessage = encodeURIComponent(
     `Hi, I'm interested in "${property.name}" (${property.price}). Please share more details.`
   );
-  const whatsappUrl = `https://wa.me/919887073904?text=${whatsappMessage}`;
+  const whatsappUrl = `https://wa.me/919511750686?text=${whatsappMessage}`;
 
   /* ---- Intersection Observer for sticky tabs & active section ---- */
   useEffect(() => {
@@ -330,7 +331,7 @@ export default function PropertyDetail({
     const msg = encodeURIComponent(
       `Hi, I'm ${formName} (${formPhone}). I'd like to book a site visit for "${property.name}".`
     );
-    window.open(`https://wa.me/919887073904?text=${msg}`, "_blank");
+    window.open(`https://wa.me/919511750686?text=${msg}`, "_blank");
   };
 
   const setSectionRef = useCallback(
@@ -664,6 +665,174 @@ export default function PropertyDetail({
                       </div>
                     </div>
                   )}
+                </div>
+              </FadeIn>
+            </section>
+
+            {/* ====================================================== */}
+            {/*  SECTION: FLOOR PLANS & PRICING TABLE                  */}
+            {/* ====================================================== */}
+            <section
+              ref={setSectionRef("floorplans")}
+              id="floorplans"
+            >
+              <FadeIn>
+                <div className="bg-white rounded-2xl p-6 md:p-8 shadow-sm border border-gray-100">
+                  <h2 className="text-2xl font-bold text-charcoal mb-6 flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-xl bg-gold/10 flex items-center justify-center">
+                      <Maximize2 className="w-5 h-5 text-gold" />
+                    </div>
+                    Floor Plans & Pricing
+                  </h2>
+
+                  {/* Floor Plan Image */}
+                  {property.floorPlanUrl ? (
+                    <div className="mb-8">
+                      <div className="relative rounded-xl border-2 border-gray-100 overflow-hidden bg-gray-50">
+                        <img
+                          src={property.floorPlanUrl}
+                          alt={`Floor plan of ${property.name}`}
+                          className="w-full h-auto object-contain max-h-[500px] mx-auto"
+                        />
+                        <a
+                          href={property.floorPlanUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="absolute bottom-4 right-4 inline-flex items-center gap-2 bg-charcoal/90 backdrop-blur-sm text-white text-xs font-semibold px-4 py-2.5 rounded-lg hover:bg-charcoal transition-colors"
+                        >
+                          <ExternalLink className="w-3.5 h-3.5" />
+                          View Full Size
+                        </a>
+                      </div>
+                    </div>
+                  ) : (
+                    <div className="mb-8 flex flex-col items-center justify-center rounded-xl border-2 border-dashed border-gray-200 bg-gray-50/50 py-16 px-6">
+                      <div className="w-16 h-16 rounded-full bg-gold/10 flex items-center justify-center mb-4">
+                        <Maximize2 className="w-8 h-8 text-gold/50" />
+                      </div>
+                      <p className="text-sm font-medium text-gray-500 mb-1">
+                        Floor plan not yet available
+                      </p>
+                      <p className="text-xs text-gray-400 text-center max-w-sm">
+                        Contact us to request floor plans and detailed area statements for this property.
+                      </p>
+                      <a
+                        href={whatsappUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="mt-4 inline-flex items-center gap-2 bg-green-600 text-white text-sm font-semibold px-5 py-2.5 rounded-lg hover:bg-green-700 transition-colors"
+                      >
+                        <MessageCircle className="w-4 h-4" />
+                        Request Floor Plan
+                      </a>
+                    </div>
+                  )}
+
+                  {/* Area Statement / Configurations Table */}
+                  <div>
+                    <h3 className="text-lg font-bold text-charcoal mb-4 flex items-center gap-2">
+                      <FileText className="w-5 h-5 text-gold" />
+                      Area & Configuration
+                    </h3>
+                    <div className="rounded-xl border border-gray-100 overflow-hidden">
+                      <table className="w-full text-sm">
+                        <thead>
+                          <tr className="bg-gradient-to-r from-charcoal to-charcoal/90 text-white">
+                            <th className="px-5 py-3.5 text-left text-xs font-semibold uppercase tracking-wider">
+                              Configuration
+                            </th>
+                            <th className="px-5 py-3.5 text-left text-xs font-semibold uppercase tracking-wider">
+                              Area
+                            </th>
+                            <th className="px-5 py-3.5 text-right text-xs font-semibold uppercase tracking-wider">
+                              Price (Approx.)
+                            </th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr className="border-b border-gray-100 hover:bg-gold/5 transition-colors">
+                            <td className="px-5 py-4">
+                              <div className="flex items-center gap-2">
+                                <span className="w-2 h-2 rounded-full bg-gold" />
+                                <span className="font-medium text-charcoal">
+                                  {property.bedrooms ? `${property.bedrooms} BHK` : property.type}
+                                  {property.facing ? ` — ${property.facing} Facing` : ""}
+                                </span>
+                              </div>
+                            </td>
+                            <td className="px-5 py-4">
+                              <div className="text-charcoal">
+                                {property.carpetArea && (
+                                  <p className="font-medium">
+                                    Carpet: {property.carpetArea}
+                                  </p>
+                                )}
+                                {property.superBuiltUpArea && (
+                                  <p className="text-xs text-gray-500 mt-0.5">
+                                    Super Built-up: {property.superBuiltUpArea}
+                                  </p>
+                                )}
+                                {!property.carpetArea && !property.superBuiltUpArea && (
+                                  <p className="font-medium">{property.area}</p>
+                                )}
+                              </div>
+                            </td>
+                            <td className="px-5 py-4 text-right">
+                              <span className="text-lg font-bold text-gold">
+                                {property.price}
+                              </span>
+                              {property.bookingAmount && (
+                                <p className="text-xs text-gray-500 mt-0.5">
+                                  Booking: {property.bookingAmount}
+                                </p>
+                              )}
+                            </td>
+                          </tr>
+                          {/* If area range suggests multiple configs, show the range */}
+                          {property.areaRange && property.areaRange !== property.area && (
+                            <tr className="bg-gold/5">
+                              <td
+                                colSpan={3}
+                                className="px-5 py-3 text-xs text-gray-500"
+                              >
+                                <span className="font-medium text-charcoal">Available sizes:</span>{" "}
+                                {property.areaRange}
+                              </td>
+                            </tr>
+                          )}
+                        </tbody>
+                      </table>
+                    </div>
+                    <p className="text-xs text-gray-400 mt-3 flex items-center gap-1.5">
+                      <Shield className="w-3 h-3" />
+                      Prices are approximate and subject to change. Contact us for exact pricing.
+                    </p>
+                  </div>
+
+                  {/* EMI Quick Preview */}
+                  <div className="mt-6 bg-gradient-to-r from-gold/5 to-gold/10 border border-gold/20 rounded-xl p-5">
+                    <div className="flex items-center justify-between flex-wrap gap-4">
+                      <div>
+                        <p className="text-xs text-gold-dark uppercase tracking-wider font-semibold mb-1">
+                          Estimated Monthly EMI
+                        </p>
+                        <p className="text-2xl font-bold text-charcoal">
+                          &#8377;{Math.round(monthlyEMI).toLocaleString("en-IN")}
+                          <span className="text-sm font-normal text-gray-500">/month</span>
+                        </p>
+                        <p className="text-xs text-gray-500 mt-1">
+                          Based on {interestRate}% rate, {tenure} year tenure, 80% loan
+                        </p>
+                      </div>
+                      <button
+                        onClick={() => scrollToSection("pricing")}
+                        className="inline-flex items-center gap-2 bg-charcoal text-white text-sm font-semibold px-5 py-2.5 rounded-lg hover:bg-charcoal/90 transition-colors"
+                      >
+                        <Calculator className="w-4 h-4" />
+                        Calculate EMI
+                      </button>
+                    </div>
+                  </div>
                 </div>
               </FadeIn>
             </section>
@@ -1155,8 +1324,8 @@ export default function PropertyDetail({
                   },
                   {
                     icon: Users,
-                    title: "300+ Families",
-                    desc: "Happy homeowners",
+                    title: "Data-Driven",
+                    desc: "Tech-powered analysis",
                     color: "text-purple-600",
                     bg: "bg-purple-50",
                   },
@@ -1265,51 +1434,13 @@ export default function PropertyDetail({
                     WhatsApp
                   </a>
                   <a
-                    href="tel:+919887073904"
+                    href="tel:+919511750686"
                     className="flex items-center justify-center gap-2 rounded-xl bg-white/10 border border-white/20 py-3 text-sm font-bold text-white hover:bg-white/20 transition-colors"
                   >
                     <Phone className="w-4 h-4" />
                     Call Now
                   </a>
                 </div>
-              </motion.div>
-
-              {/* Agent Card */}
-              <motion.div
-                initial={{ opacity: 0, x: 20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 0.5 }}
-                className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100"
-              >
-                <div className="flex items-center gap-4">
-                  <div className="w-14 h-14 rounded-full bg-gradient-to-br from-gold/30 to-gold/10 flex items-center justify-center border-2 border-gold/20">
-                    <span className="text-xl font-bold text-gold-dark">
-                      RS
-                    </span>
-                  </div>
-                  <div>
-                    <p className="font-bold text-charcoal">Rahul Sharma</p>
-                    <p className="text-xs text-gray-500">
-                      Senior Property Consultant
-                    </p>
-                    <div className="flex items-center gap-1 mt-1">
-                      {[1, 2, 3, 4, 5].map((star) => (
-                        <div
-                          key={star}
-                          className="w-3 h-3 rounded-full bg-gold"
-                        />
-                      ))}
-                      <span className="text-xs text-gray-400 ml-1">5.0</span>
-                    </div>
-                  </div>
-                </div>
-                <a
-                  href="tel:+919887073904"
-                  className="mt-4 flex items-center justify-center gap-2 w-full rounded-xl border-2 border-charcoal py-3 text-sm font-bold text-charcoal hover:bg-charcoal hover:text-white transition-all"
-                >
-                  <Phone className="w-4 h-4" />
-                  +91 98870 73904
-                </a>
               </motion.div>
 
               {/* Quick property summary */}
@@ -1394,7 +1525,7 @@ export default function PropertyDetail({
           </div>
           <div className="flex items-center gap-2 shrink-0">
             <a
-              href="tel:+919887073904"
+              href="tel:+919511750686"
               className="flex items-center justify-center w-11 h-11 rounded-xl bg-charcoal text-white hover:bg-charcoal/90 transition-colors"
             >
               <Phone className="w-5 h-5" />

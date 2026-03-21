@@ -4,36 +4,17 @@ import { motion } from "framer-motion";
 import { ChevronDown } from "lucide-react";
 import Link from "next/link";
 
-const containerVariants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.15,
-      delayChildren: 0.4,
-    },
-  },
-};
+const cities = ["Solapur", "Pune", "Mumbai"];
 
-const itemVariants = {
-  hidden: { opacity: 0, y: 30 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.7, ease: "easeOut" as const },
-  },
-};
-
-const trustItems = [
-  "RERA Registered",
-  "75+ Properties",
-  "\u20B9150Cr+ Transactions",
-  "300+ Happy Families",
+const stats = [
+  { value: "3 Cities" },
+  { value: "RERA Registered" },
+  { value: "Tech-Powered" },
 ];
 
 export default function Hero() {
   return (
-    <section className="relative min-h-screen flex items-center justify-center bg-black overflow-hidden">
+    <section className="relative h-screen flex items-center bg-primary-black overflow-hidden">
       {/* Animated gradient orbs */}
       <div className="absolute inset-0">
         <motion.div
@@ -106,105 +87,138 @@ export default function Hero() {
       {/* Subtle vignette */}
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_0%,rgba(10,10,10,0.6)_100%)]" />
 
-      <motion.div
-        className="relative z-10 text-center px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto pt-20"
-        variants={containerVariants}
-        initial="hidden"
-        animate="visible"
-      >
-        {/* Floating trust badge */}
-        <motion.div variants={itemVariants} className="flex justify-center mb-10">
-          <div className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-white/[0.08] bg-white/[0.03] backdrop-blur-sm">
-            <span className="relative flex h-2 w-2">
-              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-gold opacity-75" />
-              <span className="relative inline-flex h-2 w-2 rounded-full bg-gold" />
-            </span>
-            <span className="text-white/70 text-xs sm:text-sm tracking-wide font-light">
-              Trusted by 300+ families across Maharashtra
-            </span>
+      {/* Main content */}
+      <div className="relative z-10 w-full max-w-7xl mx-auto px-6 sm:px-10 lg:px-16 flex flex-col lg:flex-row items-center lg:items-center gap-16 lg:gap-10 pt-24 lg:pt-0">
+        {/* LEFT SIDE — 60% */}
+        <div className="w-full lg:w-[60%]">
+          {/* Gold label */}
+          <motion.p
+            className="text-gold text-[11px] tracking-[0.3em] uppercase font-body"
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, delay: 0.4, ease: "easeOut" }}
+          >
+            RERA Registered Consultancy
+          </motion.p>
+
+          {/* Gold line */}
+          <motion.div
+            className="mt-4 mb-8"
+            initial={{ width: 0, opacity: 0 }}
+            animate={{ width: 50, opacity: 1 }}
+            transition={{ duration: 0.8, delay: 0.5, ease: "easeOut" }}
+          >
+            <div className="h-[2px] w-full bg-gold" />
+          </motion.div>
+
+          {/* Main heading */}
+          <motion.h1
+            className="font-heading text-5xl sm:text-6xl md:text-7xl lg:text-8xl text-white leading-[0.95] tracking-tight"
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, delay: 0.6, ease: "easeOut" }}
+          >
+            Find Your
+            <br />
+            Next Address
+            <br />
+            <span className="text-gradient-gold">in Maharashtra</span>
+          </motion.h1>
+
+          {/* Subheading */}
+          <motion.p
+            className="mt-8 font-body text-lg text-text-muted max-w-lg leading-relaxed"
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, delay: 0.8, ease: "easeOut" }}
+          >
+            Premium plots, row houses, and apartments across Solapur, Pune &amp;
+            Mumbai. Title-verified. RERA compliant. Data-driven.
+          </motion.p>
+
+          {/* Buttons */}
+          <motion.div
+            className="mt-10 flex flex-wrap items-center gap-4"
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, delay: 1.0, ease: "easeOut" }}
+          >
+            <Link
+              href="/projects"
+              className="group relative inline-flex items-center px-8 py-4 bg-gold text-black font-semibold rounded-lg text-sm transition-all duration-500 hover:shadow-[0_0_40px_rgba(198,169,98,0.3)] hover:scale-[1.02] active:scale-[0.98]"
+            >
+              <span className="relative z-10">Explore Projects</span>
+              <div className="absolute inset-0 rounded-lg bg-gradient-to-r from-gold-light to-gold opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+            </Link>
+            <Link
+              href="/contact"
+              className="inline-flex items-center px-8 py-4 rounded-lg text-sm font-semibold text-gold border border-gold/40 transition-all duration-500 hover:bg-gold/10 hover:border-gold/70 hover:scale-[1.02] active:scale-[0.98]"
+            >
+              Book Free Consultation
+            </Link>
+          </motion.div>
+        </div>
+
+        {/* RIGHT SIDE — 40% stat column */}
+        <motion.div
+          className="w-full lg:w-[40%] flex flex-row lg:flex-col items-center lg:items-end gap-8 lg:gap-10"
+          initial={{ opacity: 0, x: 40 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.8, delay: 1.2, ease: "easeOut" }}
+        >
+          {/* City names */}
+          <div className="flex flex-row lg:flex-col items-center lg:items-end gap-3 lg:gap-2">
+            {cities.map((city, i) => (
+              <motion.span
+                key={city}
+                className="text-sm font-body text-text-ghost hover:text-white transition-colors duration-300 cursor-default tracking-wider uppercase"
+                initial={{ opacity: 0, x: 20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{
+                  duration: 0.5,
+                  delay: 1.2 + i * 0.1,
+                  ease: "easeOut",
+                }}
+              >
+                {city}
+              </motion.span>
+            ))}
+          </div>
+
+          {/* Gold line divider */}
+          <motion.div
+            className="hidden lg:block w-[1px] h-12 bg-gold/40"
+            initial={{ scaleY: 0 }}
+            animate={{ scaleY: 1 }}
+            transition={{ duration: 0.6, delay: 1.5, ease: "easeOut" }}
+          />
+          <motion.div
+            className="lg:hidden w-12 h-[1px] bg-gold/40"
+            initial={{ scaleX: 0 }}
+            animate={{ scaleX: 1 }}
+            transition={{ duration: 0.6, delay: 1.5, ease: "easeOut" }}
+          />
+
+          {/* Stat items */}
+          <div className="flex flex-row lg:flex-col items-center lg:items-end gap-3 lg:gap-2">
+            {stats.map((stat, i) => (
+              <motion.span
+                key={stat.value}
+                className="text-xs font-body text-text-muted tracking-wider uppercase"
+                initial={{ opacity: 0, x: 20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{
+                  duration: 0.5,
+                  delay: 1.6 + i * 0.1,
+                  ease: "easeOut",
+                }}
+              >
+                {stat.value}
+              </motion.span>
+            ))}
           </div>
         </motion.div>
-
-        {/* Gold accent line that draws in */}
-        <motion.div
-          className="flex justify-center mb-8"
-          variants={itemVariants}
-        >
-          <motion.div
-            className="h-[1px] bg-gradient-to-r from-transparent via-gold to-transparent"
-            initial={{ width: 0, opacity: 0 }}
-            animate={{ width: 120, opacity: 1 }}
-            transition={{ duration: 1.2, delay: 0.8, ease: "easeOut" as const }}
-          />
-        </motion.div>
-
-        {/* Gold label */}
-        <motion.p
-          variants={itemVariants}
-          className="text-gold/80 text-xs sm:text-sm tracking-[0.35em] font-light mb-8 uppercase"
-        >
-          Premium Real Estate Consultancy
-        </motion.p>
-
-        {/* Main headline */}
-        <motion.h1
-          variants={itemVariants}
-          className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold text-white max-w-5xl mx-auto leading-[0.95] tracking-tight"
-        >
-          Your Future{" "}
-          <span className="bg-gradient-to-b from-white to-gray-400 bg-clip-text text-transparent">
-            Address
-          </span>
-          <br />
-          Starts Here
-        </motion.h1>
-
-        {/* Subheadline */}
-        <motion.p
-          variants={itemVariants}
-          className="mt-8 text-lg sm:text-xl text-white/50 max-w-2xl mx-auto leading-relaxed font-light"
-        >
-          Premium plots, row houses, and investment properties across Mumbai,
-          Pune &amp; Solapur&apos;s fastest-growing corridors.
-        </motion.p>
-
-        {/* CTA buttons */}
-        <motion.div
-          variants={itemVariants}
-          className="mt-12 flex flex-wrap items-center justify-center gap-5"
-        >
-          <Link
-            href="#properties"
-            className="group relative inline-flex items-center px-9 py-4 bg-gold text-black font-semibold rounded-xl text-sm sm:text-base transition-all duration-500 hover:shadow-[0_0_40px_rgba(198,169,98,0.3)] hover:scale-[1.02] active:scale-[0.98]"
-          >
-            <span className="relative z-10">Explore Properties</span>
-            <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-gold-light to-gold opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-          </Link>
-          <a
-            href="https://wa.me/919887073904?text=Hi%2C%20I%27d%20like%20to%20book%20a%20free%20consultation%20with%20Crystal%20Estates."
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center px-9 py-4 rounded-xl text-sm sm:text-base font-semibold text-white border border-white/[0.12] bg-white/[0.04] backdrop-blur-md transition-all duration-500 hover:bg-white/[0.08] hover:border-white/[0.2] hover:scale-[1.02] active:scale-[0.98]"
-          >
-            Book a Free Consultation
-          </a>
-        </motion.div>
-
-        {/* Trust strip */}
-        <motion.div
-          variants={itemVariants}
-          className="mt-16 flex flex-wrap items-center justify-center gap-4 sm:gap-0"
-        >
-          {trustItems.map((item, index) => (
-            <span key={item} className="flex items-center text-white/35 text-sm sm:text-[15px] font-light tracking-wide">
-              {index > 0 && (
-                <span className="hidden sm:inline-block mx-5 w-[1px] h-4 bg-white/10" />
-              )}
-              {item}
-            </span>
-          ))}
-        </motion.div>
-      </motion.div>
+      </div>
 
       {/* Scroll indicator */}
       <motion.div
@@ -213,7 +227,7 @@ export default function Hero() {
         animate={{ opacity: 1 }}
         transition={{ delay: 2, duration: 1 }}
       >
-        <span className="text-[10px] tracking-[0.3em] text-white/20 uppercase font-light">
+        <span className="text-[10px] tracking-[0.3em] text-white/20 uppercase font-light font-body">
           Scroll
         </span>
         <motion.div

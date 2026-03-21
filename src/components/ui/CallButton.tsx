@@ -5,7 +5,7 @@ import { Phone } from "lucide-react";
 export default function CallButton() {
   return (
     <a
-      href="tel:+919887073904"
+      href="tel:+919511750686"
       aria-label="Call Crystal Estates"
       onClick={() => {
         import("@/components/analytics/GoogleAds").then(({ trackContactClick }) => trackContactClick("call")).catch(() => {});

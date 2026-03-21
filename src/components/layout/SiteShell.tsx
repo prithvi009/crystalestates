@@ -5,7 +5,7 @@ import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import WhatsAppButton from "@/components/ui/WhatsAppButton";
 import CallButton from "@/components/ui/CallButton";
-import SocialProof from "@/components/ui/SocialProof";
+import ScrollToTop from "@/components/ui/ScrollToTop";
 import ExitIntentPopup from "@/components/ui/ExitIntentPopup";
 
 export default function SiteShell({ children }: { children: React.ReactNode }) {
@@ -23,7 +23,7 @@ export default function SiteShell({ children }: { children: React.ReactNode }) {
       <Footer />
       <WhatsAppButton />
       <CallButton />
-      <SocialProof />
+      <ScrollToTop />
       <ExitIntentPopup />
     </>
   );

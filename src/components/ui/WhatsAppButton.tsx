@@ -4,7 +4,7 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 const WHATSAPP_URL =
-  "https://wa.me/919887073904?text=Hi%2C%20I%27m%20interested%20in%20properties%20from%20Crystal%20Estates.%20Please%20share%20details.";
+  "https://wa.me/919511750686?text=Hi%2C%20I%27d%20like%20to%20know%20about%20Crystal%20Estates%20properties.";
 
 export default function WhatsAppButton() {
   const [isHovered, setIsHovered] = useState(false);
@@ -37,8 +37,8 @@ export default function WhatsAppButton() {
         onClick={() => {
           import("@/components/analytics/GoogleAds").then(({ trackContactClick }) => trackContactClick("whatsapp")).catch(() => {});
         }}
-        className="flex h-14 w-14 items-center justify-center rounded-full bg-[#25D366] text-white shadow-lg transition-transform duration-300 hover:scale-110"
-        style={{ animation: "whatsapp-pulse 2s infinite" }}
+        className="flex h-[60px] w-[60px] items-center justify-center rounded-full bg-[#25D366] text-white shadow-lg transition-transform duration-300 hover:scale-110"
+        style={{ animation: "whatsapp-pulse 5s infinite" }}
       >
         <svg
           width="28"

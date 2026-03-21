@@ -15,15 +15,22 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.9,
   }));
 
-  // Location landing pages for internal linking (future)
-  const locationSlugs = [
-    "mumbai-thane",
-    "navi-mumbai",
-    "pune",
-    "solapur",
-    "pmrda-belt",
-    "pune-solapur-highway",
+  // Blog post slugs
+  const blogSlugs = [
+    "how-to-check-7-12-extract-online-maharashtra",
+    "crest-oaks-marol-andheri-east-review",
+    "best-areas-invest-solapur-2026",
+    "na-conversion-maharashtra-process",
+    "stamp-duty-maharashtra-2026-calculator",
+    "rera-agent-registration-maharashtra",
   ];
+
+  const blogUrls: MetadataRoute.Sitemap = blogSlugs.map((slug) => ({
+    url: `${BASE_URL}/blog/${slug}`,
+    lastModified: new Date(),
+    changeFrequency: "monthly" as const,
+    priority: 0.7,
+  }));
 
   return [
     {
@@ -50,6 +57,19 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       changeFrequency: "monthly",
       priority: 0.7,
     },
+    {
+      url: `${BASE_URL}/blog`,
+      lastModified: new Date(),
+      changeFrequency: "weekly",
+      priority: 0.8,
+    },
+    {
+      url: `${BASE_URL}/emi-calculator`,
+      lastModified: new Date(),
+      changeFrequency: "monthly",
+      priority: 0.6,
+    },
     ...propertyUrls,
+    ...blogUrls,
   ];
 }

@@ -1,25 +1,25 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "About Crystal Estates — Maharashtra's Trusted Real Estate Consultancy",
+  title: "About Crystal Estates — Technology-Powered Real Estate Consultancy",
   description:
-    "Crystal Estates is Maharashtra's trusted real estate consultancy with 300+ happy clients across Mumbai, Pune & Solapur. RERA-registered, 75+ verified properties, ₹150Cr+ transactions. Founded with a mission to make real estate transparent.",
+    "Crystal Estates is a technology-powered real estate consultancy founded by Prithviraj. RERA-registered, serving Solapur, Pune & Mumbai with data-driven property recommendations.",
   keywords: [
     "about Crystal Estates",
-    "real estate consultancy Mumbai",
+    "real estate consultancy Solapur",
     "real estate consultancy Pune",
-    "trusted property dealer Maharashtra",
+    "trusted property consultant Maharashtra",
     "RERA registered agent",
-    "property consultant Pune",
-    "real estate company Mumbai",
+    "property consultant Mumbai",
+    "Prithviraj Crystal Estates",
   ],
   alternates: {
     canonical: "https://www.crystalestates.in/about",
   },
   openGraph: {
-    title: "About Crystal Estates — Trusted Real Estate in Mumbai & Pune",
+    title: "About Crystal Estates — Built Different",
     description:
-      "300+ happy clients, 75+ verified properties, ₹150Cr+ transactions. Maharashtra's trusted real estate consultancy.",
+      "Technology-powered real estate consultancy. Data-driven approach to property in Solapur, Pune & Mumbai.",
     url: "https://www.crystalestates.in/about",
     type: "website",
   },
@@ -34,19 +34,12 @@ export default function AboutLayout({ children }: { children: React.ReactNode })
     mainEntity: {
       "@type": "Organization",
       name: "Crystal Estates",
-      foundingDate: "2020",
-      founder: {
-        "@type": "Person",
-        name: "Rahul Sharma",
-        jobTitle: "Founder & Chief Consultant",
-      },
-      numberOfEmployees: { "@type": "QuantitativeValue", value: "15" },
-      areaServed: ["Mumbai", "Thane", "Navi Mumbai", "Pune", "Solapur"],
+      areaServed: ["Solapur", "Pune", "Mumbai"],
       knowsAbout: [
         "Real Estate Investment",
         "RERA Compliance",
         "Property Verification",
-        "NRI Property Purchase",
+        "Market Analysis",
         "Home Loans",
       ],
     },

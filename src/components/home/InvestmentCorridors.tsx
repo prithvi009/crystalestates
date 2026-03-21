@@ -2,64 +2,58 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { TrendingUp, X } from "lucide-react";
+import { TrendingUp, MapPin, Building2, ArrowRight, X } from "lucide-react";
 
 interface Corridor {
   name: string;
-  appreciation: string;
+  tag: string;
   priceRange: string;
-  description: string;
-  listings: string;
+  appreciation: string;
+  properties: number;
 }
 
 const corridors: Corridor[] = [
   {
-    name: "Navi Mumbai Airport Belt",
-    appreciation: "18-25% annual appreciation",
-    priceRange: "\u20B96,000\u2013\u20B912,000/sqft",
-    description:
-      "The upcoming Navi Mumbai International Airport is driving massive appreciation in Panvel, Kharghar, and Ulwe. Early investors are seeing 2-3x returns.",
-    listings: "6 available",
-  },
-  {
-    name: "Thane-Ghodbunder Corridor",
-    appreciation: "12-18% annual appreciation",
-    priceRange: "\u20B98,000\u2013\u20B914,000/sqft",
-    description:
-      "Mumbai\u2019s fastest-growing suburban corridor with metro connectivity, IT parks, and premium residential demand.",
-    listings: "5 available",
-  },
-  {
     name: "Pune-Solapur Highway (NH65)",
-    appreciation: "12-15% annual appreciation",
+    tag: "High-Growth Corridor",
     priceRange: "\u20B92,500\u2013\u20B94,000/sqft",
-    description:
-      "The 200km corridor is seeing massive infrastructure investment. Early investors are reaping 2-3x returns.",
-    listings: "8 available",
+    appreciation: "12-15%",
+    properties: 8,
   },
   {
     name: "PMRDA Eastern Belt",
-    appreciation: "10-18% annual appreciation",
+    tag: "Loni Kalbhor, Wagholi, Kedgaon",
     priceRange: "\u20B93,500\u2013\u20B96,000/sqft",
-    description:
-      "IT-driven demand is pushing property values in Loni Kalbhor, Wagholi, and surrounding areas.",
-    listings: "6 available",
+    appreciation: "10-18%",
+    properties: 6,
+  },
+  {
+    name: "Talegaon-Chakan",
+    tag: "Industrial + Residential",
+    priceRange: "\u20B93,000\u2013\u20B95,500/sqft",
+    appreciation: "10-15%",
+    properties: 4,
+  },
+  {
+    name: "Mumbai \u2013 Andheri East",
+    tag: "Crest Oaks Territory",
+    priceRange: "\u20B915,000\u2013\u20B925,000/sqft",
+    appreciation: "8-12%",
+    properties: 3,
   },
   {
     name: "Solapur MIDC Corridor",
-    appreciation: "8-12% annual appreciation",
+    tag: "Industrial Growth Zone",
     priceRange: "\u20B91,500\u2013\u20B93,000/sqft",
-    description:
-      "Industrial growth in MIDC is creating residential demand. Smart money is entering now.",
-    listings: "5 available",
+    appreciation: "8-12%",
+    properties: 5,
   },
   {
     name: "Solapur Smart City Zone",
-    appreciation: "10-14% annual appreciation",
+    tag: "Govt-Backed Infrastructure",
     priceRange: "\u20B92,000\u2013\u20B93,500/sqft",
-    description:
-      "Government-backed Smart City infrastructure is transforming Solapur\u2019s real estate landscape.",
-    listings: "4 available",
+    appreciation: "10-14%",
+    properties: 4,
   },
 ];
 
@@ -67,16 +61,16 @@ const containerVariants = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
-    transition: { staggerChildren: 0.12 },
+    transition: { staggerChildren: 0.1 },
   },
 };
 
 const cardVariants = {
-  hidden: { opacity: 0, y: 30 },
+  hidden: { opacity: 0, y: 24 },
   visible: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.5, ease: "easeOut" as const },
+    transition: { duration: 0.45, ease: "easeOut" as const },
   },
 };
 
@@ -86,19 +80,27 @@ export default function InvestmentCorridors() {
   const [reportName, setReportName] = useState("");
 
   return (
-    <section className="py-20 sm:py-24 bg-black">
+    <section className="py-20 sm:py-24 bg-bg-light">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section header */}
-        <h2 className="text-3xl sm:text-4xl font-bold text-white text-center mb-4">
-          Where Smart Money Is Moving
-        </h2>
-        <div className="flex justify-center mb-14">
-          <div className="w-[60px] h-[3px] bg-gold rounded-full" />
+        <div className="text-center mb-14">
+          <h2 className="font-heading text-4xl md:text-5xl text-text-dark mb-4">
+            Where Smart Money Is Moving
+          </h2>
+          <div className="flex justify-center">
+            <motion.div
+              className="h-[3px] bg-gold rounded-full"
+              initial={{ width: 0 }}
+              whileInView={{ width: 60 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.7, ease: "easeOut", delay: 0.15 }}
+            />
+          </div>
         </div>
 
         {/* Corridors grid */}
         <motion.div
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5"
           variants={containerVariants}
           initial="hidden"
           whileInView="visible"
@@ -108,30 +110,43 @@ export default function InvestmentCorridors() {
             <motion.div
               key={corridor.name}
               variants={cardVariants}
-              className="bg-white/5 backdrop-blur-sm rounded-xl p-6 border border-white/10 hover:border-gold/30 transition-colors duration-300"
+              className="group bg-white rounded-xl p-6 border border-gray-100 shadow-sm hover:shadow-md border-l-[3px] border-l-gold hover:border-l-[5px] transition-all duration-300 hover:-translate-y-0.5"
             >
-              <div className="flex items-start justify-between mb-3">
-                <h3 className="text-xl font-bold text-white">
-                  {corridor.name}
-                </h3>
-                <TrendingUp className="w-6 h-6 text-gold shrink-0 ml-3" />
-              </div>
-
-              <p className="text-sm text-gray-400 leading-relaxed mb-5">
-                {corridor.description}
+              {/* Title & tag */}
+              <h3 className="font-body text-base font-semibold text-text-dark mb-1">
+                {corridor.name}
+              </h3>
+              <p className="text-xs text-gold font-medium mb-4">
+                {corridor.tag}
               </p>
 
-              <div className="flex flex-wrap items-center gap-x-5 gap-y-2 text-sm">
-                <span className="text-gray-300">
-                  {corridor.priceRange}
-                </span>
-                <span className="text-emerald-light font-medium">
-                  {corridor.appreciation}
-                </span>
-                <span className="text-gold font-medium">
-                  {corridor.listings}
-                </span>
+              {/* Data rows */}
+              <div className="space-y-2.5 mb-5">
+                <div className="flex items-center gap-2 text-sm">
+                  <MapPin className="w-3.5 h-3.5 text-gray-400 shrink-0" />
+                  <span className="text-text-dark-muted">
+                    {corridor.priceRange}
+                  </span>
+                </div>
+                <div className="flex items-center gap-2 text-sm">
+                  <TrendingUp className="w-3.5 h-3.5 text-emerald shrink-0" />
+                  <span className="text-emerald font-medium">
+                    {corridor.appreciation} annual appreciation
+                  </span>
+                </div>
+                <div className="flex items-center gap-2 text-sm">
+                  <Building2 className="w-3.5 h-3.5 text-gray-400 shrink-0" />
+                  <span className="text-text-dark-muted">
+                    {corridor.properties} properties available
+                  </span>
+                </div>
               </div>
+
+              {/* Explore link */}
+              <button className="inline-flex items-center gap-1 text-sm font-medium text-gold hover:text-gold-dark transition-colors duration-200 group/link">
+                Explore
+                <ArrowRight className="w-3.5 h-3.5 transition-transform duration-200 group-hover/link:translate-x-0.5" />
+              </button>
             </motion.div>
           ))}
         </motion.div>
@@ -147,7 +162,7 @@ export default function InvestmentCorridors() {
         </div>
       </div>
 
-      {/* Simple modal */}
+      {/* Modal */}
       <AnimatePresence>
         {showModal && (
           <motion.div
@@ -199,7 +214,10 @@ export default function InvestmentCorridors() {
 
               <button
                 onClick={async () => {
-                  if (reportName.trim() && reportPhone.replace(/\D/g, "").length >= 10) {
+                  if (
+                    reportName.trim() &&
+                    reportPhone.replace(/\D/g, "").length >= 10
+                  ) {
                     try {
                       await fetch("/api/leads", {
                         method: "POST",
@@ -208,15 +226,21 @@ export default function InvestmentCorridors() {
                           name: reportName,
                           phone: reportPhone.replace(/\D/g, "").slice(-10),
                           source: "investment_report",
-                          message: "Requested free investment corridor report",
+                          message:
+                            "Requested free investment corridor report",
                         }),
                       });
-                    } catch { /* continue to WhatsApp */ }
+                    } catch {
+                      /* continue to WhatsApp */
+                    }
                   }
                   const msg = encodeURIComponent(
                     `Hi, I'm ${reportName || "interested"}. I'd like to receive the free investment report from Crystal Estates.`
                   );
-                  window.open(`https://wa.me/919887073904?text=${msg}`, "_blank");
+                  window.open(
+                    `https://wa.me/919511750686?text=${msg}`,
+                    "_blank"
+                  );
                   setShowModal(false);
                 }}
                 className="block w-full text-center px-6 py-3 bg-[#25D366] text-white font-semibold rounded-lg hover:bg-[#20BD5A] transition-colors duration-300"
@@ -226,8 +250,11 @@ export default function InvestmentCorridors() {
 
               <p className="text-center text-gray-400 text-xs mt-4">
                 Or call us at{" "}
-                <a href="tel:+919887073904" className="text-gold hover:underline">
-                  +91 98870 73904
+                <a
+                  href="tel:+919511750686"
+                  className="text-gold hover:underline"
+                >
+                  +91 95117 50686
                 </a>
               </p>
             </motion.div>

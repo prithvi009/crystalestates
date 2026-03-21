@@ -1,17 +1,47 @@
 @import "tailwindcss";
 
 @theme inline {
+  /* Primary Blacks */
+  --color-primary-black: #0A0A0A;
+  --color-deep-black: #050505;
+  --color-card-dark: #111111;
+  --color-card-hover: #161616;
+  --color-border-subtle: #1A1A1A;
+  --color-border-medium: #222222;
+
+  /* Legacy aliases */
   --color-black: #0A0A0A;
+  --color-charcoal: #0A0A0A;
+
+  /* Gold */
   --color-gold: #C6A962;
-  --color-gold-light: #D4BC7C;
+  --color-gold-light: #D4BC7A;
   --color-gold-dark: #A88D4A;
-  --color-white: #FAFAFA;
-  --color-charcoal: #1A1A2E;
+
+  /* Text */
+  --color-white: #FFFFFF;
+  --color-text-light: #E5E5E5;
+  --color-text-muted: #999999;
+  --color-text-ghost: #555555;
+
+  /* Light backgrounds */
+  --color-bg-light: #FAFAF8;
   --color-offwhite: #F5F3EF;
-  --color-emerald: #1B5E20;
-  --color-emerald-light: #2E7D32;
-  --font-heading: "Inter", "Outfit", system-ui, sans-serif;
-  --font-body: "Inter", "DM Sans", system-ui, sans-serif;
+  --color-bg-cream: #F5F3EF;
+  --color-text-dark: #1A1A1A;
+  --color-text-dark-muted: #666666;
+
+  /* Status */
+  --color-success: #22C55E;
+  --color-warning: #EAB308;
+  --color-error: #EF4444;
+  --color-emerald: #25D366;
+  --color-emerald-light: #20BD5A;
+
+  /* Fonts */
+  --font-heading: "Playfair Display", serif;
+  --font-body: "DM Sans", sans-serif;
+  --font-mono: "JetBrains Mono", monospace;
 }
 
 html {
@@ -22,8 +52,8 @@ html {
 
 body {
   font-family: var(--font-body);
-  color: var(--color-charcoal);
-  background-color: var(--color-white);
+  color: var(--color-white);
+  background-color: var(--color-primary-black);
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -32,7 +62,7 @@ h1, h2, h3, h4, h5, h6 {
 
 ::selection {
   background-color: var(--color-gold);
-  color: var(--color-black);
+  color: var(--color-primary-black);
 }
 
 /* WhatsApp pulse animation */
@@ -42,7 +72,7 @@ h1, h2, h3, h4, h5, h6 {
   100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); }
 }
 
-/* Shimmer animation for property card image placeholders */
+/* Shimmer animation for loading states */
 @keyframes shimmer {
   0% { transform: translateX(-100%); }
   100% { transform: translateX(100%); }
@@ -50,6 +80,16 @@ h1, h2, h3, h4, h5, h6 {
 
 .animate-shimmer {
   animation: shimmer 2.5s ease-in-out infinite;
+}
+
+/* Gold skeleton pulse */
+@keyframes gold-pulse {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 0.6; }
+}
+
+.animate-gold-pulse {
+  animation: gold-pulse 2s ease-in-out infinite;
 }
 
 /* Gradient text utility */
@@ -82,6 +122,28 @@ h1, h2, h3, h4, h5, h6 {
   animation: float-orb 12s ease-in-out infinite reverse;
 }
 
+/* Gold line grow animation */
+@keyframes gold-line-grow {
+  from { width: 0; }
+  to { width: 100%; }
+}
+
+.animate-gold-line {
+  animation: gold-line-grow 1s ease-out forwards;
+}
+
+/* Number counter animation handled via Framer Motion */
+
+/* Image reveal clip-path */
+@keyframes image-reveal {
+  from { clip-path: inset(0 100% 0 0); }
+  to { clip-path: inset(0 0 0 0); }
+}
+
+.animate-image-reveal {
+  animation: image-reveal 0.8s ease-out forwards;
+}
+
 /* Noise texture overlay */
 .noise-overlay::after {
   content: '';
@@ -93,13 +155,17 @@ h1, h2, h3, h4, h5, h6 {
   pointer-events: none;
 }
 
-/* Gold glow utility */
+/* Gold glow utilities */
 .glow-gold {
   box-shadow: 0 0 20px rgba(198, 169, 98, 0.15), 0 0 60px rgba(198, 169, 98, 0.05);
 }
 
 .glow-gold-sm {
   box-shadow: 0 0 10px rgba(198, 169, 98, 0.1), 0 0 30px rgba(198, 169, 98, 0.03);
+}
+
+.glow-gold-hover:hover {
+  box-shadow: 0 0 30px rgba(198, 169, 98, 0.25), 0 0 80px rgba(198, 169, 98, 0.1);
 }
 
 /* Glass card utility */
@@ -115,6 +181,15 @@ h1, h2, h3, h4, h5, h6 {
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   border: 1px solid rgba(255, 255, 255, 0.8);
+}
+
+/* Gold muted/ghost backgrounds */
+.bg-gold-muted {
+  background-color: rgba(198, 169, 98, 0.15);
+}
+
+.bg-gold-ghost {
+  background-color: rgba(198, 169, 98, 0.06);
 }
 
 /* Hide scrollbar for horizontal scroll */
@@ -139,4 +214,36 @@ h1, h2, h3, h4, h5, h6 {
 }
 ::-webkit-scrollbar-thumb:hover {
   background: var(--color-gold-dark);
+}
+
+/* Link hover: gold underline slides in from left */
+.link-gold-underline {
+  position: relative;
+}
+.link-gold-underline::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background-color: var(--color-gold);
+  transition: width 0.3s ease;
+}
+.link-gold-underline:hover::after {
+  width: 100%;
+}
+
+/* Section label style (11px, uppercase, letter-spacing) */
+.section-label {
+  font-family: var(--font-body);
+  font-size: 11px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--color-gold);
+}
+
+/* RERA/data mono style */
+.font-data {
+  font-family: var(--font-mono);
 }

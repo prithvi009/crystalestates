@@ -2,17 +2,16 @@ import type { Metadata } from "next";
 import { faqs } from "@/data/faqs";
 
 export const metadata: Metadata = {
-  title: "Contact Crystal Estates — Get Free Property Consultation in Mumbai & Pune",
+  title: "Contact Crystal Estates — Free Property Consultation",
   description:
-    "Get a free property consultation from Crystal Estates. Call +91 98870 73904 or visit our Pune office. Expert advice on plots, flats & properties across Mumbai, Thane, Navi Mumbai, Pune & Solapur.",
+    "Get a free property consultation from Crystal Estates. Call +91 95117 50686 or WhatsApp us. Expert advice on plots, flats & properties across Solapur, Pune & Mumbai.",
   keywords: [
     "contact Crystal Estates",
-    "property consultation Mumbai",
+    "property consultation Solapur",
     "real estate agent contact Pune",
     "free property advice",
     "property dealer phone number",
-    "real estate office Pune",
-    "book site visit Mumbai property",
+    "book site visit property",
   ],
   alternates: {
     canonical: "https://www.crystalestates.in/contact",
@@ -20,7 +19,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Contact Crystal Estates — Free Property Consultation",
     description:
-      "Call +91 98870 73904 for expert property advice across Mumbai, Pune & Solapur. We respond within 30 minutes.",
+      "Call +91 95117 50686 for expert property advice across Solapur, Pune & Mumbai. We respond within 30 minutes.",
     url: "https://www.crystalestates.in/contact",
     type: "website",
   },
@@ -45,21 +44,13 @@ export default function ContactLayout({ children }: { children: React.ReactNode 
     "@type": "ContactPage",
     name: "Contact Crystal Estates",
     description:
-      "Get a free property consultation from Crystal Estates for properties in Mumbai, Pune & Solapur.",
+      "Get a free property consultation from Crystal Estates for properties in Solapur, Pune & Mumbai.",
     url: "https://www.crystalestates.in/contact",
     mainEntity: {
       "@type": "RealEstateAgent",
       name: "Crystal Estates",
-      telephone: "+919887073904",
+      telephone: "+919511750686",
       email: "info@crystalestates.in",
-      address: {
-        "@type": "PostalAddress",
-        streetAddress: "Innov8, 102, Suman Business Center, Kalyani Nagar",
-        addressLocality: "Pune",
-        addressRegion: "Maharashtra",
-        postalCode: "411014",
-        addressCountry: "IN",
-      },
     },
   };
 

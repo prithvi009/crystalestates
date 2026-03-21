@@ -5,19 +5,19 @@ import PropertiesClient from "./PropertiesClient";
 export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
-  title: "Properties for Sale in Mumbai, Pune & Solapur — Plots, Flats, Row Houses",
+  title: "Properties for Sale in Solapur, Pune & Mumbai — Plots, Flats, Row Houses",
   description:
-    "Browse 75+ RERA-verified properties for sale across Mumbai, Thane, Navi Mumbai, Pune & Solapur. Plots, flats, row houses & commercial spaces. Filter by location, type & budget. Crystal Estates.",
+    "Browse RERA-verified properties for sale across Solapur, Pune & Mumbai. Plots, flats, row houses & commercial spaces. Filter by location, type & budget. Crystal Estates.",
   keywords: [
-    "property for sale Mumbai",
+    "property for sale Solapur",
     "flats for sale Pune",
     "plots for sale Solapur",
     "RERA verified properties",
-    "2 BHK flat Mumbai",
     "row house Solapur",
-    "commercial property Navi Mumbai",
-    "plots near Pune",
-    "Thane real estate",
+    "plots Pune Solapur highway",
+    "flats Pune",
+    "Mumbai property",
+    "Andheri East flats",
     "investment property Maharashtra",
   ],
   alternates: {

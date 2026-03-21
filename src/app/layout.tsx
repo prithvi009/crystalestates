@@ -1,55 +1,64 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Playfair_Display, DM_Sans, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import SiteShell from "@/components/layout/SiteShell";
 import GoogleAds from "@/components/analytics/GoogleAds";
 
-const inter = Inter({
-  variable: "--font-inter",
+const playfair = Playfair_Display({
+  variable: "--font-playfair",
   subsets: ["latin"],
   display: "swap",
+  weight: ["400", "600", "700"],
+});
+
+const dmSans = DM_Sans({
+  variable: "--font-dm-sans",
+  subsets: ["latin"],
+  display: "swap",
+  weight: ["300", "400", "500", "600"],
+});
+
+const jetbrainsMono = JetBrains_Mono({
+  variable: "--font-jetbrains",
+  subsets: ["latin"],
+  display: "swap",
+  weight: ["400", "500"],
 });
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.crystalestates.in"),
   title: {
-    default: "Crystal Estates | RERA Verified Properties in Mumbai, Pune & Solapur",
+    default: "Crystal Estates | Premium Properties in Solapur, Pune & Mumbai",
     template: "%s | Crystal Estates",
   },
   description:
-    "Find RERA-verified plots, flats, row houses & investment properties in Mumbai, Thane, Navi Mumbai, Pune & Solapur. Title-verified, transparent pricing. 300+ happy families. Call +91 98870 73904.",
+    "Premium real estate consultancy offering RERA-verified plots, flats, row houses & investment properties across Solapur, Pune & Mumbai. Title-verified, transparent pricing. Data-driven approach. Call +91 95117 50686.",
   keywords: [
-    "real estate Mumbai",
-    "property for sale Mumbai",
-    "flats in Thane",
-    "flats Navi Mumbai",
-    "plots Panvel",
-    "property for sale Pune",
-    "flats in Pune",
-    "plots in Pune",
     "real estate Solapur",
+    "property for sale Pune",
     "plots Solapur",
-    "properties Pune Solapur highway",
-    "RERA verified properties Maharashtra",
-    "PMRDA approved plots",
+    "real estate consultancy Maharashtra",
+    "RERA verified properties",
+    "plots Pune-Solapur highway",
     "row houses Solapur",
-    "flats Wagholi Pune",
+    "flats Pune",
+    "property investment Maharashtra",
     "Crystal Estates",
-    "investment property Maharashtra",
-    "Navi Mumbai airport property",
-    "Kharghar commercial property",
-    "Ghodbunder Road flats Thane",
-    "2 BHK flat Mumbai",
-    "3 BHK flat Pune",
-    "plots near Pune",
-    "property dealer Mumbai",
-    "real estate agent Pune",
-    "best real estate company Maharashtra",
+    "Crest Oaks Andheri",
+    "Yash Evana Talegaon",
+    "PMRDA approved plots",
+    "real estate consultant Pune",
+    "property dealer Solapur",
+    "Mumbai property",
+    "Andheri East flats",
+    "Talegaon row houses",
+    "investment property Pune",
+    "NA plots Maharashtra",
   ],
   openGraph: {
-    title: "Crystal Estates | Premium Properties in Mumbai, Pune & Solapur",
+    title: "Crystal Estates | Decoding Value in Real Estate",
     description:
-      "RERA-verified plots, flats, row houses & commercial properties across Mumbai, Thane, Navi Mumbai, Pune & Solapur. Transparent pricing, verified documents.",
+      "RERA-verified plots, flats, row houses & investment properties across Solapur, Pune & Mumbai. Data-driven consultancy with transparent pricing.",
     url: "https://www.crystalestates.in",
     type: "website",
     locale: "en_IN",
@@ -57,9 +66,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Crystal Estates | Properties in Mumbai, Pune & Solapur",
+    title: "Crystal Estates | Properties in Solapur, Pune & Mumbai",
     description:
-      "RERA-verified plots, flats & properties in Mumbai & Pune. 300+ happy families. Transparent pricing.",
+      "RERA-verified properties across Maharashtra. Data-driven real estate consultancy. Transparent pricing.",
   },
   alternates: {
     canonical: "https://www.crystalestates.in",
@@ -79,7 +88,7 @@ export const metadata: Metadata = {
     google: "placeholder",
   },
   other: {
-    "theme-color": "#000000",
+    "theme-color": "#0A0A0A",
     "apple-mobile-web-app-title": "Crystal Estates",
   },
 };
@@ -90,7 +99,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={inter.variable}>
+    <html lang="en" className={`${playfair.variable} ${dmSans.variable} ${jetbrainsMono.variable}`}>
       <head>
         <script
           type="application/ld+json"
@@ -102,88 +111,37 @@ export default function RootLayout({
               name: "Crystal Estates",
               legalName: "Crystal Estates Real Estate Consultancy",
               description:
-                "Premium real estate consultancy in Maharashtra offering RERA-verified plots, row houses, flats, and investment properties across Mumbai, Thane, Navi Mumbai, Pune & Solapur. 300+ happy families, ₹150Cr+ transactions.",
+                "Premium real estate consultancy in Maharashtra offering RERA-verified plots, row houses, flats, and investment properties across Solapur, Pune & Mumbai. Data-driven approach to real estate.",
               url: "https://www.crystalestates.in",
-              telephone: "+919887073904",
+              telephone: "+919511750686",
               email: "info@crystalestates.in",
-              foundingDate: "2020",
-              numberOfEmployees: { "@type": "QuantitativeValue", value: "15" },
-              priceRange: "₹8L - ₹1Cr+",
+              priceRange: "₹8L - ₹5Cr+",
               currenciesAccepted: "INR",
               paymentAccepted: "Cash, Bank Transfer, Cheque, Home Loan",
-              address: {
-                "@type": "PostalAddress",
-                streetAddress: "Innov8, 102, Suman Business Center, Kalyani Nagar",
-                addressLocality: "Pune",
-                addressRegion: "Maharashtra",
-                postalCode: "411014",
-                addressCountry: "IN",
-              },
-              geo: {
-                "@type": "GeoCoordinates",
-                latitude: "18.5525",
-                longitude: "73.9028",
-              },
-              openingHoursSpecification: [
-                {
-                  "@type": "OpeningHoursSpecification",
-                  dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
-                  opens: "09:00",
-                  closes: "19:00",
-                },
+              areaServed: [
+                { "@type": "City", name: "Solapur" },
+                { "@type": "City", name: "Pune" },
+                { "@type": "City", name: "Mumbai" },
               ],
               contactPoint: [
                 {
                   "@type": "ContactPoint",
-                  telephone: "+919887073904",
+                  telephone: "+919511750686",
                   contactType: "sales",
                   areaServed: "IN",
                   availableLanguage: ["English", "Hindi", "Marathi"],
                 },
-                {
-                  "@type": "ContactPoint",
-                  telephone: "+919511750686",
-                  contactType: "customer support",
-                  areaServed: "IN",
-                  availableLanguage: ["English", "Hindi", "Marathi"],
-                },
               ],
-              areaServed: [
-                { "@type": "City", name: "Mumbai" },
-                { "@type": "City", name: "Thane" },
-                { "@type": "City", name: "Navi Mumbai" },
-                { "@type": "City", name: "Pune" },
-                { "@type": "City", name: "Solapur" },
-              ],
-              hasOfferCatalog: {
-                "@type": "OfferCatalog",
-                name: "Real Estate Properties",
-                itemListElement: [
-                  { "@type": "Offer", itemOffered: { "@type": "Product", name: "Residential Plots" } },
-                  { "@type": "Offer", itemOffered: { "@type": "Product", name: "Flats & Apartments" } },
-                  { "@type": "Offer", itemOffered: { "@type": "Product", name: "Row Houses" } },
-                  { "@type": "Offer", itemOffered: { "@type": "Product", name: "Commercial Spaces" } },
-                  { "@type": "Offer", itemOffered: { "@type": "Product", name: "Agricultural Land" } },
-                ],
-              },
               sameAs: [
                 "https://instagram.com/crystalestates",
-                "https://facebook.com/crystalestates",
                 "https://linkedin.com/company/crystalestates",
                 "https://youtube.com/@crystalestates",
               ],
-              aggregateRating: {
-                "@type": "AggregateRating",
-                ratingValue: "4.8",
-                bestRating: "5",
-                ratingCount: "200",
-                reviewCount: "150",
-              },
             }),
           }}
         />
       </head>
-      <body className="font-[family-name:var(--font-inter)] antialiased">
+      <body className="font-body antialiased bg-primary-black text-white">
         <GoogleAds />
         <SiteShell>{children}</SiteShell>
       </body>
