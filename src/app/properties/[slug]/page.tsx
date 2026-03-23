@@ -131,14 +131,23 @@ export default async function PropertyPage({ params }: Props) {
     };
   }
 
-  const productSchema = {
+  const images = (property.images ?? []) as string[];
+  const productImage =
+    images.length > 0 && images[0] !== "/placeholder-property.jpg"
+      ? images[0]
+      : "https://www.crystalestates.in/crystal-estates-logo-1080x1080.svg";
+
+  const productSchema: Record<string, unknown> = {
     "@context": "https://schema.org",
     "@type": "Product",
     name: property.name,
     description: property.description,
+    image: images.length > 0 && images[0] !== "/placeholder-property.jpg"
+      ? images.slice(0, 5)
+      : [productImage],
     offers: {
       "@type": "Offer",
-      price: property.priceNumeric,
+      price: property.priceNumeric || undefined,
       priceCurrency: "INR",
       availability: "https://schema.org/InStock",
       seller: {
@@ -151,7 +160,11 @@ export default async function PropertyPage({ params }: Props) {
       name: property.builderName || "Crystal Estates",
     },
     category: property.type,
+    url: pageUrl,
   };
+
+  // Also add image to the RealEstateListing schema
+  realEstateListingSchema.image = productImage;
 
   const breadcrumbSchema = {
     "@context": "https://schema.org",

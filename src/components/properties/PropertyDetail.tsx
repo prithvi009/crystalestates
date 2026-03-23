@@ -294,10 +294,12 @@ export default function PropertyDetail({
   const totalInterest = totalAmount - loanAmount;
 
   /* ---- WhatsApp ---- */
-  const whatsappMessage = encodeURIComponent(
-    `Hi, I'm interested in "${property.name}" (${property.price}). Please share more details.`
-  );
-  const whatsappUrl = `https://wa.me/919511750686?text=${whatsappMessage}`;
+  const whatsappUrl = useMemo(() => {
+    const msg = encodeURIComponent(
+      "Hi, I am interested in " + property.name + " (" + property.price + "). Please share more details."
+    );
+    return "https://wa.me/919511750686?text=" + msg;
+  }, [property.name, property.price]);
 
   /* ---- Intersection Observer for sticky tabs & active section ---- */
   useEffect(() => {
