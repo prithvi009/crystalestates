@@ -98,9 +98,9 @@ export default function EMICalculatorPage() {
         content="Calculate your home loan EMI instantly. Free EMI calculator for properties in Maharashtra — Crystal Estates."
       />
 
-      <main className="min-h-screen bg-primary-black">
+      <main className="min-h-screen bg-bg-light">
         {/* ---- Hero ---- */}
-        <section className="pt-36 pb-16 px-6 text-center">
+        <section className="pt-32 pb-12 px-6 text-center">
           <motion.div
             variants={fadeUp}
             initial="hidden"
@@ -116,7 +116,7 @@ export default function EMICalculatorPage() {
             initial="hidden"
             animate="visible"
             custom={1}
-            className="font-heading text-4xl md:text-5xl text-white mb-4"
+            className="font-heading text-4xl md:text-5xl text-navy mb-4"
           >
             EMI Calculator
           </motion.h1>
@@ -159,7 +159,7 @@ export default function EMICalculatorPage() {
                         const num = parseInt(e.target.value.replace(/,/g, ""), 10);
                         if (!isNaN(num)) setLoanAmount(Math.min(1500000000, Math.max(100000, num)));
                       }}
-                      className="w-40 bg-card-dark border border-border-subtle rounded-lg px-3 py-1.5 text-right text-white font-body text-sm focus:outline-none focus:border-gold/50 transition-colors"
+                      className="w-40 bg-white border border-border-medium rounded-lg px-3 py-1.5 text-right text-navy font-body text-sm focus:outline-none focus:border-gold transition-colors"
                     />
                   </div>
                 </div>
@@ -194,7 +194,7 @@ export default function EMICalculatorPage() {
                       const val = parseFloat(e.target.value);
                       if (!isNaN(val)) setInterestRate(Math.min(15, Math.max(5, val)));
                     }}
-                    className="w-20 bg-card-dark border border-border-subtle rounded-lg px-3 py-1.5 text-right text-white font-body text-sm focus:outline-none focus:border-gold/50 transition-colors"
+                    className="w-20 bg-white border border-border-medium rounded-lg px-3 py-1.5 text-right text-navy font-body text-sm focus:outline-none focus:border-gold transition-colors"
                   />
                 </div>
                 <input
@@ -227,7 +227,7 @@ export default function EMICalculatorPage() {
                       const val = parseInt(e.target.value, 10);
                       if (!isNaN(val)) setTenure(Math.min(30, Math.max(1, val)));
                     }}
-                    className="w-20 bg-card-dark border border-border-subtle rounded-lg px-3 py-1.5 text-right text-white font-body text-sm focus:outline-none focus:border-gold/50 transition-colors"
+                    className="w-20 bg-white border border-border-medium rounded-lg px-3 py-1.5 text-right text-navy font-body text-sm focus:outline-none focus:border-gold transition-colors"
                   />
                 </div>
                 <input
@@ -264,7 +264,7 @@ export default function EMICalculatorPage() {
                       cy="90"
                       r="70"
                       fill="none"
-                      stroke="#333"
+                      stroke="#E4E7EB"
                       strokeWidth="20"
                     />
                     {/* Principal arc */}
@@ -287,7 +287,7 @@ export default function EMICalculatorPage() {
                       cy="90"
                       r="70"
                       fill="none"
-                      stroke="#555"
+                      stroke="#102A43"
                       strokeWidth="20"
                       strokeDasharray={`${interestStroke} ${circumference}`}
                       strokeDashoffset={-principalStroke}
@@ -297,8 +297,8 @@ export default function EMICalculatorPage() {
                     />
                   </svg>
                   <div className="absolute inset-0 flex flex-col items-center justify-center">
-                    <span className="font-body text-xs text-text-muted">Monthly EMI</span>
-                    <span className="font-heading text-lg text-white">
+                    <span className="font-body text-xs text-navy/55">Monthly EMI</span>
+                    <span className="font-heading text-lg text-navy">
                       {formatCurrency(emi)}
                     </span>
                   </div>
@@ -314,8 +314,8 @@ export default function EMICalculatorPage() {
                   </span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <span className="h-3 w-3 rounded-full bg-[#555]" />
-                  <span className="font-body text-xs text-text-muted">
+                  <span className="h-3 w-3 rounded-full bg-navy" />
+                  <span className="font-body text-xs text-navy/55">
                     Interest ({interestPercent.toFixed(1)}%)
                   </span>
                 </div>
@@ -323,28 +323,28 @@ export default function EMICalculatorPage() {
 
               {/* Output Cards */}
               <div className="grid grid-cols-1 gap-4">
-                <div className="rounded-2xl bg-card-dark border border-border-subtle p-5">
-                  <p className="font-body text-sm text-text-muted mb-1">Monthly EMI</p>
+                <div className="rounded-2xl bg-navy p-5">
+                  <p className="font-body text-sm text-white/60 mb-1">Monthly EMI</p>
                   <p className="font-heading text-2xl text-gold">
                     {formatCurrency(emi)}
                   </p>
                 </div>
                 <div className="grid grid-cols-2 gap-4">
-                  <div className="rounded-2xl bg-card-dark border border-border-subtle p-5">
-                    <p className="font-body text-sm text-text-muted mb-1">Total Interest</p>
-                    <p className="font-heading text-lg text-white">
+                  <div className="rounded-2xl bg-white border border-border-subtle card-elevate p-5">
+                    <p className="font-body text-sm text-navy/55 mb-1">Total Interest</p>
+                    <p className="font-heading text-lg text-navy">
                       {formatCurrency(totalInterest)}
                     </p>
-                    <p className="font-body text-xs text-text-muted mt-1">
+                    <p className="font-body text-xs text-navy/45 mt-1">
                       ({formatINR(totalInterest)})
                     </p>
                   </div>
-                  <div className="rounded-2xl bg-card-dark border border-border-subtle p-5">
-                    <p className="font-body text-sm text-text-muted mb-1">Total Payment</p>
-                    <p className="font-heading text-lg text-white">
+                  <div className="rounded-2xl bg-white border border-border-subtle card-elevate p-5">
+                    <p className="font-body text-sm text-navy/55 mb-1">Total Payment</p>
+                    <p className="font-heading text-lg text-navy">
                       {formatCurrency(totalPayment)}
                     </p>
-                    <p className="font-body text-xs text-text-muted mt-1">
+                    <p className="font-body text-xs text-navy/45 mt-1">
                       ({formatINR(totalPayment)})
                     </p>
                   </div>
@@ -362,12 +362,12 @@ export default function EMICalculatorPage() {
             whileInView="visible"
             viewport={{ once: true }}
             custom={0}
-            className="mx-auto max-w-3xl rounded-2xl bg-card-dark border border-border-subtle p-8 md:p-12 text-center"
+            className="mx-auto max-w-3xl rounded-2xl bg-navy p-8 md:p-12 text-center"
           >
             <h2 className="font-heading text-2xl md:text-3xl text-white mb-4">
               Need Help with Home Loan?
             </h2>
-            <p className="font-body text-text-muted mb-8 max-w-xl mx-auto">
+            <p className="font-body text-white/60 mb-8 max-w-xl mx-auto">
               We assist with complete loan processing — from documentation to disbursement.
               Our tie-ups with leading banks ensure you get the best interest rates.
             </p>
@@ -394,10 +394,10 @@ export default function EMICalculatorPage() {
               viewport={{ once: true }}
               custom={0}
             >
-              <h2 className="font-heading text-2xl text-white mb-6">
+              <h2 className="font-heading text-2xl text-navy mb-6">
                 Home Loans in Maharashtra — What You Need to Know
               </h2>
-              <div className="space-y-4 font-body text-sm text-text-muted leading-relaxed">
+              <div className="space-y-4 font-body text-sm text-navy/65 leading-relaxed">
                 <p>
                   Maharashtra remains one of India&rsquo;s most active real estate markets,
                   with cities like Mumbai, Pune, and Nashik seeing consistent

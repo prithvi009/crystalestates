@@ -2,8 +2,9 @@
 
 import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
-import { ChevronDown, X, SlidersHorizontal } from "lucide-react";
+import { X, SlidersHorizontal } from "lucide-react";
 import { propertyTypes, locations, budgetRanges } from "@/lib/constants";
+import Select from "@/components/ui/Select";
 
 interface PropertyFiltersProps {
   selectedType: string;
@@ -22,48 +23,6 @@ const sortOptions = [
   { value: "price-desc", label: "Price: High to Low" },
   { value: "newest", label: "Newest" },
 ];
-
-function DarkSelect({
-  label,
-  value,
-  onChange,
-  options,
-}: {
-  label: string;
-  value: string;
-  onChange: (val: string) => void;
-  options: readonly string[] | { value: string; label: string }[];
-}) {
-  const isStringArray = typeof options[0] === "string";
-
-  return (
-    <div className="flex-1 min-w-[140px]">
-      <label className="block text-xs text-text-muted mb-1.5 font-body">
-        {label}
-      </label>
-      <div className="relative">
-        <select
-          value={value}
-          onChange={(e) => onChange(e.target.value)}
-          className="w-full appearance-none rounded-lg bg-primary-black border border-border-subtle text-white text-sm px-4 py-2.5 pr-10 font-body focus:border-gold focus:outline-none focus:ring-1 focus:ring-gold/30 transition-colors cursor-pointer"
-        >
-          {isStringArray
-            ? (options as readonly string[]).map((opt) => (
-                <option key={opt} value={opt}>
-                  {opt}
-                </option>
-              ))
-            : (options as { value: string; label: string }[]).map((opt) => (
-                <option key={opt.value} value={opt.value}>
-                  {opt.label}
-                </option>
-              ))}
-        </select>
-        <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-text-muted pointer-events-none" />
-      </div>
-    </div>
-  );
-}
 
 export default function PropertyFilters({
   selectedType,
@@ -100,26 +59,26 @@ export default function PropertyFilters({
     <>
       {/* ===== DESKTOP FILTERS (md+) ===== */}
       <div className="hidden md:block">
-        <div className="flex items-end gap-4 flex-wrap">
-          <DarkSelect
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+          <Select
             label="Property Type"
             value={selectedType}
             onChange={onTypeChange}
             options={propertyTypes}
           />
-          <DarkSelect
+          <Select
             label="Location"
             value={selectedLocation}
             onChange={onLocationChange}
             options={locations}
           />
-          <DarkSelect
+          <Select
             label="Budget"
             value={selectedBudget}
             onChange={onBudgetChange}
             options={budgetRanges}
           />
-          <DarkSelect
+          <Select
             label="Sort By"
             value={sortBy}
             onChange={onSortChange}
@@ -134,7 +93,7 @@ export default function PropertyFilters({
               <button
                 key={f.label}
                 onClick={f.clear}
-                className="inline-flex items-center gap-1.5 bg-gold/10 text-gold border border-gold/20 text-xs font-medium px-3 py-1.5 rounded-full hover:bg-gold/20 transition-colors font-body"
+                className="inline-flex items-center gap-1.5 bg-gold/10 text-gold-dark border border-gold/30 text-xs font-medium px-3 py-1.5 rounded-full hover:bg-gold/20 transition-colors font-body"
               >
                 {f.label}
                 <X className="w-3 h-3" />
@@ -142,7 +101,7 @@ export default function PropertyFilters({
             ))}
             <button
               onClick={clearAll}
-              className="text-xs text-text-muted hover:text-gold transition-colors font-body ml-1"
+              className="text-xs text-navy/50 hover:text-gold-dark transition-colors font-body ml-1"
             >
               Clear all
             </button>
@@ -155,12 +114,12 @@ export default function PropertyFilters({
         <div className="flex items-center gap-3">
           <button
             onClick={() => setMobileDrawerOpen(true)}
-            className="flex items-center gap-2 rounded-lg border border-border-subtle bg-primary-black px-4 py-2.5 text-sm font-medium text-white hover:border-gold transition-colors font-body"
+            className="flex items-center gap-2 rounded-lg border border-navy/20 bg-navy px-4 py-2.5 text-sm font-medium text-white hover:bg-gold hover:text-navy transition-colors font-body"
           >
             <SlidersHorizontal className="w-4 h-4" />
             Filters
             {activeFilters.length > 0 && (
-              <span className="flex items-center justify-center w-5 h-5 rounded-full bg-gold text-black text-xs font-bold">
+              <span className="flex items-center justify-center w-5 h-5 rounded-full bg-gold text-navy text-xs font-bold">
                 {activeFilters.length}
               </span>
             )}
@@ -174,8 +133,8 @@ export default function PropertyFilters({
                 onClick={() => onTypeChange(type)}
                 className={`whitespace-nowrap rounded-full px-3.5 py-1.5 text-xs font-medium transition-colors font-body ${
                   selectedType === type
-                    ? "bg-gold text-black"
-                    : "border border-border-subtle text-text-muted hover:border-gold hover:text-gold"
+                    ? "bg-navy text-white"
+                    : "border border-border-medium text-navy/60 hover:border-gold hover:text-gold-dark"
                 }`}
               >
                 {type}
@@ -191,7 +150,7 @@ export default function PropertyFilters({
               <button
                 key={f.label}
                 onClick={f.clear}
-                className="inline-flex items-center gap-1.5 bg-gold/10 text-gold border border-gold/20 text-xs font-medium px-3 py-1.5 rounded-full hover:bg-gold/20 transition-colors font-body"
+                className="inline-flex items-center gap-1.5 bg-gold/10 text-gold-dark border border-gold/30 text-xs font-medium px-3 py-1.5 rounded-full hover:bg-gold/20 transition-colors font-body"
               >
                 {f.label}
                 <X className="w-3 h-3" />
@@ -218,44 +177,44 @@ export default function PropertyFilters({
               animate={{ y: 0 }}
               exit={{ y: "100%" }}
               transition={{ type: "spring", damping: 30, stiffness: 300 }}
-              className="fixed bottom-0 left-0 right-0 z-50 md:hidden bg-card-dark rounded-t-2xl max-h-[85vh] overflow-y-auto border-t border-border-subtle"
+              className="fixed bottom-0 left-0 right-0 z-50 md:hidden bg-white rounded-t-2xl max-h-[85vh] overflow-y-auto border-t border-border-subtle"
             >
               {/* Handle */}
-              <div className="sticky top-0 bg-card-dark pt-3 pb-2 px-5 border-b border-border-subtle rounded-t-2xl">
+              <div className="sticky top-0 bg-white pt-3 pb-2 px-5 border-b border-border-subtle rounded-t-2xl">
                 <div className="w-10 h-1 rounded-full bg-border-medium mx-auto mb-3" />
                 <div className="flex items-center justify-between">
-                  <h2 className="text-lg font-heading font-bold text-white">
+                  <h2 className="text-lg font-heading font-bold text-navy">
                     Filters
                   </h2>
                   <button
                     onClick={() => setMobileDrawerOpen(false)}
-                    className="p-1 rounded-full hover:bg-primary-black transition-colors"
+                    className="p-1 rounded-full hover:bg-bg-cream transition-colors"
                   >
-                    <X className="w-5 h-5 text-text-muted" />
+                    <X className="w-5 h-5 text-navy/60" />
                   </button>
                 </div>
               </div>
 
               <div className="p-5 space-y-5">
-                <DarkSelect
+                <Select
                   label="Property Type"
                   value={selectedType}
                   onChange={onTypeChange}
                   options={propertyTypes}
                 />
-                <DarkSelect
+                <Select
                   label="Location"
                   value={selectedLocation}
                   onChange={onLocationChange}
                   options={locations}
                 />
-                <DarkSelect
+                <Select
                   label="Budget"
                   value={selectedBudget}
                   onChange={onBudgetChange}
                   options={budgetRanges}
                 />
-                <DarkSelect
+                <Select
                   label="Sort By"
                   value={sortBy}
                   onChange={onSortChange}
@@ -267,14 +226,14 @@ export default function PropertyFilters({
                   {activeFilters.length > 0 && (
                     <button
                       onClick={clearAll}
-                      className="flex-1 rounded-lg border border-border-subtle py-3 text-sm font-medium text-text-muted hover:border-gold hover:text-gold transition-colors font-body"
+                      className="flex-1 rounded-full border border-border-medium py-3.5 text-sm font-medium text-navy/60 hover:border-gold hover:text-gold-dark transition-colors font-body"
                     >
                       Clear All
                     </button>
                   )}
                   <button
                     onClick={() => setMobileDrawerOpen(false)}
-                    className="flex-1 rounded-lg bg-gold py-3 text-sm font-bold text-black hover:bg-gold/90 transition-colors font-body"
+                    className="flex-1 rounded-full bg-navy py-3.5 text-sm font-bold text-white hover:bg-gold hover:text-navy transition-colors font-body"
                   >
                     Apply Filters
                   </button>

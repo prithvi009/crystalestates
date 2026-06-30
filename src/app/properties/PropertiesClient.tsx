@@ -93,27 +93,27 @@ export default function PropertiesClient({
   }, [properties, selectedType, selectedLocation, selectedBudget, sortBy]);
 
   return (
-    <section className="min-h-screen bg-primary-black">
+    <section className="min-h-screen bg-bg-light">
       {/* ── Hero / Breadcrumb ── */}
-      <div className="bg-primary-black pt-36 pb-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <nav className="flex items-center gap-2 text-sm text-text-muted mb-6">
+      <div className="bg-bg-light pt-28 sm:pt-32 pb-10 sm:pb-12">
+        <div className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8">
+          <nav className="flex items-center gap-2 text-sm text-navy/50 mb-6">
             <Link
               href="/"
-              className="flex items-center gap-1 text-gold hover:text-white transition-colors"
+              className="flex items-center gap-1 text-navy/60 hover:text-gold-dark transition-colors"
             >
               <Home className="w-3.5 h-3.5" />
               Home
             </Link>
-            <ChevronRight className="w-3.5 h-3.5 text-text-muted" />
-            <span className="text-gold">Properties</span>
+            <ChevronRight className="w-3.5 h-3.5 text-navy/30" />
+            <span className="text-gold-dark font-medium">Properties</span>
           </nav>
 
           <motion.h1
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
-            className="font-heading text-4xl md:text-5xl font-bold text-white"
+            className="font-heading text-4xl sm:text-5xl text-navy"
           >
             Explore Properties
           </motion.h1>
@@ -122,16 +122,15 @@ export default function PropertiesClient({
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.1 }}
-            className="mt-4 text-text-muted text-lg max-w-xl"
+            className="mt-4 text-navy/60 text-base sm:text-lg max-w-xl"
           >
-            Discover premium plots, homes, and commercial spaces across Pune &amp;
-            Mumbai.
+            Premium plots, homes &amp; commercial spaces across Pune &amp; Mumbai.
           </motion.p>
         </div>
       </div>
 
       {/* ── Sticky Filter Bar ── */}
-      <div className="sticky top-16 z-30 bg-card-dark border-y border-border-subtle backdrop-blur-md">
+      <div className="sticky top-[68px] sm:top-20 z-30 bg-white/95 border-y border-border-subtle backdrop-blur-md">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <PropertyFilters
             selectedType={selectedType}
@@ -147,12 +146,12 @@ export default function PropertiesClient({
       </div>
 
       {/* ── Properties Grid ── */}
-      <div className="bg-primary-black">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 md:py-14">
+      <div className="bg-bg-light">
+        <div className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 py-8 md:py-12">
           {/* Count */}
-          <p className="text-sm text-text-muted mb-8">
+          <p className="text-sm text-navy/60 mb-7">
             Showing{" "}
-            <span className="font-data font-semibold text-gold">
+            <span className="font-data font-semibold text-gold-dark">
               {filtered.length}
             </span>{" "}
             {filtered.length === 1 ? "property" : "properties"}
@@ -178,19 +177,19 @@ export default function PropertiesClient({
               animate={{ opacity: 1, y: 0 }}
               className="flex flex-col items-center justify-center py-24 text-center"
             >
-              <div className="w-20 h-20 rounded-full bg-card-dark border border-border-subtle flex items-center justify-center mb-6">
-                <SearchX className="w-10 h-10 text-text-muted" />
+              <div className="w-20 h-20 rounded-full bg-white border border-border-subtle shadow-sm flex items-center justify-center mb-6">
+                <SearchX className="w-10 h-10 text-navy/40" />
               </div>
-              <h3 className="text-xl font-heading font-bold text-white mb-2">
+              <h3 className="text-xl font-heading font-bold text-navy mb-2">
                 No properties found
               </h3>
-              <p className="text-text-muted max-w-md mb-8">
+              <p className="text-navy/60 max-w-md mb-8">
                 Can&apos;t find what you&apos;re looking for? Try adjusting your
                 filters or reach out to us for personalized assistance.
               </p>
               <Link
                 href="/contact"
-                className="inline-flex items-center px-8 py-3 bg-gold text-black font-semibold rounded-lg hover:bg-gold/90 transition-colors"
+                className="inline-flex items-center px-8 py-3.5 bg-navy text-white font-semibold rounded-full hover:bg-gold hover:text-navy transition-colors"
               >
                 Contact Us
               </Link>
@@ -200,12 +199,12 @@ export default function PropertiesClient({
       </div>
 
       {/* ── WhatsApp CTA ── */}
-      <div className="bg-card-dark border-t border-border-subtle">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14 text-center">
+      <div className="bg-navy border-t border-navy-light">
+        <div className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 py-14 text-center">
           <h2 className="font-heading text-2xl md:text-3xl font-bold text-white mb-3">
             Can&apos;t find the right property?
           </h2>
-          <p className="text-text-muted mb-8 max-w-lg mx-auto">
+          <p className="text-white/60 mb-8 max-w-lg mx-auto">
             Tell us your requirements and our team will find the perfect match
             for you.
           </p>

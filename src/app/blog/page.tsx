@@ -124,16 +124,16 @@ function formatDate(dateStr: string): string {
 
 export default function BlogPage() {
   return (
-    <main className="min-h-screen bg-primary-black">
+    <main className="min-h-screen bg-bg-light">
       {/* ---- Hero ---- */}
-      <section className="pt-36 pb-16 px-6 text-center">
-        <p className="font-body text-sm uppercase tracking-widest text-gold mb-4">
+      <section className="pt-32 pb-14 px-6 text-center">
+        <p className="section-label mb-4">
           Crystal Estates Blog
         </p>
-        <h1 className="font-heading text-5xl md:text-6xl text-white mb-4">
+        <h1 className="font-heading text-5xl md:text-6xl text-navy mb-4">
           Insights &amp; Guides
         </h1>
-        <p className="font-body text-lg text-text-muted max-w-2xl mx-auto">
+        <p className="font-body text-lg text-navy/60 max-w-2xl mx-auto">
           Expert analysis, buying guides, and market insights to help you make
           smarter property decisions in Maharashtra.
         </p>
@@ -147,8 +147,8 @@ export default function BlogPage() {
               key={cat}
               className={`inline-block rounded-full px-5 py-2 font-body text-sm cursor-pointer transition-colors ${
                 cat === "All"
-                  ? "bg-gold text-primary-black font-semibold"
-                  : "bg-card-dark text-text-muted border border-border-subtle hover:border-gold/40 hover:text-white"
+                  ? "bg-navy text-white font-semibold"
+                  : "bg-white text-navy/60 border border-border-medium hover:border-gold hover:text-gold-dark"
               }`}
             >
               {cat}
@@ -166,32 +166,32 @@ export default function BlogPage() {
               href={`/blog/${post.slug}`}
               className="group block"
             >
-              <article className="h-full rounded-2xl bg-card-dark border border-border-subtle p-6 flex flex-col transition-all duration-300 hover:border-gold/30 hover:-translate-y-1">
+              <article className="h-full rounded-2xl bg-white border border-border-subtle card-elevate p-6 flex flex-col transition-all duration-300 hover:border-gold/40 hover:-translate-y-1">
                 {/* Category Badge */}
-                <span className="self-start rounded-full bg-gold/10 text-gold font-body text-xs font-semibold px-3 py-1 mb-4">
+                <span className="self-start rounded-full bg-gold/10 text-gold-dark font-body text-xs font-semibold px-3 py-1 mb-4">
                   {post.category}
                 </span>
 
                 {/* Title */}
-                <h2 className="font-heading text-xl text-white mb-3 group-hover:text-gold transition-colors line-clamp-2">
+                <h2 className="font-heading text-xl text-navy mb-3 group-hover:text-gold-dark transition-colors line-clamp-2">
                   {post.title}
                 </h2>
 
                 {/* Excerpt */}
-                <p className="font-body text-sm text-text-muted leading-relaxed mb-6 line-clamp-3 flex-1">
+                <p className="font-body text-sm text-navy/60 leading-relaxed mb-6 line-clamp-3 flex-1">
                   {post.excerpt}
                 </p>
 
                 {/* Meta */}
                 <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-3 font-body text-xs text-text-muted">
+                  <div className="flex items-center gap-3 font-body text-xs text-navy/50">
                     <span>{formatDate(post.date)}</span>
                     <span className="flex items-center gap-1">
                       <Clock className="h-3 w-3" />
                       {post.readTime}
                     </span>
                   </div>
-                  <span className="font-body text-sm text-gold flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                  <span className="font-body text-sm text-gold-dark flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
                     Read More <ArrowRight className="h-3.5 w-3.5" />
                   </span>
                 </div>

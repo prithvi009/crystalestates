@@ -84,7 +84,7 @@ export const metadata: Metadata = {
     google: "placeholder",
   },
   other: {
-    "theme-color": "#0A0A0A",
+    "theme-color": "#FFFFFF",
     "apple-mobile-web-app-title": "Crystal Estates",
   },
 };
@@ -136,7 +136,7 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body className="font-body antialiased bg-primary-black text-white">
+      <body className="font-body antialiased bg-white text-navy">
         <GoogleAds />
         <SiteShell>{children}</SiteShell>
       </body>

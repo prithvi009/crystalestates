@@ -2,10 +2,11 @@
 
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { useForm } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { Lock, CheckCircle2, MessageCircle } from "lucide-react";
+import Select from "@/components/ui/Select";
 
 const leadSchema = z.object({
   fullName: z.string().min(2, "Name must be at least 2 characters"),
@@ -72,6 +73,7 @@ export default function LeadCapture() {
 
   const {
     register,
+    control,
     handleSubmit,
     formState: { errors, isSubmitting },
     reset,
@@ -126,20 +128,18 @@ export default function LeadCapture() {
   };
 
   const inputBase =
-    "w-full px-4 py-3 rounded-lg border border-border-subtle bg-card-dark text-white text-sm placeholder:text-text-ghost focus:outline-none focus:ring-2 focus:ring-gold/50 focus:border-gold transition-colors";
-  const selectBase =
-    "w-full px-4 py-3 rounded-lg border border-border-subtle bg-card-dark text-white text-sm focus:outline-none focus:ring-2 focus:ring-gold/50 focus:border-gold transition-colors appearance-none";
-  const labelBase = "block text-sm text-text-muted mb-1.5";
+    "w-full px-4 py-3.5 rounded-xl border border-border-subtle bg-white text-navy text-base placeholder:text-text-ghost focus:outline-none focus:ring-2 focus:ring-gold/40 focus:border-gold transition-colors";
+  const labelBase = "block text-sm text-navy/70 mb-1.5 font-medium";
   const errorBase = "text-error text-xs mt-1";
 
   return (
-    <section className="relative py-20 sm:py-28 bg-primary-black overflow-hidden">
+    <section className="relative py-20 sm:py-28 bg-bg-light overflow-hidden">
       {/* Gold gradient overlay */}
       <div
         className="absolute inset-0 pointer-events-none"
         style={{
           background:
-            "radial-gradient(ellipse 60% 40% at 50% 0%, rgba(198,169,98,0.06) 0%, transparent 70%)",
+            "radial-gradient(ellipse 60% 40% at 50% 0%, rgba(198,169,98,0.10) 0%, transparent 70%)",
         }}
       />
 
@@ -151,17 +151,18 @@ export default function LeadCapture() {
         viewport={{ once: true, margin: "-50px" }}
       >
         {/* Header */}
-        <motion.div variants={itemVariants} className="text-center mb-10">
-          <h2 className="font-heading text-4xl md:text-5xl text-white mb-4">
-            Find Your Perfect Property
+        <motion.div variants={itemVariants} className="text-center mb-8">
+          <p className="section-label mb-4">Get Started</p>
+          <h2 className="font-heading text-4xl sm:text-5xl text-navy mb-4">
+            Find your perfect property
           </h2>
-          <p className="text-base text-text-muted">
-            Tell us what you&apos;re looking for. We respond within 30 minutes.
+          <p className="text-base sm:text-lg text-navy/60">
+            Tell us what you&apos;re looking for. We reply within 30 minutes.
           </p>
         </motion.div>
 
         {/* Form */}
-        <motion.div variants={itemVariants}>
+        <motion.div variants={itemVariants} className="bg-white rounded-3xl p-6 sm:p-8 card-elevate border border-border-subtle">
           {submitted ? (
             <motion.div
               initial={{ opacity: 0, scale: 0.95 }}
@@ -171,10 +172,10 @@ export default function LeadCapture() {
               <div className="w-16 h-16 rounded-full bg-success/10 flex items-center justify-center mx-auto mb-5">
                 <CheckCircle2 className="w-8 h-8 text-success" />
               </div>
-              <h3 className="font-heading text-2xl text-white mb-2">
+              <h3 className="font-heading text-2xl text-navy mb-2">
                 Thank You!
               </h3>
-              <p className="text-text-muted text-sm max-w-sm mx-auto">
+              <p className="text-navy/60 text-sm max-w-sm mx-auto">
                 Our team will contact you shortly with personalized property
                 recommendations.
               </p>
@@ -216,7 +217,7 @@ export default function LeadCapture() {
                   Phone <span className="text-error">*</span>
                 </label>
                 <div className="flex">
-                  <span className="inline-flex items-center px-3.5 bg-border-subtle border border-r-0 border-border-subtle rounded-l-lg text-sm text-text-muted">
+                  <span className="inline-flex items-center px-3.5 bg-bg-cream border border-r-0 border-border-subtle rounded-l-xl text-base text-navy/70">
                     +91
                   </span>
                   <input
@@ -234,21 +235,19 @@ export default function LeadCapture() {
 
               {/* Property Type */}
               <div>
-                <label htmlFor="propertyType" className={labelBase}>
-                  Property Type
-                </label>
-                <select
-                  id="propertyType"
-                  className={selectBase}
-                  {...register("propertyType")}
-                >
-                  <option value="">Select property type</option>
-                  {propertyTypeOptions.map((opt) => (
-                    <option key={opt} value={opt}>
-                      {opt}
-                    </option>
-                  ))}
-                </select>
+                <Controller
+                  control={control}
+                  name="propertyType"
+                  render={({ field }) => (
+                    <Select
+                      label="Property Type"
+                      placeholder="Select property type"
+                      value={field.value}
+                      onChange={field.onChange}
+                      options={propertyTypeOptions}
+                    />
+                  )}
+                />
                 {errors.propertyType && (
                   <p className={errorBase}>{errors.propertyType.message}</p>
                 )}
@@ -256,21 +255,19 @@ export default function LeadCapture() {
 
               {/* Budget Range */}
               <div>
-                <label htmlFor="budget" className={labelBase}>
-                  Budget Range
-                </label>
-                <select
-                  id="budget"
-                  className={selectBase}
-                  {...register("budget")}
-                >
-                  <option value="">Select budget range</option>
-                  {budgetOptions.map((opt) => (
-                    <option key={opt} value={opt}>
-                      {opt}
-                    </option>
-                  ))}
-                </select>
+                <Controller
+                  control={control}
+                  name="budget"
+                  render={({ field }) => (
+                    <Select
+                      label="Budget Range"
+                      placeholder="Select budget range"
+                      value={field.value}
+                      onChange={field.onChange}
+                      options={budgetOptions}
+                    />
+                  )}
+                />
                 {errors.budget && (
                   <p className={errorBase}>{errors.budget.message}</p>
                 )}
@@ -278,21 +275,19 @@ export default function LeadCapture() {
 
               {/* Preferred Location */}
               <div>
-                <label htmlFor="location" className={labelBase}>
-                  Preferred Location
-                </label>
-                <select
-                  id="location"
-                  className={selectBase}
-                  {...register("location")}
-                >
-                  <option value="">Select preferred location</option>
-                  {locationOptions.map((opt) => (
-                    <option key={opt} value={opt}>
-                      {opt}
-                    </option>
-                  ))}
-                </select>
+                <Controller
+                  control={control}
+                  name="location"
+                  render={({ field }) => (
+                    <Select
+                      label="Preferred Location"
+                      placeholder="Select preferred location"
+                      value={field.value}
+                      onChange={field.onChange}
+                      options={locationOptions}
+                    />
+                  )}
+                />
                 {errors.location && (
                   <p className={errorBase}>{errors.location.message}</p>
                 )}
@@ -317,7 +312,7 @@ export default function LeadCapture() {
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="w-full py-3.5 bg-gold text-primary-black font-semibold rounded-lg hover:bg-gold-light transition-colors duration-300 disabled:opacity-60 disabled:cursor-not-allowed text-base"
+                className="w-full py-4 bg-navy text-white font-semibold rounded-full hover:bg-gold hover:text-navy transition-colors duration-300 disabled:opacity-60 disabled:cursor-not-allowed text-base"
               >
                 {isSubmitting
                   ? "Submitting..."

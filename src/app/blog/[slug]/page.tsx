@@ -181,37 +181,37 @@ export default async function BlogPostPage({ params }: Props) {
   const relatedPosts = getRelatedPosts(post.slug);
 
   return (
-    <main className="min-h-screen bg-primary-black">
+    <main className="min-h-screen bg-bg-light">
       {/* ---- Article Header ---- */}
-      <section className="pt-36 pb-12 px-6">
+      <section className="pt-32 pb-12 px-6">
         <div className="mx-auto max-w-3xl">
           {/* Breadcrumb */}
-          <nav className="flex items-center gap-2 font-body text-sm text-text-muted mb-8">
-            <Link href="/" className="hover:text-white transition-colors">
+          <nav className="flex items-center gap-2 font-body text-sm text-navy/55 mb-8">
+            <Link href="/" className="hover:text-gold-dark transition-colors">
               Home
             </Link>
             <ChevronRight className="h-3.5 w-3.5" />
-            <Link href="/blog" className="hover:text-white transition-colors">
+            <Link href="/blog" className="hover:text-gold-dark transition-colors">
               Blog
             </Link>
             <ChevronRight className="h-3.5 w-3.5" />
-            <span className="text-white/60 truncate max-w-[200px]">
+            <span className="text-gold-dark truncate max-w-[200px]">
               {post.title}
             </span>
           </nav>
 
           {/* Category Badge */}
-          <span className="inline-block rounded-full bg-gold/10 text-gold font-body text-xs font-semibold px-4 py-1.5 mb-6">
+          <span className="inline-block rounded-full bg-gold/10 text-gold-dark font-body text-xs font-semibold px-4 py-1.5 mb-6">
             {post.category}
           </span>
 
           {/* Title */}
-          <h1 className="font-heading text-3xl md:text-4xl lg:text-5xl text-white mb-6 leading-tight">
+          <h1 className="font-heading text-3xl md:text-4xl lg:text-5xl text-navy mb-6 leading-tight">
             {post.title}
           </h1>
 
           {/* Meta */}
-          <div className="flex flex-wrap items-center gap-4 font-body text-sm text-text-muted">
+          <div className="flex flex-wrap items-center gap-4 font-body text-sm text-navy/55">
             <span className="flex items-center gap-2">
               <User className="h-4 w-4" />
               Prithviraj Awatade

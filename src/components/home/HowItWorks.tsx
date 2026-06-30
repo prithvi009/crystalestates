@@ -64,19 +64,27 @@ export default function HowItWorks() {
   return (
     <section
       ref={sectionRef}
-      className="relative py-24 sm:py-32 bg-primary-black overflow-hidden"
+      className="relative py-20 sm:py-32 bg-bg-cream overflow-hidden"
     >
       {/* Subtle radial glow */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-[radial-gradient(ellipse_at_center,rgba(198,169,98,0.04)_0%,transparent_70%)] pointer-events-none" />
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-[radial-gradient(ellipse_at_center,rgba(198,169,98,0.10)_0%,transparent_70%)] pointer-events-none" />
 
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="relative max-w-7xl mx-auto px-5 sm:px-6 lg:px-8">
         {/* Section header */}
-        <div className="text-center mb-16 sm:mb-20">
+        <div className="text-center mb-14 sm:mb-20">
+          <motion.p
+            initial={{ opacity: 0, y: 10 }}
+            animate={isInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.5 }}
+            className="section-label mb-4"
+          >
+            Simple Process
+          </motion.p>
           <motion.h2
             initial={{ opacity: 0, y: 20 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.6 }}
-            className="font-heading text-4xl md:text-5xl text-white mb-4"
+            className="font-heading text-4xl sm:text-5xl text-navy mb-4"
           >
             How It Works
           </motion.h2>
@@ -92,7 +100,7 @@ export default function HowItWorks() {
             initial={{ opacity: 0, y: 15 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.6, delay: 0.15 }}
-            className="text-base text-text-muted font-body"
+            className="text-base sm:text-lg text-navy/60 font-body"
           >
             From first call to keys in hand
           </motion.p>
@@ -118,7 +126,7 @@ export default function HowItWorks() {
                   className="relative flex flex-col items-center text-center"
                 >
                   {/* Gold number */}
-                  <span className="font-heading text-5xl text-gold mb-4 relative z-10 bg-primary-black px-3">
+                  <span className="font-heading text-5xl text-gold mb-4 relative z-10 bg-bg-cream px-3">
                     {step.number}
                   </span>
 
@@ -134,12 +142,12 @@ export default function HowItWorks() {
                   />
 
                   {/* Title */}
-                  <h3 className="font-body text-sm uppercase tracking-wider text-white mb-3">
+                  <h3 className="font-body text-sm uppercase tracking-wider text-navy font-semibold mb-3">
                     {step.title}
                   </h3>
 
                   {/* Description */}
-                  <p className="text-sm text-text-muted leading-relaxed font-body max-w-[240px]">
+                  <p className="text-sm text-navy/60 leading-relaxed font-body max-w-[240px]">
                     {step.description}
                   </p>
                 </motion.div>
@@ -176,18 +184,18 @@ export default function HowItWorks() {
                   className="relative flex gap-6 items-start"
                 >
                   {/* Number circle */}
-                  <div className="relative z-10 w-14 h-14 rounded-full bg-primary-black border border-gold/40 flex items-center justify-center shrink-0">
-                    <span className="font-heading text-xl text-gold">
+                  <div className="relative z-10 w-14 h-14 rounded-full bg-white border border-gold/50 shadow-sm flex items-center justify-center shrink-0">
+                    <span className="font-heading text-xl text-gold-dark">
                       {step.number}
                     </span>
                   </div>
 
                   {/* Content */}
                   <div className="pt-1 flex-1">
-                    <h3 className="font-body text-sm uppercase tracking-wider text-white mb-2">
+                    <h3 className="font-body text-base uppercase tracking-wider text-navy font-semibold mb-2">
                       {step.title}
                     </h3>
-                    <p className="text-sm text-text-muted leading-relaxed font-body">
+                    <p className="text-[15px] text-navy/60 leading-relaxed font-body">
                       {step.description}
                     </p>
                     {/* Gold accent line */}

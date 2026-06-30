@@ -458,7 +458,7 @@ export default function PropertyDetail({
       {/* ============================================================ */}
       {/*  SECTION 1: HERO / GALLERY AREA                              */}
       {/* ============================================================ */}
-      <div className="relative h-[320px] sm:h-[420px] md:h-[520px] bg-charcoal overflow-hidden">
+      <div className="relative h-[440px] sm:h-[470px] md:h-[540px] bg-charcoal overflow-hidden">
         {/* Actual property image or fallback pattern */}
         {hasRealImages ? (
           <>
@@ -595,7 +595,7 @@ export default function PropertyDetail({
             <span className="inline-block text-[10px] sm:text-xs tracking-[0.2em] sm:tracking-[0.25em] uppercase text-gold-light font-semibold mb-2 sm:mb-3 bg-gold/10 px-2.5 py-0.5 sm:px-3 sm:py-1 rounded-full backdrop-blur-sm">
               {property.type}
             </span>
-            <h1 className="text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-bold text-white mb-1.5 sm:mb-3 leading-tight">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-2 sm:mb-3 leading-tight">
               {property.name}
             </h1>
             <p className="flex items-center gap-1.5 sm:gap-2 text-gray-300 text-xs sm:text-sm md:text-base mb-3 sm:mb-6">

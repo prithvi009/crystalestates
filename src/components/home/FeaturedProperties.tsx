@@ -42,21 +42,15 @@ export default function FeaturedProperties({
       : properties.filter((p) => p.type === activeTab);
 
   return (
-    <section id="properties" className="py-20 sm:py-28 bg-[#FAFAF8]">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="properties" className="py-20 sm:py-28 bg-white">
+      <div className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8">
         {/* Section header */}
-        <div className="mb-14">
-          <h2 className="font-heading text-4xl md:text-5xl text-charcoal mb-4">
+        <div className="mb-12">
+          <p className="section-label mb-4">Featured</p>
+          <h2 className="font-heading text-4xl sm:text-5xl text-navy mb-4">
             Featured Projects
           </h2>
-          <motion.div
-            className="h-[2px] bg-gold rounded-full"
-            initial={{ width: 0 }}
-            whileInView={{ width: 50 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
-          />
-          <p className="font-body text-base text-gray-500 mt-4">
+          <p className="font-body text-base sm:text-lg text-navy/60">
             Handpicked developments across Maharashtra
           </p>
         </div>

@@ -96,13 +96,21 @@ export default function AboutPage() {
   return (
     <main className="min-h-screen overflow-hidden">
       {/* ========== HERO ========== */}
-      <section className="relative bg-primary-black pt-36 pb-24">
+      <section className="relative bg-bg-light pt-32 pb-20 md:pb-24">
         <div className="mx-auto max-w-4xl px-6 text-center">
+          <motion.p
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            className="section-label mb-4"
+          >
+            About Crystal Estates
+          </motion.p>
           <motion.h1
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="font-heading text-5xl font-bold leading-tight tracking-tight text-white md:text-6xl"
+            className="font-heading text-5xl font-bold leading-tight tracking-tight text-navy md:text-6xl"
           >
             Built Different
           </motion.h1>
@@ -111,7 +119,7 @@ export default function AboutPage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.15 }}
-            className="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-text-muted"
+            className="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-navy/60"
           >
             Crystal Estates isn&apos;t your typical brokerage. We&apos;re a
             technology-powered real estate consultancy built for the age of
@@ -200,7 +208,7 @@ export default function AboutPage() {
                   key={v.title}
                   variants={fadeUp}
                   custom={i}
-                  className="group rounded-2xl border border-border-subtle bg-white/5 p-6 backdrop-blur-sm transition-colors hover:border-gold/30 hover:bg-white/[0.08] md:p-8"
+                  className="group rounded-2xl border border-white/10 bg-white/5 p-6 backdrop-blur-sm transition-colors hover:border-gold/40 hover:bg-white/[0.08] md:p-8"
                 >
                   <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-gold/10">
                     <Icon className="h-6 w-6 text-gold" />

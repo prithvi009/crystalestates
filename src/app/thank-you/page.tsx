@@ -56,7 +56,7 @@ export default function ThankYouPage() {
   }, []);
 
   return (
-    <main className="min-h-screen bg-primary-black pt-36 pb-20">
+    <main className="min-h-screen bg-bg-light pt-32 pb-20">
       <div className="mx-auto max-w-3xl px-6 text-center">
         {/* ---- Success Icon ---- */}
         <motion.div
@@ -74,7 +74,7 @@ export default function ThankYouPage() {
           initial="hidden"
           animate="visible"
           custom={0}
-          className="font-heading text-4xl md:text-5xl text-white mb-4"
+          className="font-heading text-4xl md:text-5xl text-navy mb-4"
         >
           We&rsquo;ve Got Your Request
         </motion.h1>
@@ -85,7 +85,7 @@ export default function ThankYouPage() {
           initial="hidden"
           animate="visible"
           custom={1}
-          className="font-body text-lg text-text-muted mb-14 max-w-xl mx-auto"
+          className="font-body text-lg text-navy/60 mb-14 max-w-xl mx-auto"
         >
           Our team will contact you within 30 minutes during business hours.
         </motion.p>
@@ -96,7 +96,7 @@ export default function ThankYouPage() {
           initial="hidden"
           animate="visible"
           custom={2}
-          className="font-heading text-2xl text-white mb-10"
+          className="font-heading text-2xl text-navy mb-10"
         >
           What Happens Next
         </motion.h2>
@@ -109,16 +109,16 @@ export default function ThankYouPage() {
               initial="hidden"
               animate="visible"
               custom={i + 3}
-              className="flex gap-5 items-start rounded-2xl bg-card-dark border border-border-subtle p-6"
+              className="flex gap-5 items-start rounded-2xl bg-white border border-border-subtle card-elevate p-6"
             >
               <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-gold/10">
                 <step.icon className="h-5 w-5 text-gold" />
               </div>
               <div>
-                <p className="font-body text-base font-semibold text-white mb-1">
+                <p className="font-body text-base font-semibold text-navy mb-1">
                   Step {i + 1}: {step.title}
                 </p>
-                <p className="font-body text-sm text-text-muted leading-relaxed">
+                <p className="font-body text-sm text-navy/60 leading-relaxed">
                   {step.description}
                 </p>
               </div>
@@ -152,12 +152,12 @@ export default function ThankYouPage() {
           initial="hidden"
           animate="visible"
           custom={7}
-          className="font-body text-text-muted"
+          className="font-body text-navy/60"
         >
           Meanwhile, explore our featured projects{" "}
           <Link
             href="/projects"
-            className="text-gold hover:text-gold/80 transition-colors underline underline-offset-4"
+            className="text-gold-dark hover:text-gold transition-colors underline underline-offset-4"
           >
             View Projects <ArrowRight className="inline h-4 w-4" />
           </Link>
