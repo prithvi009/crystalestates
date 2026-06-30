@@ -3,7 +3,7 @@
 import { useState, useMemo } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { Home, ChevronRight, SearchX, MessageCircle } from "lucide-react";
+import { Home, ChevronRight, SearchX, MessageCircle, Search, X } from "lucide-react";
 import type { Property } from "@/lib/db/schema";
 import PropertyCard from "@/components/properties/PropertyCard";
 import PropertyFilters from "@/components/properties/PropertyFilters";
@@ -59,9 +59,19 @@ export default function PropertiesClient({
   const [selectedLocation, setSelectedLocation] = useState("All");
   const [selectedBudget, setSelectedBudget] = useState("All");
   const [sortBy, setSortBy] = useState("default");
+  const [search, setSearch] = useState("");
 
   const filtered = useMemo(() => {
     let result = [...properties];
+
+    const q = search.trim().toLowerCase();
+    if (q) {
+      result = result.filter((p) =>
+        [p.name, p.location, p.locationArea, p.type]
+          .filter(Boolean)
+          .some((field) => String(field).toLowerCase().includes(q))
+      );
+    }
 
     if (selectedType !== "All") {
       result = result.filter((p) => p.type === selectedType);
@@ -90,7 +100,7 @@ export default function PropertiesClient({
     }
 
     return result;
-  }, [properties, selectedType, selectedLocation, selectedBudget, sortBy]);
+  }, [properties, search, selectedType, selectedLocation, selectedBudget, sortBy]);
 
   return (
     <section className="min-h-screen bg-bg-light">
@@ -126,6 +136,34 @@ export default function PropertiesClient({
           >
             Premium plots, homes &amp; commercial spaces across Pune &amp; Mumbai.
           </motion.p>
+
+          {/* Search */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+            className="mt-7 max-w-xl"
+          >
+            <div className="relative">
+              <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-navy/40 pointer-events-none" />
+              <input
+                type="text"
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                placeholder="Search by name, location or area…"
+                className="w-full rounded-full border border-border-medium bg-white pl-12 pr-11 py-3.5 text-[15px] text-navy placeholder:text-navy/40 shadow-sm focus:outline-none focus:border-gold focus:ring-2 focus:ring-gold/25 transition-all"
+              />
+              {search && (
+                <button
+                  onClick={() => setSearch("")}
+                  aria-label="Clear search"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 w-7 h-7 rounded-full flex items-center justify-center text-navy/50 hover:bg-bg-cream transition-colors"
+                >
+                  <X className="w-4 h-4" />
+                </button>
+              )}
+            </div>
+          </motion.div>
         </div>
       </div>
 
@@ -163,7 +201,7 @@ export default function PropertiesClient({
               variants={containerVariants}
               initial="hidden"
               animate="visible"
-              key={`${selectedType}-${selectedLocation}-${selectedBudget}-${sortBy}`}
+              key={`${search}-${selectedType}-${selectedLocation}-${selectedBudget}-${sortBy}`}
             >
               {filtered.map((property) => (
                 <motion.div key={property.id} variants={cardVariants}>

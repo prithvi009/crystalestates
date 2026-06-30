@@ -231,17 +231,17 @@ export default async function BlogPostPage({ params }: Props) {
           <div className="space-y-6">
             {post.body.map((paragraph, i) => (
               <div key={i}>
-                <p className="font-body text-base text-text-muted leading-relaxed">
+                <p className="font-body text-[17px] text-navy/75 leading-relaxed">
                   {paragraph}
                 </p>
 
                 {/* Lead capture CTA after 2nd paragraph */}
                 {i === 1 && (
-                  <div className="my-10 rounded-2xl bg-card-dark border border-border-subtle p-8 text-center">
+                  <div className="my-10 rounded-2xl bg-navy p-8 text-center">
                     <p className="font-heading text-xl text-white mb-3">
                       Looking for Expert Guidance?
                     </p>
-                    <p className="font-body text-sm text-text-muted mb-6">
+                    <p className="font-body text-sm text-white/60 mb-6">
                       Our property consultants can help you navigate the
                       Maharashtra real estate market with confidence.
                     </p>
@@ -249,7 +249,7 @@ export default async function BlogPostPage({ params }: Props) {
                       href="https://wa.me/919511750686?text=Hi%2C%20I%20read%20your%20blog%20and%20need%20property%20guidance."
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 rounded-full bg-gold hover:bg-gold/90 transition-colors px-6 py-3 font-body text-sm font-semibold text-primary-black"
+                      className="inline-flex items-center gap-2 rounded-full bg-gold hover:bg-gold-light transition-colors px-6 py-3 font-body text-sm font-semibold text-navy"
                     >
                       <MessageCircle className="h-4 w-4" />
                       Chat with Us on WhatsApp
@@ -264,19 +264,19 @@ export default async function BlogPostPage({ params }: Props) {
 
       {/* ---- Author Box ---- */}
       <section className="px-6 pb-16">
-        <div className="mx-auto max-w-3xl rounded-2xl bg-card-dark border border-border-subtle p-8">
+        <div className="mx-auto max-w-3xl rounded-2xl bg-white border border-border-subtle card-elevate p-8">
           <div className="flex flex-col sm:flex-row items-start gap-6">
             <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-full bg-gold/10">
               <User className="h-8 w-8 text-gold" />
             </div>
             <div>
-              <p className="font-heading text-xl text-white mb-1">
+              <p className="font-heading text-xl text-navy mb-1">
                 Prithviraj Awatade
               </p>
-              <p className="font-body text-xs text-gold mb-3">
+              <p className="font-body text-xs text-gold-dark mb-3">
                 Founder, Crystal Estates
               </p>
-              <p className="font-body text-sm text-text-muted leading-relaxed mb-4">
+              <p className="font-body text-sm text-navy/65 leading-relaxed mb-4">
                 Prithviraj is a RERA-certified real estate consultant with deep
                 expertise in the Maharashtra property market. With a focus on
                 transparency and client-first service, he has helped hundreds of
@@ -286,7 +286,7 @@ export default async function BlogPostPage({ params }: Props) {
                 href="https://wa.me/919511750686?text=Hi%20Prithviraj%2C%20I%20would%20like%20to%20book%20a%20consultation."
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 rounded-full bg-gold hover:bg-gold/90 transition-colors px-5 py-2.5 font-body text-sm font-semibold text-primary-black"
+                className="inline-flex items-center gap-2 rounded-full bg-navy hover:bg-gold hover:text-navy transition-colors px-5 py-2.5 font-body text-sm font-semibold text-white"
               >
                 Book Consultation
                 <ArrowRight className="h-4 w-4" />
@@ -299,7 +299,7 @@ export default async function BlogPostPage({ params }: Props) {
       {/* ---- Related Posts ---- */}
       <section className="px-6 pb-24">
         <div className="mx-auto max-w-6xl">
-          <h2 className="font-heading text-2xl md:text-3xl text-white mb-10 text-center">
+          <h2 className="font-heading text-2xl md:text-3xl text-navy mb-10 text-center">
             Related Articles
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -309,17 +309,17 @@ export default async function BlogPostPage({ params }: Props) {
                 href={`/blog/${related.slug}`}
                 className="group block"
               >
-                <article className="h-full rounded-2xl bg-card-dark border border-border-subtle p-6 flex flex-col transition-all duration-300 hover:border-gold/30 hover:-translate-y-1">
-                  <span className="self-start rounded-full bg-gold/10 text-gold font-body text-xs font-semibold px-3 py-1 mb-4">
+                <article className="h-full rounded-2xl bg-white border border-border-subtle card-elevate p-6 flex flex-col transition-all duration-300 hover:border-gold/40 hover:-translate-y-1">
+                  <span className="self-start rounded-full bg-gold/10 text-gold-dark font-body text-xs font-semibold px-3 py-1 mb-4">
                     {related.category}
                   </span>
-                  <h3 className="font-heading text-lg text-white mb-3 group-hover:text-gold transition-colors line-clamp-2">
+                  <h3 className="font-heading text-lg text-navy mb-3 group-hover:text-gold-dark transition-colors line-clamp-2">
                     {related.title}
                   </h3>
-                  <p className="font-body text-sm text-text-muted leading-relaxed mb-4 line-clamp-2 flex-1">
+                  <p className="font-body text-sm text-navy/60 leading-relaxed mb-4 line-clamp-2 flex-1">
                     {related.excerpt}
                   </p>
-                  <div className="flex items-center justify-between font-body text-xs text-text-muted">
+                  <div className="flex items-center justify-between font-body text-xs text-navy/50">
                     <span>{formatDate(related.date)}</span>
                     <span className="flex items-center gap-1">
                       <Clock className="h-3 w-3" />

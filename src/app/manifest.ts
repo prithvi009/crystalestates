@@ -8,9 +8,14 @@ export default function manifest(): MetadataRoute.Manifest {
       "Find RERA-verified plots, flats, row houses & commercial properties across Pune & Mumbai. Transparent pricing, verified documents.",
     start_url: "/",
     display: "standalone",
-    background_color: "#000000",
-    theme_color: "#C6A962",
+    background_color: "#FAF8F4",
+    theme_color: "#102A43",
     icons: [
+      {
+        src: "/icon.svg",
+        sizes: "any",
+        type: "image/svg+xml",
+      },
       {
         src: "/favicon.ico",
         sizes: "any",
