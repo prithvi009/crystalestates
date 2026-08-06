@@ -560,12 +560,16 @@ export default function PropertyDetail({
             />
           </>
         )}
-        {/* Cinematic gradient overlays */}
-        <div className="absolute inset-0 bg-gradient-to-t from-navy via-navy/50 to-navy/15 z-10" />
-        <div className="absolute inset-x-0 top-0 h-36 bg-gradient-to-b from-navy/55 to-transparent z-10" />
+        {/* Cinematic gradient overlays — only for image heroes; video stays clean */}
+        {!hasVideo && (
+          <>
+            <div className="absolute inset-0 bg-gradient-to-t from-navy via-navy/50 to-navy/15 z-10" />
+            <div className="absolute inset-x-0 top-0 h-36 bg-gradient-to-b from-navy/55 to-transparent z-10" />
+          </>
+        )}
 
         {/* Badge */}
-        {property.badge && badgeConfig[property.badge] && (
+        {!hasVideo && property.badge && badgeConfig[property.badge] && (
           <motion.span
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
@@ -576,7 +580,8 @@ export default function PropertyDetail({
           </motion.span>
         )}
 
-        {/* Share button */}
+        {/* Share button (image heroes only) */}
+        {!hasVideo && (
         <motion.button
           initial={{ opacity: 0, x: 20 }}
           animate={{ opacity: 1, x: 0 }}
@@ -596,8 +601,10 @@ export default function PropertyDetail({
             </>
           )}
         </motion.button>
+        )}
 
-        {/* Hero content */}
+        {/* Hero content overlay (image heroes only) */}
+        {!hasVideo && (
         <div className="absolute bottom-0 left-0 right-0 z-20 p-4 sm:p-6 md:p-10 max-w-7xl mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -677,7 +684,91 @@ export default function PropertyDetail({
             )}
           </motion.div>
         </div>
+        )}
       </div>
+
+      {/* ============================================================ */}
+      {/*  INFO BAR (below a clean video hero)                         */}
+      {/* ============================================================ */}
+      {hasVideo && (
+        <div className="bg-white border-b border-gray-100">
+          <div className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 py-7 sm:py-9">
+            {/* Top row: tags + share */}
+            <div className="flex items-start justify-between gap-4">
+              <div className="flex flex-wrap items-center gap-2">
+                {property.badge && badgeConfig[property.badge] && (
+                  <span className={`${badgeConfig[property.badge].bg} text-white text-[10px] font-bold px-3 py-1.5 rounded-full tracking-wider uppercase`}>
+                    {badgeConfig[property.badge].label}
+                  </span>
+                )}
+                <span className="text-[11px] font-semibold tracking-[0.18em] uppercase text-gold-dark bg-gold/10 px-3 py-1.5 rounded-full">
+                  {property.type}
+                </span>
+              </div>
+              <button
+                onClick={handleCopyLink}
+                className="shrink-0 inline-flex items-center gap-2 border border-border-medium text-navy/70 text-sm px-4 py-2 rounded-full hover:border-gold hover:text-gold-dark transition-colors"
+              >
+                {copied ? <Check className="w-4 h-4 text-emerald" /> : <Share2 className="w-4 h-4" />}
+                {copied ? "Copied!" : "Share"}
+              </button>
+            </div>
+
+            {/* Title + location */}
+            <h1 className="mt-5 font-heading text-3xl sm:text-4xl md:text-5xl font-bold text-navy leading-tight">
+              {property.name}
+            </h1>
+            <p className="mt-2.5 flex items-center gap-2 text-navy/60 text-sm sm:text-base">
+              <MapPin className="w-4 h-4 text-gold shrink-0" />
+              {property.location}
+            </p>
+
+            {/* Price + RERA */}
+            <div className="mt-6 flex flex-wrap items-end gap-x-8 gap-y-4">
+              <div>
+                <p className="text-[11px] uppercase tracking-[0.18em] text-navy/45 font-medium">
+                  Starting Price
+                </p>
+                <p className="font-heading text-3xl sm:text-4xl font-bold text-navy leading-none mt-1.5">
+                  {property.price}
+                </p>
+              </div>
+              {property.rera && (
+                <span className="inline-flex items-center gap-2 bg-emerald/10 border border-emerald/25 text-emerald text-sm font-medium px-4 py-2 rounded-full">
+                  <CheckCircle className="w-4 h-4" />
+                  RERA: {property.rera}
+                </span>
+              )}
+            </div>
+
+            {/* Spec chips */}
+            <div className="mt-6 flex flex-wrap gap-2.5">
+              {[
+                { icon: Maximize2, val: property.area },
+                property.bedrooms ? { icon: Bed, val: `${property.bedrooms} BHK` } : null,
+                property.bathrooms ? { icon: Bath, val: `${property.bathrooms} Bath` } : null,
+                property.floor ? { icon: Building2, val: property.floor } : null,
+                property.facing ? { icon: Compass, val: property.facing } : null,
+                { icon: Calendar, val: property.possession },
+              ]
+                .filter(Boolean)
+                .map((s, i) => {
+                  const spec = s as { icon: React.ElementType; val: string };
+                  const Icon = spec.icon;
+                  return (
+                    <span
+                      key={i}
+                      className="inline-flex items-center gap-2 bg-bg-cream border border-border-subtle text-navy/75 text-sm px-3.5 py-2 rounded-lg"
+                    >
+                      <Icon className="w-4 h-4 text-gold" />
+                      {spec.val}
+                    </span>
+                  );
+                })}
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* ============================================================ */}
       {/*  SECTION 2: STICKY TAB NAVIGATION                            */}
