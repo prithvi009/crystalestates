@@ -268,6 +268,18 @@ export default function PropertyDetail({
   const images = (property.images ?? []) as string[];
   const hasRealImages = images.length > 0 && images[0] !== "/placeholder-property.jpg";
 
+  /* ---- Hero video (Cloudinary-optimized for instant HD playback) ---- */
+  const videoUrl = property.videoUrl || "";
+  const hasVideo = Boolean(videoUrl);
+  const heroVideoSrc = videoUrl.includes("cloudinary.com")
+    ? videoUrl.replace("/upload/", "/upload/f_auto,q_auto,w_1920/")
+    : videoUrl;
+  const heroVideoPoster = videoUrl.includes("cloudinary.com")
+    ? videoUrl
+        .replace("/upload/", "/upload/so_0,f_jpg,q_auto,w_1920/")
+        .replace(/\.(mp4|mov|m4v|webm)$/i, ".jpg")
+    : undefined;
+
   /* ---- Description formatting ---- */
   const DESCRIPTION_WORD_LIMIT = 80;
   const descriptionText = property.description || "";
@@ -459,8 +471,31 @@ export default function PropertyDetail({
       {/*  SECTION 1: HERO / GALLERY AREA                              */}
       {/* ============================================================ */}
       <div className="relative h-[440px] sm:h-[470px] md:h-[540px] bg-charcoal overflow-hidden">
-        {/* Actual property image or fallback pattern */}
-        {hasRealImages ? (
+        {/* Hero media: video (instant HD loop) takes priority, else image, else pattern */}
+        {hasVideo ? (
+          <>
+            <video
+              autoPlay
+              muted
+              loop
+              playsInline
+              preload="auto"
+              poster={heroVideoPoster}
+              className="absolute inset-0 w-full h-full object-cover"
+            >
+              <source src={heroVideoSrc} type="video/mp4" />
+            </video>
+            {hasRealImages && (
+              <button
+                onClick={() => { setLightboxIndex(0); setLightboxOpen(true); }}
+                className="absolute bottom-6 right-6 z-20 flex items-center gap-2 bg-black/50 backdrop-blur-sm text-white text-sm px-4 py-2 rounded-full hover:bg-black/70 transition-colors"
+              >
+                <ImageIcon className="w-4 h-4" />
+                View Gallery ({images.length})
+              </button>
+            )}
+          </>
+        ) : hasRealImages ? (
           <>
             <AnimatePresence mode="wait">
               <motion.img
@@ -501,30 +536,6 @@ export default function PropertyDetail({
                 {heroImageIndex + 1} / {images.length} — View All
               </button>
             )}
-            {/* Thumbnail strip — hidden on mobile */}
-            {images.length > 1 && (
-              <div className="absolute bottom-6 left-6 z-20 hidden sm:flex gap-2 max-w-[60%] overflow-x-auto scrollbar-hide">
-                {images.slice(0, 6).map((img, i) => (
-                  <button
-                    key={i}
-                    onClick={() => setHeroImageIndex(i)}
-                    className={`shrink-0 w-16 h-12 rounded-lg overflow-hidden border-2 transition-all ${
-                      heroImageIndex === i ? "border-gold shadow-lg" : "border-white/30 opacity-70 hover:opacity-100"
-                    }`}
-                  >
-                    <img src={optimizeImg(img, { w: 128, h: 96 })} alt="" className="w-full h-full object-cover" />
-                  </button>
-                ))}
-                {images.length > 6 && (
-                  <button
-                    onClick={() => { setLightboxIndex(0); setLightboxOpen(true); }}
-                    className="shrink-0 w-16 h-12 rounded-lg bg-black/60 backdrop-blur-sm flex items-center justify-center text-white text-xs font-bold border-2 border-white/30"
-                  >
-                    +{images.length - 6}
-                  </button>
-                )}
-              </div>
-            )}
           </>
         ) : (
           <>
@@ -549,8 +560,9 @@ export default function PropertyDetail({
             />
           </>
         )}
-        {/* Gradient overlay */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-black/10 z-10" />
+        {/* Cinematic gradient overlays */}
+        <div className="absolute inset-0 bg-gradient-to-t from-navy via-navy/50 to-navy/15 z-10" />
+        <div className="absolute inset-x-0 top-0 h-36 bg-gradient-to-b from-navy/55 to-transparent z-10" />
 
         {/* Badge */}
         {property.badge && badgeConfig[property.badge] && (
@@ -605,11 +617,11 @@ export default function PropertyDetail({
 
             {/* Price + key specs — mobile-optimized */}
             <div className="flex flex-wrap items-center gap-2 sm:gap-3 md:gap-5">
-              <div className="bg-gold/20 backdrop-blur-sm border border-gold/30 rounded-lg sm:rounded-xl px-3 sm:px-5 py-2 sm:py-3">
-                <p className="text-[10px] sm:text-xs text-gold-light uppercase tracking-wider font-medium">
-                  Price
+              <div className="bg-white/10 backdrop-blur-md border border-gold/40 rounded-xl px-4 sm:px-6 py-2.5 sm:py-3.5">
+                <p className="text-[10px] sm:text-xs text-gold-light uppercase tracking-[0.18em] font-medium">
+                  Starting Price
                 </p>
-                <p className="text-xl sm:text-2xl md:text-3xl font-bold text-white">
+                <p className="text-2xl sm:text-3xl md:text-4xl font-bold text-white leading-tight">
                   {property.price}
                 </p>
               </div>
