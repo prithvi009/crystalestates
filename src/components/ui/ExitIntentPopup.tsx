@@ -148,7 +148,7 @@ export default function ExitIntentPopup() {
                       required
                       value={phone}
                       onChange={(e) => setPhone(e.target.value)}
-                      placeholder="+91 95117 50686"
+                      placeholder="+91 76662 29818"
                       className="w-full rounded-lg border border-border-subtle bg-white px-4 py-3 text-sm text-navy placeholder:text-text-ghost outline-none transition-all duration-200 focus:border-gold focus:ring-2 focus:ring-gold/20"
                     />
                   </div>

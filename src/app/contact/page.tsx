@@ -250,7 +250,7 @@ export default function ContactPage() {
                       <input
                         id="phone"
                         type="tel"
-                        placeholder="95117 50686"
+                        placeholder="76662 29818"
                         {...register("phone")}
                         className={`${inputCls} mt-0 pl-12`}
                       />
@@ -383,10 +383,10 @@ export default function ContactPage() {
                           Phone
                         </p>
                         <a
-                          href="tel:+919511750686"
+                          href="tel:+917666229818"
                           className="mt-1 block text-sm text-text-muted transition-colors hover:text-gold"
                         >
-                          +91 95117 50686
+                          +91 76662 29818
                         </a>
                       </div>
                     </div>
@@ -415,12 +415,12 @@ export default function ContactPage() {
                           WhatsApp
                         </p>
                         <a
-                          href="https://wa.me/919511750686"
+                          href="https://wa.me/917666229818"
                           target="_blank"
                           rel="noopener noreferrer"
                           className="mt-1 block text-sm text-text-muted transition-colors hover:text-gold"
                         >
-                          +91 95117 50686
+                          +91 76662 29818
                         </a>
                       </div>
                     </div>
@@ -591,7 +591,7 @@ export default function ContactPage() {
               </p>
 
               <a
-                href="https://wa.me/919511750686"
+                href="https://wa.me/917666229818"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="mt-8 inline-flex items-center gap-3 rounded-full bg-[#25D366] px-10 py-4 text-base font-semibold text-white shadow-lg transition-all hover:scale-105 hover:shadow-xl"

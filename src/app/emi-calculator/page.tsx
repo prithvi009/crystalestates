@@ -372,7 +372,7 @@ export default function EMICalculatorPage() {
               Our tie-ups with leading banks ensure you get the best interest rates.
             </p>
             <a
-              href="https://wa.me/919511750686?text=Hi%2C%20I%20need%20help%20with%20home%20loan%20processing."
+              href="https://wa.me/917666229818?text=Hi%2C%20I%20need%20help%20with%20home%20loan%20processing."
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-3 rounded-full bg-green-600 hover:bg-green-500 transition-colors px-8 py-4 font-body text-base font-semibold text-white"

@@ -247,7 +247,7 @@ export default function PropertiesClient({
             for you.
           </p>
           <a
-            href="https://wa.me/919511750686?text=Hi%2C%20I%27m%20looking%20for%20a%20property.%20Can%20you%20help%3F"
+            href="https://wa.me/917666229818?text=Hi%2C%20I%27m%20looking%20for%20a%20property.%20Can%20you%20help%3F"
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2 bg-green-600 text-white font-semibold px-8 py-3.5 rounded-lg hover:bg-green-700 transition-colors"

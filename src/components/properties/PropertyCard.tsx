@@ -43,7 +43,7 @@ export default function PropertyCard({ property }: PropertyCardProps) {
     const msg = encodeURIComponent(
       "Hi, I am interested in " + property.name + " (" + property.price + "). Please share more details."
     );
-    return "https://wa.me/919511750686?text=" + msg;
+    return "https://wa.me/917666229818?text=" + msg;
   }, [property.name, property.price]);
 
   const images = (property.images ?? []) as string[];

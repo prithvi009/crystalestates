@@ -246,7 +246,7 @@ export default async function BlogPostPage({ params }: Props) {
                       Maharashtra real estate market with confidence.
                     </p>
                     <a
-                      href="https://wa.me/919511750686?text=Hi%2C%20I%20read%20your%20blog%20and%20need%20property%20guidance."
+                      href="https://wa.me/917666229818?text=Hi%2C%20I%20read%20your%20blog%20and%20need%20property%20guidance."
                       target="_blank"
                       rel="noopener noreferrer"
                       className="inline-flex items-center gap-2 rounded-full bg-gold hover:bg-gold-light transition-colors px-6 py-3 font-body text-sm font-semibold text-navy"
@@ -283,7 +283,7 @@ export default async function BlogPostPage({ params }: Props) {
                 families find their dream homes across Mumbai and Pune.
               </p>
               <a
-                href="https://wa.me/919511750686?text=Hi%20Prithviraj%2C%20I%20would%20like%20to%20book%20a%20consultation."
+                href="https://wa.me/917666229818?text=Hi%20Prithviraj%2C%20I%20would%20like%20to%20book%20a%20consultation."
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 rounded-full bg-navy hover:bg-gold hover:text-navy transition-colors px-5 py-2.5 font-body text-sm font-semibold text-white"

@@ -32,7 +32,7 @@ export const metadata: Metadata = {
     template: "%s | Crystal Estates",
   },
   description:
-    "Premium real estate consultancy offering RERA-verified plots, flats, row houses & investment properties across Pune & Mumbai. Title-verified, transparent pricing. Data-driven approach. Call +91 95117 50686.",
+    "Premium real estate consultancy offering RERA-verified plots, flats, row houses & investment properties across Pune & Mumbai. Title-verified, transparent pricing. Data-driven approach. Call +91 76662 29818.",
   keywords: [
     "real estate Pune",
     "property for sale Pune",
@@ -109,7 +109,7 @@ export default function RootLayout({
               description:
                 "Premium real estate consultancy in Maharashtra offering RERA-verified plots, row houses, flats, and investment properties across Pune & Mumbai. Data-driven approach to real estate.",
               url: "https://www.crystalestates.in",
-              telephone: "+919511750686",
+              telephone: "+917666229818",
               email: "info@crystalestates.in",
               priceRange: "₹8L - ₹5Cr+",
               currenciesAccepted: "INR",
@@ -121,7 +121,7 @@ export default function RootLayout({
               contactPoint: [
                 {
                   "@type": "ContactPoint",
-                  telephone: "+919511750686",
+                  telephone: "+917666229818",
                   contactType: "sales",
                   areaServed: "IN",
                   availableLanguage: ["English", "Hindi", "Marathi"],

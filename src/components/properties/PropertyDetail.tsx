@@ -311,7 +311,7 @@ export default function PropertyDetail({
     const msg = encodeURIComponent(
       "Hi, I am interested in " + property.name + " (" + property.price + "). Please share more details."
     );
-    return "https://wa.me/919511750686?text=" + msg;
+    return "https://wa.me/917666229818?text=" + msg;
   }, [property.name, property.price]);
 
   /* ---- Intersection Observer for sticky tabs & active section ---- */
@@ -403,7 +403,7 @@ export default function PropertyDetail({
     const msg = encodeURIComponent(
       `Hi, I'm ${formName} (${formPhone}). I'd like to book a site visit for "${property.name}".`
     );
-    window.open(`https://wa.me/919511750686?text=${msg}`, "_blank");
+    window.open(`https://wa.me/917666229818?text=${msg}`, "_blank");
   };
 
   const setSectionRef = useCallback(
@@ -453,25 +453,25 @@ export default function PropertyDetail({
       {/* ============================================================ */}
       {/*  BREADCRUMB                                                   */}
       {/* ============================================================ */}
-      <div className="bg-charcoal text-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 pb-4 md:pt-24">
-          <nav className="flex items-center gap-2 text-sm text-gray-400 flex-wrap">
+      <div className="bg-bg-light">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 pb-4 md:pt-28">
+          <nav className="flex items-center gap-2 text-sm text-navy/50 flex-wrap">
             <Link
               href="/"
-              className="flex items-center gap-1 hover:text-gold transition-colors"
+              className="flex items-center gap-1 hover:text-gold-dark transition-colors"
             >
               <Home className="w-3.5 h-3.5" />
               Home
             </Link>
-            <ChevronRight className="w-3.5 h-3.5" />
+            <ChevronRight className="w-3.5 h-3.5 text-navy/30" />
             <Link
               href="/properties"
-              className="hover:text-gold transition-colors"
+              className="hover:text-gold-dark transition-colors"
             >
               Properties
             </Link>
-            <ChevronRight className="w-3.5 h-3.5" />
-            <span className="text-gold truncate max-w-[200px]">
+            <ChevronRight className="w-3.5 h-3.5 text-navy/30" />
+            <span className="text-gold-dark font-medium truncate max-w-[200px]">
               {property.name}
             </span>
           </nav>
@@ -481,7 +481,7 @@ export default function PropertyDetail({
       {/* ============================================================ */}
       {/*  SECTION 1: HERO / GALLERY AREA                              */}
       {/* ============================================================ */}
-      <div className="relative h-[440px] sm:h-[470px] md:h-[540px] bg-charcoal overflow-hidden">
+      <div className="relative h-[440px] sm:h-[470px] md:h-[540px] bg-bg-cream overflow-hidden">
         {/* Clean hero media: video loop → image slider → pattern. No text overlay. */}
         {hasVideo ? (
           <video
@@ -496,15 +496,15 @@ export default function PropertyDetail({
             <source src={heroVideoSrc} type="video/mp4" />
           </video>
         ) : hasRealImages ? (
-          <AnimatePresence mode="wait">
+          <AnimatePresence>
             <motion.img
               key={heroImageIndex}
               src={optimizeImg(images[heroImageIndex], { w: 1920, h: 1080 })}
               alt={`${property.name} — ${heroImageIndex + 1}`}
-              initial={{ opacity: 0, scale: 1.03 }}
-              animate={{ opacity: 1, scale: 1 }}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              transition={{ duration: 0.7, ease: "easeOut" }}
+              transition={{ duration: 0.9, ease: "easeInOut" }}
               className="absolute inset-0 w-full h-full object-cover"
             />
           </AnimatePresence>
@@ -1641,7 +1641,7 @@ export default function PropertyDetail({
                     WhatsApp
                   </a>
                   <a
-                    href="tel:+919511750686"
+                    href="tel:+917666229818"
                     className="flex items-center justify-center gap-2 rounded-xl bg-white/10 border border-white/20 py-3 text-sm font-bold text-white hover:bg-white/20 transition-colors"
                   >
                     <Phone className="w-4 h-4" />
@@ -1780,7 +1780,7 @@ export default function PropertyDetail({
           </div>
           <div className="flex items-center gap-2 shrink-0">
             <a
-              href="tel:+919511750686"
+              href="tel:+917666229818"
               className="flex items-center justify-center w-11 h-11 rounded-xl bg-charcoal text-white hover:bg-charcoal/90 transition-colors"
             >
               <Phone className="w-5 h-5" />

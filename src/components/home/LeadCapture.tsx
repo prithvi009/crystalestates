@@ -223,7 +223,7 @@ export default function LeadCapture() {
                   <input
                     id="phone"
                     type="tel"
-                    placeholder="95117 50686"
+                    placeholder="76662 29818"
                     className={`${inputBase} rounded-l-none`}
                     {...register("phone")}
                   />
@@ -326,13 +326,13 @@ export default function LeadCapture() {
         {!submitted && (
           <motion.div variants={itemVariants} className="mt-8 text-center space-y-3">
             <a
-              href="https://wa.me/919511750686?text=Hi%2C%20I%27d%20like%20to%20know%20more%20about%20Crystal%20Estates%20properties."
+              href="https://wa.me/917666229818?text=Hi%2C%20I%27d%20like%20to%20know%20more%20about%20Crystal%20Estates%20properties."
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 text-sm text-text-muted hover:text-emerald transition-colors"
             >
               <MessageCircle className="w-4 h-4" />
-              Or WhatsApp us directly &rarr; +91 95117 50686
+              Or WhatsApp us directly &rarr; +91 76662 29818
             </a>
             <p className="flex items-center justify-center gap-1.5 text-xs text-text-ghost">
               <Lock className="w-3.5 h-3.5" />

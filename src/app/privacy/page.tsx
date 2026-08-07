@@ -263,8 +263,8 @@ export default function PrivacyPolicyPage() {
                 </p>
                 <p className="flex items-center gap-3">
                   <Phone className="w-4 h-4 text-gold shrink-0" />
-                  <a href="tel:+919511750686" className="hover:text-gold-dark transition-colors">
-                    +91 95117 50686
+                  <a href="tel:+917666229818" className="hover:text-gold-dark transition-colors">
+                    +91 76662 29818
                   </a>
                 </p>
                 <p className="flex items-start gap-3">

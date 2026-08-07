@@ -15,8 +15,8 @@ const navLinks = [
   { href: "/contact", label: "Contact" },
 ];
 
-const WHATSAPP_LINK = "https://wa.me/919511750686";
-const PHONE_NUMBER = "+91 95117 50686";
+const WHATSAPP_LINK = "https://wa.me/917666229818";
+const PHONE_NUMBER = "+91 76662 29818";
 
 function Wordmark({ className = "" }: { className?: string }) {
   return (

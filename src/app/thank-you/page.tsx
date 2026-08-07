@@ -135,7 +135,7 @@ export default function ThankYouPage() {
           className="mb-10"
         >
           <a
-            href="https://wa.me/919511750686"
+            href="https://wa.me/917666229818"
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-3 rounded-full bg-green-600 hover:bg-green-500 transition-colors px-8 py-4 font-body text-base font-semibold text-white"

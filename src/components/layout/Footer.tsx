@@ -39,7 +39,7 @@ const socialLinks: { icon?: typeof Instagram; href: string; label: string; custo
   { icon: Instagram, href: "https://instagram.com/crystalestates", label: "Instagram" },
   { icon: Youtube, href: "https://youtube.com/@crystalestates", label: "YouTube" },
   { icon: Linkedin, href: "https://linkedin.com/company/crystalestates", label: "LinkedIn" },
-  { label: "WhatsApp", href: "https://wa.me/919511750686", customIcon: true },
+  { label: "WhatsApp", href: "https://wa.me/917666229818", customIcon: true },
 ];
 
 function ColHeading({ children }: { children: React.ReactNode }) {
@@ -141,9 +141,9 @@ export default function Footer() {
                 </span>
               </li>
               <li>
-                <a href="tel:+919511750686" className="flex items-center gap-3 text-sm text-white/55 transition-colors hover:text-gold">
+                <a href="tel:+917666229818" className="flex items-center gap-3 text-sm text-white/55 transition-colors hover:text-gold">
                   <Phone className="h-4 w-4 text-gold shrink-0" />
-                  +91 95117 50686
+                  +91 76662 29818
                 </a>
               </li>
               <li>

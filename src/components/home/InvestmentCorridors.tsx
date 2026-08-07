@@ -238,7 +238,7 @@ export default function InvestmentCorridors() {
                     `Hi, I'm ${reportName || "interested"}. I'd like to receive the free investment report from Crystal Estates.`
                   );
                   window.open(
-                    `https://wa.me/919511750686?text=${msg}`,
+                    `https://wa.me/917666229818?text=${msg}`,
                     "_blank"
                   );
                   setShowModal(false);
@@ -251,10 +251,10 @@ export default function InvestmentCorridors() {
               <p className="text-center text-gray-400 text-xs mt-4">
                 Or call us at{" "}
                 <a
-                  href="tel:+919511750686"
+                  href="tel:+917666229818"
                   className="text-gold hover:underline"
                 >
-                  +91 95117 50686
+                  +91 76662 29818
                 </a>
               </p>
             </motion.div>

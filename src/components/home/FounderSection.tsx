@@ -113,7 +113,7 @@ export default function FounderSection() {
             {/* CTA */}
             <div className="pt-4">
               <a
-                href="https://wa.me/919511750686?text=Hi%20Prithviraj%2C%20I%27d%20like%20to%20book%20a%20free%20consultation."
+                href="https://wa.me/917666229818?text=Hi%20Prithviraj%2C%20I%27d%20like%20to%20book%20a%20free%20consultation."
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 px-6 py-3 bg-gold text-primary-black font-semibold text-sm rounded-lg hover:bg-gold-light transition-colors duration-300"
