@@ -14,7 +14,7 @@ export default function Hero() {
       <div className="pointer-events-none absolute -top-24 -right-24 w-[520px] h-[520px] rounded-full bg-[radial-gradient(circle,rgba(198,169,98,0.12)_0%,transparent_70%)]" />
 
       <div className="relative max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 pt-24 sm:pt-28 lg:pt-28 pb-10 lg:pb-16">
-        <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 items-center">
+        <div className="grid lg:grid-cols-[1.15fr_0.85fr] gap-10 lg:gap-12 items-center">
           {/* ── VISUAL (desktop only — mobile stays clean) ── */}
           <motion.div
             initial={{ opacity: 0, scale: 0.96 }}
@@ -69,7 +69,7 @@ export default function Hero() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 0.3, ease }}
-              className="max-w-xl"
+              className="max-w-xl lg:max-w-none"
             >
               <HomeSearch />
               <p className="mt-4 text-sm text-navy/55">
