@@ -279,6 +279,7 @@ export default function PropertyDetail({
         .replace("/upload/", "/upload/so_0,f_jpg,q_auto,w_1920/")
         .replace(/\.(mp4|mov|m4v|webm)$/i, ".jpg")
     : undefined;
+  const showSlider = !hasVideo && hasRealImages && images.length > 1;
 
   /* ---- Description formatting ---- */
   const DESCRIPTION_WORD_LIMIT = 80;
@@ -346,6 +347,16 @@ export default function PropertyDetail({
     });
     return () => observers.forEach((o) => o.disconnect());
   }, []);
+
+  /* ---- Hero slider auto-advance ---- */
+  useEffect(() => {
+    if (!showSlider || lightboxOpen) return;
+    const t = setInterval(
+      () => setHeroImageIndex((i) => (i + 1) % images.length),
+      4500
+    );
+    return () => clearInterval(t);
+  }, [showSlider, lightboxOpen, images.length]);
 
   /* ---- Handlers ---- */
   const scrollToSection = useCallback((id: string) => {
@@ -471,72 +482,32 @@ export default function PropertyDetail({
       {/*  SECTION 1: HERO / GALLERY AREA                              */}
       {/* ============================================================ */}
       <div className="relative h-[440px] sm:h-[470px] md:h-[540px] bg-charcoal overflow-hidden">
-        {/* Hero media: video (instant HD loop) takes priority, else image, else pattern */}
+        {/* Clean hero media: video loop → image slider → pattern. No text overlay. */}
         {hasVideo ? (
-          <>
-            <video
-              autoPlay
-              muted
-              loop
-              playsInline
-              preload="auto"
-              poster={heroVideoPoster}
-              className="absolute inset-0 w-full h-full object-cover"
-            >
-              <source src={heroVideoSrc} type="video/mp4" />
-            </video>
-            {hasRealImages && (
-              <button
-                onClick={() => { setLightboxIndex(0); setLightboxOpen(true); }}
-                className="absolute bottom-6 right-6 z-20 flex items-center gap-2 bg-black/50 backdrop-blur-sm text-white text-sm px-4 py-2 rounded-full hover:bg-black/70 transition-colors"
-              >
-                <ImageIcon className="w-4 h-4" />
-                View Gallery ({images.length})
-              </button>
-            )}
-          </>
+          <video
+            autoPlay
+            muted
+            loop
+            playsInline
+            preload="auto"
+            poster={heroVideoPoster}
+            className="absolute inset-0 w-full h-full object-cover"
+          >
+            <source src={heroVideoSrc} type="video/mp4" />
+          </video>
         ) : hasRealImages ? (
-          <>
-            <AnimatePresence mode="wait">
-              <motion.img
-                key={heroImageIndex}
-                src={optimizeImg(images[heroImageIndex], { w: 1400, h: 700 })}
-                alt={`${property.name} - Image ${heroImageIndex + 1}`}
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.4 }}
-                className="absolute inset-0 w-full h-full object-cover"
-              />
-            </AnimatePresence>
-            {/* Image nav arrows */}
-            {images.length > 1 && (
-              <>
-                <button
-                  onClick={() => setHeroImageIndex((i) => (i - 1 + images.length) % images.length)}
-                  className="absolute left-4 top-1/2 -translate-y-1/2 z-20 w-10 h-10 rounded-full bg-black/40 backdrop-blur-sm flex items-center justify-center text-white hover:bg-black/60 transition-colors"
-                >
-                  <ChevronLeft className="w-5 h-5" />
-                </button>
-                <button
-                  onClick={() => setHeroImageIndex((i) => (i + 1) % images.length)}
-                  className="absolute right-4 top-1/2 -translate-y-1/2 z-20 w-10 h-10 rounded-full bg-black/40 backdrop-blur-sm flex items-center justify-center text-white hover:bg-black/60 transition-colors"
-                >
-                  <ChevronRight className="w-5 h-5" />
-                </button>
-              </>
-            )}
-            {/* Image counter + view all */}
-            {images.length > 1 && (
-              <button
-                onClick={() => { setLightboxIndex(0); setLightboxOpen(true); }}
-                className="absolute bottom-6 right-6 z-20 flex items-center gap-2 bg-black/50 backdrop-blur-sm text-white text-sm px-4 py-2 rounded-full hover:bg-black/70 transition-colors"
-              >
-                <ImageIcon className="w-4 h-4" />
-                {heroImageIndex + 1} / {images.length} — View All
-              </button>
-            )}
-          </>
+          <AnimatePresence mode="wait">
+            <motion.img
+              key={heroImageIndex}
+              src={optimizeImg(images[heroImageIndex], { w: 1920, h: 1080 })}
+              alt={`${property.name} — ${heroImageIndex + 1}`}
+              initial={{ opacity: 0, scale: 1.03 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.7, ease: "easeOut" }}
+              className="absolute inset-0 w-full h-full object-cover"
+            />
+          </AnimatePresence>
         ) : (
           <>
             {/* Fallback geometric pattern */}
@@ -548,149 +519,58 @@ export default function PropertyDetail({
                 backgroundSize: "50px 50px",
               }}
             />
-            <motion.div
-              className="absolute inset-0 opacity-[0.03]"
-              style={{
-                background:
-                  "linear-gradient(135deg, transparent 30%, rgba(198,169,98,0.3) 50%, transparent 70%)",
-                backgroundSize: "200% 200%",
-              }}
-              animate={{ backgroundPosition: ["0% 0%", "100% 100%"] }}
-              transition={{ duration: 8, repeat: Infinity, repeatType: "reverse" }}
-            />
           </>
         )}
-        {/* Cinematic gradient overlays — only for image heroes; video stays clean */}
-        {!hasVideo && (
+
+        {/* Slider controls (image hero only) */}
+        {showSlider && (
           <>
-            <div className="absolute inset-0 bg-gradient-to-t from-navy via-navy/50 to-navy/15 z-10" />
-            <div className="absolute inset-x-0 top-0 h-36 bg-gradient-to-b from-navy/55 to-transparent z-10" />
+            <button
+              aria-label="Previous"
+              onClick={() => setHeroImageIndex((i) => (i - 1 + images.length) % images.length)}
+              className="absolute left-4 top-1/2 -translate-y-1/2 z-20 w-11 h-11 rounded-full bg-white/85 backdrop-blur-sm flex items-center justify-center text-navy hover:bg-white transition-colors shadow-md"
+            >
+              <ChevronLeft className="w-5 h-5" />
+            </button>
+            <button
+              aria-label="Next"
+              onClick={() => setHeroImageIndex((i) => (i + 1) % images.length)}
+              className="absolute right-4 top-1/2 -translate-y-1/2 z-20 w-11 h-11 rounded-full bg-white/85 backdrop-blur-sm flex items-center justify-center text-navy hover:bg-white transition-colors shadow-md"
+            >
+              <ChevronRight className="w-5 h-5" />
+            </button>
+            {/* Dots */}
+            <div className="absolute bottom-5 left-1/2 -translate-x-1/2 z-20 flex items-center gap-2 bg-black/25 backdrop-blur-sm rounded-full px-3 py-2">
+              {images.map((_, i) => (
+                <button
+                  key={i}
+                  aria-label={`Go to image ${i + 1}`}
+                  onClick={() => setHeroImageIndex(i)}
+                  className={`h-1.5 rounded-full transition-all duration-300 ${
+                    heroImageIndex === i ? "w-6 bg-white" : "w-1.5 bg-white/60 hover:bg-white/80"
+                  }`}
+                />
+              ))}
+            </div>
           </>
         )}
 
-        {/* Badge */}
-        {!hasVideo && property.badge && badgeConfig[property.badge] && (
-          <motion.span
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.3 }}
-            className={`absolute top-6 left-6 z-20 ${badgeConfig[property.badge].bg} text-white text-xs font-bold px-4 py-2 rounded-full tracking-wide uppercase shadow-lg`}
+        {/* View gallery (video or image hero) */}
+        {hasRealImages && (
+          <button
+            onClick={() => { setLightboxIndex(hasVideo ? 0 : heroImageIndex); setLightboxOpen(true); }}
+            className="absolute bottom-5 right-5 z-20 flex items-center gap-2 bg-black/45 backdrop-blur-sm text-white text-sm px-4 py-2 rounded-full hover:bg-black/65 transition-colors"
           >
-            {badgeConfig[property.badge].label}
-          </motion.span>
-        )}
-
-        {/* Share button (image heroes only) */}
-        {!hasVideo && (
-        <motion.button
-          initial={{ opacity: 0, x: 20 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ delay: 0.3 }}
-          onClick={handleCopyLink}
-          className="absolute top-6 right-6 z-20 flex items-center gap-2 bg-white/10 backdrop-blur-md border border-white/20 text-white text-sm px-4 py-2.5 rounded-full hover:bg-white/20 transition-colors"
-        >
-          {copied ? (
-            <>
-              <Check className="w-4 h-4 text-emerald-light" />
-              <span>Copied!</span>
-            </>
-          ) : (
-            <>
-              <Share2 className="w-4 h-4" />
-              <span>Share</span>
-            </>
-          )}
-        </motion.button>
-        )}
-
-        {/* Hero content overlay (image heroes only) */}
-        {!hasVideo && (
-        <div className="absolute bottom-0 left-0 right-0 z-20 p-4 sm:p-6 md:p-10 max-w-7xl mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-          >
-            <span className="inline-block text-[10px] sm:text-xs tracking-[0.2em] sm:tracking-[0.25em] uppercase text-gold-light font-semibold mb-2 sm:mb-3 bg-gold/10 px-2.5 py-0.5 sm:px-3 sm:py-1 rounded-full backdrop-blur-sm">
-              {property.type}
-            </span>
-            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-2 sm:mb-3 leading-tight">
-              {property.name}
-            </h1>
-            <p className="flex items-center gap-1.5 sm:gap-2 text-gray-300 text-xs sm:text-sm md:text-base mb-3 sm:mb-6">
-              <MapPin className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-gold shrink-0" />
-              <span className="truncate">{property.location}</span>
-            </p>
-
-            {/* Price + key specs — mobile-optimized */}
-            <div className="flex flex-wrap items-center gap-2 sm:gap-3 md:gap-5">
-              <div className="bg-white/10 backdrop-blur-md border border-gold/40 rounded-xl px-4 sm:px-6 py-2.5 sm:py-3.5">
-                <p className="text-[10px] sm:text-xs text-gold-light uppercase tracking-[0.18em] font-medium">
-                  Starting Price
-                </p>
-                <p className="text-2xl sm:text-3xl md:text-4xl font-bold text-white leading-tight">
-                  {property.price}
-                </p>
-              </div>
-
-              {/* Specs — horizontal scroll on mobile */}
-              <div className="flex items-center gap-1.5 sm:gap-3 text-xs sm:text-sm text-gray-300 overflow-x-auto scrollbar-hide max-w-full">
-                <span className="flex items-center gap-1 sm:gap-1.5 bg-white/5 backdrop-blur-sm rounded-md sm:rounded-lg px-2 sm:px-3 py-1.5 sm:py-2 border border-white/10 whitespace-nowrap shrink-0">
-                  <Maximize2 className="w-3 h-3 sm:w-4 sm:h-4 text-gold-light" />
-                  {property.area}
-                </span>
-                {property.bedrooms && (
-                  <span className="flex items-center gap-1 sm:gap-1.5 bg-white/5 backdrop-blur-sm rounded-md sm:rounded-lg px-2 sm:px-3 py-1.5 sm:py-2 border border-white/10 whitespace-nowrap shrink-0">
-                    <Bed className="w-3 h-3 sm:w-4 sm:h-4 text-gold-light" />
-                    {property.bedrooms} BHK
-                  </span>
-                )}
-                {property.bathrooms && (
-                  <span className="hidden sm:flex items-center gap-1.5 bg-white/5 backdrop-blur-sm rounded-lg px-3 py-2 border border-white/10 whitespace-nowrap shrink-0">
-                    <Bath className="w-4 h-4 text-gold-light" />
-                    {property.bathrooms} Bath
-                  </span>
-                )}
-                {property.floor && (
-                  <span className="hidden md:flex items-center gap-1.5 bg-white/5 backdrop-blur-sm rounded-lg px-3 py-2 border border-white/10 whitespace-nowrap shrink-0">
-                    <Building2 className="w-4 h-4 text-gold-light" />
-                    {property.floor}
-                  </span>
-                )}
-                {property.facing && (
-                  <span className="hidden md:flex items-center gap-1.5 bg-white/5 backdrop-blur-sm rounded-lg px-3 py-2 border border-white/10 whitespace-nowrap shrink-0">
-                    <Compass className="w-4 h-4 text-gold-light" />
-                    {property.facing}
-                  </span>
-                )}
-                <span className="flex items-center gap-1 sm:gap-1.5 bg-white/5 backdrop-blur-sm rounded-md sm:rounded-lg px-2 sm:px-3 py-1.5 sm:py-2 border border-white/10 whitespace-nowrap shrink-0">
-                  <Calendar className="w-3 h-3 sm:w-4 sm:h-4 text-gold-light" />
-                  {property.possession}
-                </span>
-              </div>
-            </div>
-
-            {/* RERA badge */}
-            {property.rera && (
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.5 }}
-                className="mt-2 sm:mt-4 inline-flex items-center gap-1.5 sm:gap-2 bg-emerald/20 backdrop-blur-sm border border-emerald/30 text-white text-xs sm:text-sm font-medium px-3 sm:px-4 py-1.5 sm:py-2 rounded-full"
-              >
-                <CheckCircle className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-green-400" />
-                RERA: {property.rera}
-              </motion.div>
-            )}
-          </motion.div>
-        </div>
+            <ImageIcon className="w-4 h-4" />
+            {showSlider ? `${heroImageIndex + 1} / ${images.length}` : `View Gallery (${images.length})`}
+          </button>
         )}
       </div>
 
       {/* ============================================================ */}
-      {/*  INFO BAR (below a clean video hero)                         */}
+      {/*  INFO BAR (clean media hero → details below)                 */}
       {/* ============================================================ */}
-      {hasVideo && (
+      {true && (
         <div className="bg-white border-b border-gray-100">
           <div className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 py-7 sm:py-9">
             {/* Top row: tags + share */}
