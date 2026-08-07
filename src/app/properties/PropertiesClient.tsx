@@ -50,14 +50,20 @@ function matchBudget(priceNumeric: number, budget: string): boolean {
 
 interface PropertiesClientProps {
   properties: Property[];
+  initialType?: string;
+  initialLocation?: string;
+  initialBudget?: string;
 }
 
 export default function PropertiesClient({
   properties,
+  initialType = "All",
+  initialLocation = "All",
+  initialBudget = "All",
 }: PropertiesClientProps) {
-  const [selectedType, setSelectedType] = useState("All");
-  const [selectedLocation, setSelectedLocation] = useState("All");
-  const [selectedBudget, setSelectedBudget] = useState("All");
+  const [selectedType, setSelectedType] = useState(initialType);
+  const [selectedLocation, setSelectedLocation] = useState(initialLocation);
+  const [selectedBudget, setSelectedBudget] = useState(initialBudget);
   const [sortBy, setSortBy] = useState("default");
   const [search, setSearch] = useState("");
 

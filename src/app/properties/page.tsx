@@ -1,8 +1,14 @@
 import type { Metadata } from "next";
 import { getAllProperties } from "@/lib/db/queries";
 import PropertiesClient from "./PropertiesClient";
+import { propertyTypes, locations, budgetRanges } from "@/lib/constants";
 
 export const dynamic = "force-dynamic";
+
+function pick(value: string | string[] | undefined, allowed: readonly string[]): string {
+  const v = Array.isArray(value) ? value[0] : value;
+  return v && (allowed as readonly string[]).includes(v) ? v : "All";
+}
 
 export const metadata: Metadata = {
   title: "Properties for Sale in Pune & Mumbai — Plots, Flats, Row Houses",
@@ -29,8 +35,16 @@ export const metadata: Metadata = {
   },
 };
 
-export default async function PropertiesPage() {
+export default async function PropertiesPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+}) {
   const properties = await getAllProperties();
+  const sp = await searchParams;
+  const initialType = pick(sp.type, propertyTypes);
+  const initialLocation = pick(sp.location, locations);
+  const initialBudget = pick(sp.budget, budgetRanges);
 
   return (
     <>
@@ -70,7 +84,12 @@ export default async function PropertiesPage() {
           }),
         }}
       />
-      <PropertiesClient properties={properties} />
+      <PropertiesClient
+        properties={properties}
+        initialType={initialType}
+        initialLocation={initialLocation}
+        initialBudget={initialBudget}
+      />
     </>
   );
 }

@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import { ArrowRight, ShieldCheck, MapPin } from "lucide-react";
 import Link from "next/link";
+import HomeSearch from "./HomeSearch";
 
 const stats = [
   { value: "RERA", label: "Registered" },
@@ -101,25 +102,21 @@ export default function Hero() {
               Plots, homes &amp; apartments across Pune and Mumbai. Verified. Transparent.
             </motion.p>
 
+            {/* Search */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 0.5, ease }}
-              className="mt-8 flex flex-col sm:flex-row gap-3 sm:gap-4"
+              className="mt-8 max-w-xl"
             >
-              <Link
-                href="/properties"
-                className="group inline-flex items-center justify-center gap-2 px-7 py-4 bg-navy text-white font-semibold rounded-full text-base transition-all duration-300 hover:bg-gold hover:text-navy"
-              >
-                Explore Properties
-                <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
-              </Link>
-              <Link
-                href="/contact"
-                className="inline-flex items-center justify-center px-7 py-4 rounded-full text-base font-semibold text-navy border border-navy/20 transition-all duration-300 hover:border-gold hover:text-gold-dark"
-              >
-                Book Free Consultation
-              </Link>
+              <HomeSearch />
+              <p className="mt-3.5 text-sm text-navy/55">
+                or{" "}
+                <Link href="/contact" className="font-semibold text-gold-dark hover:text-gold inline-flex items-center gap-1">
+                  book a free consultation
+                  <ArrowRight className="w-3.5 h-3.5" />
+                </Link>
+              </p>
             </motion.div>
 
             {/* Stats */}
