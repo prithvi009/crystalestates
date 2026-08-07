@@ -17,7 +17,7 @@ interface LeadPayload {
   name: string;
   phone: string;
   email?: string;
-  source: "contact_form" | "lead_capture" | "property_inquiry" | "exit_intent" | "investment_report" | "floorplan_unlock" | "market_report";
+  source: "contact_form" | "lead_capture" | "property_inquiry" | "exit_intent" | "investment_report" | "floorplan_unlock" | "brochure_unlock" | "market_report";
   propertyInterest?: string;
   propertyType?: string;
   budget?: string;

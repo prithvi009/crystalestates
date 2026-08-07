@@ -451,7 +451,7 @@ export default function PropertyDetail({
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              transition={{ duration: 0.9, ease: "easeInOut" }}
+              transition={{ duration: 0.35, ease: "easeOut" }}
               className="absolute inset-0 w-full h-full object-cover"
             />
           </AnimatePresence>
@@ -1098,29 +1098,71 @@ export default function PropertyDetail({
                     Location & Nearby
                   </h2>
 
-                  {/* Location maps (from brochure) */}
+                  {/* Location & connectivity maps (gated behind a lead form) */}
                   {locationMaps.length > 0 && (
-                    <div className="mb-6 space-y-5">
-                      {locationMaps.map((m) => (
-                        <div key={m.url}>
-                          <p className="text-sm font-semibold text-navy/70 mb-2">{m.title}</p>
-                          <a
-                            href={m.url}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="block relative rounded-xl border border-border-subtle overflow-hidden bg-bg-cream group"
-                          >
-                            <img
-                              src={m.url}
-                              alt={`${m.title} — ${property.name}`}
-                              className="w-full h-auto object-contain"
-                            />
-                            <span className="absolute bottom-3 right-3 inline-flex items-center gap-1.5 bg-navy/85 text-white text-xs px-3 py-1.5 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity">
-                              <ExternalLink className="w-3 h-3" /> Full size
-                            </span>
-                          </a>
+                    <div className="mb-6">
+                      <div className="relative">
+                        <div
+                          className={`space-y-5 transition-all duration-500 ${
+                            plansUnlocked
+                              ? ""
+                              : "blur-xl pointer-events-none select-none max-h-[430px] overflow-hidden"
+                          }`}
+                        >
+                          {locationMaps.map((m) => (
+                            <div key={m.url}>
+                              <p className="text-sm font-semibold text-navy/70 mb-2">{m.title}</p>
+                              <a
+                                href={plansUnlocked ? m.url : undefined}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="block relative rounded-xl border border-border-subtle overflow-hidden bg-bg-cream group"
+                              >
+                                <img
+                                  src={m.url}
+                                  alt={`${m.title} — ${property.name}`}
+                                  className="w-full h-auto object-contain"
+                                />
+                                <span className="absolute bottom-3 right-3 inline-flex items-center gap-1.5 bg-navy/85 text-white text-xs px-3 py-1.5 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity">
+                                  <ExternalLink className="w-3 h-3" /> Full size
+                                </span>
+                              </a>
+                            </div>
+                          ))}
                         </div>
-                      ))}
+
+                        {!plansUnlocked && (
+                          <div className="absolute inset-0 z-10 flex items-center justify-center bg-navy/45 backdrop-blur-[2px] p-4">
+                            <motion.div
+                              initial={{ opacity: 0, y: 16 }}
+                              animate={{ opacity: 1, y: 0 }}
+                              transition={{ duration: 0.4 }}
+                              className="w-full max-w-sm bg-white rounded-2xl p-5 sm:p-6 shadow-[0_20px_50px_rgba(16,42,67,0.3)]"
+                            >
+                              <div className="flex items-center gap-3 mb-1.5">
+                                <span className="flex items-center justify-center w-10 h-10 rounded-full bg-gold/15 shrink-0">
+                                  <MapPinned className="w-5 h-5 text-gold-dark" />
+                                </span>
+                                <h3 className="font-heading text-lg text-navy leading-tight">
+                                  Unlock location &amp; connectivity maps
+                                </h3>
+                              </div>
+                              <p className="text-sm text-navy/60 mb-4">
+                                Enter your details to view the locality map, connectivity &amp; nearby landmarks.
+                              </p>
+                              <LeadForm
+                                variant="light"
+                                source="brochure_unlock"
+                                propertyName={property.name}
+                                propertyType={property.type}
+                                buttonLabel="View Maps"
+                                quiet
+                                onSuccess={unlockPlans}
+                              />
+                            </motion.div>
+                          </div>
+                        )}
+                      </div>
                     </div>
                   )}
 
