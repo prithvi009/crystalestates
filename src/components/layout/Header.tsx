@@ -8,7 +8,6 @@ import { Menu, X, Phone, ArrowRight } from "lucide-react";
 
 const navLinks = [
   { href: "/", label: "Home" },
-  { href: "/projects", label: "Projects" },
   { href: "/properties", label: "Properties" },
   { href: "/about", label: "About" },
   { href: "/blog", label: "Blog" },

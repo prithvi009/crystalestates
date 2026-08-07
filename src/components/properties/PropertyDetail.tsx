@@ -62,6 +62,7 @@ import {
 } from "lucide-react";
 import type { Property } from "@/lib/db/schema";
 import PropertyCard from "./PropertyCard";
+import LeadForm from "./LeadForm";
 
 /* ------------------------------------------------------------------ */
 /*  Cloudinary URL optimization helper                                 */
@@ -112,7 +113,6 @@ const SECTIONS = [
   { id: "overview", label: "Overview", icon: List },
   { id: "gallery", label: "Gallery", icon: Eye },
   { id: "floorplans", label: "Floor Plans", icon: Maximize2 },
-  { id: "pricing", label: "Price & EMI", icon: IndianRupee },
   { id: "amenities", label: "Amenities", icon: ShieldCheck },
   { id: "location", label: "Location", icon: MapPinned },
   { id: "documents", label: "Documents", icon: FileText },
@@ -166,30 +166,6 @@ function getAmenityIcon(name: string): React.ElementType {
 }
 
 /* ------------------------------------------------------------------ */
-/*  EMI Calculator helper                                              */
-/* ------------------------------------------------------------------ */
-
-function calculateEMI(principal: number, annualRate: number, years: number) {
-  const monthlyRate = annualRate / 12 / 100;
-  const months = years * 12;
-  if (monthlyRate === 0) return principal / months;
-  const emi =
-    (principal * monthlyRate * Math.pow(1 + monthlyRate, months)) /
-    (Math.pow(1 + monthlyRate, months) - 1);
-  return emi;
-}
-
-function formatCurrency(amount: number): string {
-  if (amount >= 10000000) {
-    return `${(amount / 10000000).toFixed(2)} Cr`;
-  }
-  if (amount >= 100000) {
-    return `${(amount / 100000).toFixed(2)} L`;
-  }
-  return amount.toLocaleString("en-IN");
-}
-
-/* ------------------------------------------------------------------ */
 /*  Badge config                                                       */
 /* ------------------------------------------------------------------ */
 
@@ -237,25 +213,14 @@ export default function PropertyDetail({
   const [activeSection, setActiveSection] = useState<SectionId>("overview");
   const [isSticky, setIsSticky] = useState(false);
   const [copied, setCopied] = useState(false);
-  const [formName, setFormName] = useState("");
-  const [formPhone, setFormPhone] = useState("");
-  const [formMessage, setFormMessage] = useState(
-    `I'm interested in ${property.name}`
-  );
-  const [formSubmitted, setFormSubmitted] = useState(false);
 
   // Image gallery state
   const [heroImageIndex, setHeroImageIndex] = useState(0);
   const [activePlan, setActivePlan] = useState(0);
+  const [plansUnlocked, setPlansUnlocked] = useState(false);
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [lightboxIndex, setLightboxIndex] = useState(0);
   const [descriptionExpanded, setDescriptionExpanded] = useState(false);
-
-  // EMI calculator state
-  const defaultLoan = Math.round(property.priceNumeric * 0.8);
-  const [loanAmount, setLoanAmount] = useState(defaultLoan);
-  const [interestRate, setInterestRate] = useState(8.5);
-  const [tenure, setTenure] = useState(20);
 
   const tabNavRef = useRef<HTMLDivElement>(null);
   const sectionRefs = useRef<Record<string, HTMLElement | null>>({});
@@ -302,13 +267,6 @@ export default function PropertyDetail({
     ? descriptionWords.slice(0, DESCRIPTION_WORD_LIMIT).join(" ") + "..."
     : null;
 
-  const monthlyEMI = useMemo(
-    () => calculateEMI(loanAmount, interestRate, tenure),
-    [loanAmount, interestRate, tenure]
-  );
-  const totalAmount = monthlyEMI * tenure * 12;
-  const totalInterest = totalAmount - loanAmount;
-
   /* ---- WhatsApp ---- */
   const whatsappUrl = useMemo(() => {
     const msg = encodeURIComponent(
@@ -351,6 +309,22 @@ export default function PropertyDetail({
     return () => observers.forEach((o) => o.disconnect());
   }, []);
 
+  /* ---- Remember floor-plan unlock per property ---- */
+  useEffect(() => {
+    try {
+      if (localStorage.getItem(`ce_plans_${property.slug}`) === "1") {
+        setPlansUnlocked(true);
+      }
+    } catch {}
+  }, [property.slug]);
+
+  const unlockPlans = useCallback(() => {
+    setPlansUnlocked(true);
+    try {
+      localStorage.setItem(`ce_plans_${property.slug}`, "1");
+    } catch {}
+  }, [property.slug]);
+
   /* ---- Hero slider auto-advance ---- */
   useEffect(() => {
     if (!showSlider || lightboxOpen) return;
@@ -380,34 +354,6 @@ export default function PropertyDetail({
       // fallback
     }
   }, []);
-
-  const handleBookVisit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!formName.trim() || !formPhone.trim()) return;
-
-    try {
-      await fetch("/api/leads", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          name: formName,
-          phone: formPhone,
-          source: "property_inquiry",
-          propertyInterest: property.name,
-          propertyType: property.type,
-          message: formMessage || `Site visit request for ${property.name}`,
-        }),
-      });
-    } catch {
-      // Don't block WhatsApp redirect
-    }
-
-    setFormSubmitted(true);
-    const msg = encodeURIComponent(
-      `Hi, I'm ${formName} (${formPhone}). I'd like to book a site visit for "${property.name}".`
-    );
-    window.open(`https://wa.me/917666229818?text=${msg}`, "_blank");
-  };
 
   const setSectionRef = useCallback(
     (id: string) => (el: HTMLElement | null) => {
@@ -444,8 +390,6 @@ export default function PropertyDetail({
     });
     return map;
   }, [nearbyPlaces]);
-
-  const tenureOptions = [5, 10, 15, 20, 25, 30];
 
   /* ================================================================ */
   /*  RENDER                                                           */
@@ -884,7 +828,7 @@ export default function PropertyDetail({
                     Floor Plans & Pricing
                   </h2>
 
-                  {/* Floor Plans — multi-plan tabbed viewer */}
+                  {/* Floor Plans — multi-plan tabbed viewer (gated behind a lead form) */}
                   {floorPlans.length > 0 ? (
                     <div className="mb-8">
                       {/* Plan tabs */}
@@ -903,21 +847,57 @@ export default function PropertyDetail({
                           </button>
                         ))}
                       </div>
-                      <div className="relative rounded-xl border border-border-subtle overflow-hidden bg-white">
+                      <div className="relative rounded-xl border border-border-subtle overflow-hidden bg-white min-h-[360px]">
                         <img
                           src={floorPlans[activePlan]?.url}
                           alt={`${floorPlans[activePlan]?.title} — ${property.name}`}
-                          className="w-full h-auto object-contain max-h-[560px] mx-auto"
+                          className={`w-full h-auto object-contain max-h-[560px] mx-auto transition-all duration-500 ${
+                            plansUnlocked ? "" : "blur-xl scale-105 select-none pointer-events-none"
+                          }`}
                         />
-                        <a
-                          href={floorPlans[activePlan]?.url}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="absolute bottom-4 right-4 inline-flex items-center gap-2 bg-navy/90 backdrop-blur-sm text-white text-xs font-semibold px-4 py-2.5 rounded-lg hover:bg-navy transition-colors"
-                        >
-                          <ExternalLink className="w-3.5 h-3.5" />
-                          View Full Size
-                        </a>
+
+                        {plansUnlocked ? (
+                          <a
+                            href={floorPlans[activePlan]?.url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="absolute bottom-4 right-4 inline-flex items-center gap-2 bg-navy/90 backdrop-blur-sm text-white text-xs font-semibold px-4 py-2.5 rounded-lg hover:bg-navy transition-colors"
+                          >
+                            <ExternalLink className="w-3.5 h-3.5" />
+                            View Full Size
+                          </a>
+                        ) : (
+                          /* Lock overlay + inline lead form */
+                          <div className="absolute inset-0 z-10 flex items-center justify-center bg-navy/45 backdrop-blur-[2px] p-4">
+                            <motion.div
+                              initial={{ opacity: 0, y: 16 }}
+                              animate={{ opacity: 1, y: 0 }}
+                              transition={{ duration: 0.4 }}
+                              className="w-full max-w-sm bg-white rounded-2xl p-5 sm:p-6 shadow-[0_20px_50px_rgba(16,42,67,0.3)]"
+                            >
+                              <div className="flex items-center gap-3 mb-1.5">
+                                <span className="flex items-center justify-center w-10 h-10 rounded-full bg-gold/15 shrink-0">
+                                  <Maximize2 className="w-5 h-5 text-gold-dark" />
+                                </span>
+                                <h3 className="font-heading text-lg text-navy leading-tight">
+                                  Unlock all {floorPlans.length} floor plans
+                                </h3>
+                              </div>
+                              <p className="text-sm text-navy/60 mb-4">
+                                Enter your details to instantly view the detailed 2 &amp; 3 BHK layouts &amp; master plan.
+                              </p>
+                              <LeadForm
+                                variant="light"
+                                source="floorplan_unlock"
+                                propertyName={property.name}
+                                propertyType={property.type}
+                                buttonLabel="View Floor Plans"
+                                quiet
+                                onSuccess={unlockPlans}
+                              />
+                            </motion.div>
+                          </div>
+                        )}
                       </div>
                     </div>
                   ) : property.floorPlanUrl ? (
@@ -1054,256 +1034,10 @@ export default function PropertyDetail({
                     </p>
                   </div>
 
-                  {/* EMI Quick Preview */}
-                  <div className="mt-6 bg-gradient-to-r from-gold/5 to-gold/10 border border-gold/20 rounded-xl p-5">
-                    <div className="flex items-center justify-between flex-wrap gap-4">
-                      <div>
-                        <p className="text-xs text-gold-dark uppercase tracking-wider font-semibold mb-1">
-                          Estimated Monthly EMI
-                        </p>
-                        <p className="text-2xl font-bold text-charcoal">
-                          &#8377;{Math.round(monthlyEMI).toLocaleString("en-IN")}
-                          <span className="text-sm font-normal text-gray-500">/month</span>
-                        </p>
-                        <p className="text-xs text-gray-500 mt-1">
-                          Based on {interestRate}% rate, {tenure} year tenure, 80% loan
-                        </p>
-                      </div>
-                      <button
-                        onClick={() => scrollToSection("pricing")}
-                        className="inline-flex items-center gap-2 bg-charcoal text-white text-sm font-semibold px-5 py-2.5 rounded-lg hover:bg-charcoal/90 transition-colors"
-                      >
-                        <Calculator className="w-4 h-4" />
-                        Calculate EMI
-                      </button>
-                    </div>
-                  </div>
                 </div>
               </FadeIn>
             </section>
 
-            {/* ====================================================== */}
-            {/*  SECTION 4: PRICE & EMI CALCULATOR                     */}
-            {/* ====================================================== */}
-            <section
-              ref={setSectionRef("pricing")}
-              id="pricing"
-            >
-              <FadeIn>
-                <div className="bg-white rounded-xl sm:rounded-2xl p-4 sm:p-6 md:p-8 shadow-sm border border-gray-100">
-                  <h2 className="text-2xl font-bold text-charcoal mb-6 flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-xl bg-gold/10 flex items-center justify-center">
-                      <BadgeIndianRupee className="w-5 h-5 text-gold" />
-                    </div>
-                    Price & EMI Calculator
-                  </h2>
-
-                  {/* Price Breakdown */}
-                  {(priceBreakdown.basePrice || priceBreakdown.total) && (
-                    <div className="mb-8">
-                      <h3 className="text-base font-semibold text-charcoal mb-3">
-                        Price Breakdown
-                      </h3>
-                      <div className="rounded-xl border border-gray-100 overflow-hidden">
-                        <table className="w-full text-sm">
-                          <tbody>
-                            {priceBreakdown.basePrice && (
-                              <tr className="border-b border-gray-100">
-                                <td className="px-5 py-4 text-gray-600">
-                                  Base Price
-                                </td>
-                                <td className="px-5 py-4 text-right font-semibold text-charcoal">
-                                  {priceBreakdown.basePrice}
-                                </td>
-                              </tr>
-                            )}
-                            {priceBreakdown.stampDuty && (
-                              <tr className="border-b border-gray-100">
-                                <td className="px-5 py-4 text-gray-600">
-                                  Stamp Duty (approx.)
-                                </td>
-                                <td className="px-5 py-4 text-right font-semibold text-charcoal">
-                                  {priceBreakdown.stampDuty}
-                                </td>
-                              </tr>
-                            )}
-                            {priceBreakdown.registration && (
-                              <tr className="border-b border-gray-100">
-                                <td className="px-5 py-4 text-gray-600">
-                                  Registration (approx.)
-                                </td>
-                                <td className="px-5 py-4 text-right font-semibold text-charcoal">
-                                  {priceBreakdown.registration}
-                                </td>
-                              </tr>
-                            )}
-                            {property.bookingAmount && (
-                              <tr className="border-b border-gray-100">
-                                <td className="px-5 py-4 text-gray-600">
-                                  Booking Amount
-                                </td>
-                                <td className="px-5 py-4 text-right font-semibold text-emerald">
-                                  {property.bookingAmount}
-                                </td>
-                              </tr>
-                            )}
-                            {priceBreakdown.total && (
-                              <tr className="bg-gradient-to-r from-gold/5 to-gold/10">
-                                <td className="px-5 py-4 font-bold text-charcoal text-base">
-                                  Total (Estimated)
-                                </td>
-                                <td className="px-5 py-4 text-right font-bold text-gold text-xl">
-                                  {priceBreakdown.total}
-                                </td>
-                              </tr>
-                            )}
-                          </tbody>
-                        </table>
-                      </div>
-                      <p className="text-xs text-gray-400 mt-3">
-                        * Prices are estimated and may vary. Stamp duty and
-                        registration charges are approximate.
-                      </p>
-                    </div>
-                  )}
-
-                  {/* EMI Calculator */}
-                  <div className="bg-gradient-to-br from-charcoal to-charcoal/95 rounded-2xl p-6 md:p-8 text-white">
-                    <div className="flex items-center gap-3 mb-6">
-                      <div className="w-10 h-10 rounded-xl bg-gold/20 flex items-center justify-center">
-                        <Calculator className="w-5 h-5 text-gold" />
-                      </div>
-                      <div>
-                        <h3 className="text-lg font-bold">EMI Calculator</h3>
-                        <p className="text-xs text-gray-400">
-                          Estimate your monthly payments
-                        </p>
-                      </div>
-                    </div>
-
-                    {/* Loan Amount */}
-                    <div className="mb-6">
-                      <label className="text-sm text-gray-400 mb-2 block">
-                        Loan Amount
-                      </label>
-                      <div className="flex items-center gap-3">
-                        <button
-                          onClick={() =>
-                            setLoanAmount((v) => Math.max(100000, v - 500000))
-                          }
-                          className="w-10 h-10 rounded-lg bg-white/10 flex items-center justify-center hover:bg-white/20 transition-colors"
-                        >
-                          <Minus className="w-4 h-4" />
-                        </button>
-                        <div className="flex-1 text-center">
-                          <span className="text-2xl font-bold text-gold">
-                            {formatCurrency(loanAmount)}
-                          </span>
-                        </div>
-                        <button
-                          onClick={() =>
-                            setLoanAmount((v) =>
-                              Math.min(property.priceNumeric, v + 500000)
-                            )
-                          }
-                          className="w-10 h-10 rounded-lg bg-white/10 flex items-center justify-center hover:bg-white/20 transition-colors"
-                        >
-                          <Plus className="w-4 h-4" />
-                        </button>
-                      </div>
-                      <input
-                        type="range"
-                        min={100000}
-                        max={property.priceNumeric}
-                        step={100000}
-                        value={loanAmount}
-                        onChange={(e) => setLoanAmount(Number(e.target.value))}
-                        className="w-full mt-3 accent-gold h-1.5 rounded-full appearance-none bg-white/10 cursor-pointer"
-                      />
-                      <div className="flex justify-between text-xs text-gray-500 mt-1">
-                        <span>1 L</span>
-                        <span>{formatCurrency(property.priceNumeric)}</span>
-                      </div>
-                    </div>
-
-                    {/* Interest Rate */}
-                    <div className="mb-6">
-                      <label className="text-sm text-gray-400 mb-2 block">
-                        Interest Rate: {interestRate}% p.a.
-                      </label>
-                      <input
-                        type="range"
-                        min={7}
-                        max={12}
-                        step={0.1}
-                        value={interestRate}
-                        onChange={(e) =>
-                          setInterestRate(Number(e.target.value))
-                        }
-                        className="w-full accent-gold h-1.5 rounded-full appearance-none bg-white/10 cursor-pointer"
-                      />
-                      <div className="flex justify-between text-xs text-gray-500 mt-1">
-                        <span>7%</span>
-                        <span>12%</span>
-                      </div>
-                    </div>
-
-                    {/* Tenure */}
-                    <div className="mb-8">
-                      <label className="text-sm text-gray-400 mb-3 block">
-                        Loan Tenure
-                      </label>
-                      <div className="flex flex-wrap gap-2">
-                        {tenureOptions.map((y) => (
-                          <button
-                            key={y}
-                            onClick={() => setTenure(y)}
-                            className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
-                              tenure === y
-                                ? "bg-gold text-charcoal"
-                                : "bg-white/10 text-gray-300 hover:bg-white/20"
-                            }`}
-                          >
-                            {y} yrs
-                          </button>
-                        ))}
-                      </div>
-                    </div>
-
-                    {/* EMI Result */}
-                    <div className="bg-white/5 backdrop-blur-sm rounded-xl p-5 border border-white/10">
-                      <div className="text-center mb-4">
-                        <p className="text-xs text-gray-400 uppercase tracking-wider mb-1">
-                          Your Monthly EMI
-                        </p>
-                        <p className="text-4xl font-bold text-gold">
-                          <span className="text-lg mr-1">&#8377;</span>
-                          {Math.round(monthlyEMI).toLocaleString("en-IN")}
-                        </p>
-                      </div>
-                      <div className="grid grid-cols-2 gap-4 mt-4">
-                        <div className="text-center p-3 bg-white/5 rounded-lg">
-                          <p className="text-xs text-gray-400 mb-1">
-                            Total Interest
-                          </p>
-                          <p className="text-sm font-bold text-white">
-                            &#8377; {formatCurrency(Math.round(totalInterest))}
-                          </p>
-                        </div>
-                        <div className="text-center p-3 bg-white/5 rounded-lg">
-                          <p className="text-xs text-gray-400 mb-1">
-                            Total Amount
-                          </p>
-                          <p className="text-sm font-bold text-white">
-                            &#8377; {formatCurrency(Math.round(totalAmount))}
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </FadeIn>
-            </section>
 
             {/* ====================================================== */}
             {/*  SECTION 5: AMENITIES                                   */}
@@ -1651,47 +1385,14 @@ export default function PropertyDetail({
                   Fill in your details for a callback or site visit.
                 </p>
 
-                {formSubmitted ? (
-                  <div className="text-center py-6">
-                    <CheckCircle className="w-12 h-12 text-emerald mx-auto mb-3" />
-                    <p className="text-white font-bold">Thank you!</p>
-                    <p className="text-sm text-gray-400 mt-1">
-                      We&apos;ll contact you shortly.
-                    </p>
-                  </div>
-                ) : (
-                  <form onSubmit={handleBookVisit} className="space-y-3">
-                    <input
-                      type="text"
-                      placeholder="Your Name"
-                      value={formName}
-                      onChange={(e) => setFormName(e.target.value)}
-                      required
-                      className="w-full rounded-xl bg-white/10 border border-white/20 px-4 py-3 text-sm text-white placeholder:text-gray-500 focus:border-gold focus:outline-none focus:ring-1 focus:ring-gold transition-colors"
-                    />
-                    <input
-                      type="tel"
-                      placeholder="Phone Number"
-                      value={formPhone}
-                      onChange={(e) => setFormPhone(e.target.value)}
-                      required
-                      className="w-full rounded-xl bg-white/10 border border-white/20 px-4 py-3 text-sm text-white placeholder:text-gray-500 focus:border-gold focus:outline-none focus:ring-1 focus:ring-gold transition-colors"
-                    />
-                    <textarea
-                      placeholder="Message (optional)"
-                      value={formMessage}
-                      onChange={(e) => setFormMessage(e.target.value)}
-                      rows={2}
-                      className="w-full rounded-xl bg-white/10 border border-white/20 px-4 py-3 text-sm text-white placeholder:text-gray-500 focus:border-gold focus:outline-none focus:ring-1 focus:ring-gold transition-colors resize-none"
-                    />
-                    <button
-                      type="submit"
-                      className="w-full rounded-xl bg-gradient-to-r from-gold to-gold-light py-3.5 text-sm font-bold text-charcoal hover:opacity-90 transition-opacity shadow-lg shadow-gold/20"
-                    >
-                      Schedule Site Visit
-                    </button>
-                  </form>
-                )}
+                <LeadForm
+                  variant="dark"
+                  source="property_inquiry"
+                  propertyName={property.name}
+                  propertyType={property.type}
+                  buttonLabel="Request a Callback"
+                  successMessage="Our team will call you shortly."
+                />
 
                 {/* Quick actions */}
                 <div className="grid grid-cols-2 gap-2.5 mt-4">
@@ -1765,38 +1466,14 @@ export default function PropertyDetail({
               Fill in your details for a callback or site visit.
             </p>
 
-            {formSubmitted ? (
-              <div className="text-center py-6">
-                <CheckCircle className="w-12 h-12 text-emerald mx-auto mb-3" />
-                <p className="text-white font-bold">Thank you!</p>
-                <p className="text-sm text-gray-400 mt-1">We&apos;ll contact you shortly.</p>
-              </div>
-            ) : (
-              <form onSubmit={handleBookVisit} className="space-y-3">
-                <input
-                  type="text"
-                  placeholder="Your Name"
-                  value={formName}
-                  onChange={(e) => setFormName(e.target.value)}
-                  required
-                  className="w-full rounded-xl bg-white/10 border border-white/20 px-4 py-3 text-sm text-white placeholder:text-gray-500 focus:border-gold focus:outline-none focus:ring-1 focus:ring-gold transition-colors"
-                />
-                <input
-                  type="tel"
-                  placeholder="Phone Number"
-                  value={formPhone}
-                  onChange={(e) => setFormPhone(e.target.value)}
-                  required
-                  className="w-full rounded-xl bg-white/10 border border-white/20 px-4 py-3 text-sm text-white placeholder:text-gray-500 focus:border-gold focus:outline-none focus:ring-1 focus:ring-gold transition-colors"
-                />
-                <button
-                  type="submit"
-                  className="w-full rounded-xl bg-gradient-to-r from-gold to-gold-light py-3.5 text-sm font-bold text-charcoal hover:opacity-90 transition-opacity shadow-lg shadow-gold/20"
-                >
-                  Schedule Site Visit
-                </button>
-              </form>
-            )}
+            <LeadForm
+              variant="dark"
+              source="property_inquiry"
+              propertyName={property.name}
+              propertyType={property.type}
+              buttonLabel="Request a Callback"
+              successMessage="Our team will call you shortly."
+            />
           </div>
         </div>
 

@@ -10,7 +10,6 @@ import {
 
 const quickLinks = [
   { href: "/", label: "Home" },
-  { href: "/projects", label: "Projects" },
   { href: "/properties", label: "Properties" },
   { href: "/about", label: "About" },
   { href: "/blog", label: "Blog" },
