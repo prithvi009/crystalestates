@@ -34,11 +34,11 @@ const propertyTypeOptions = [
 ];
 
 const budgetOptions = [
-  "Under \u20B910L",
-  "\u20B910-25L",
-  "\u20B925-50L",
-  "\u20B950L-1Cr",
-  "\u20B91-3Cr",
+  "Under \u20B950L",
+  "\u20B950L - \u20B91Cr",
+  "\u20B91Cr - \u20B91.5Cr",
+  "\u20B91.5Cr - \u20B92Cr",
+  "\u20B92Cr - \u20B93Cr",
   "\u20B93Cr+",
 ];
 

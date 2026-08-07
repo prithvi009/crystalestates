@@ -5,28 +5,22 @@ import { ArrowRight, ShieldCheck, MapPin } from "lucide-react";
 import Link from "next/link";
 import HomeSearch from "./HomeSearch";
 
-const stats = [
-  { value: "RERA", label: "Registered" },
-  { value: "2", label: "Cities" },
-  { value: "100%", label: "Title-Verified" },
-];
-
 const ease = [0.25, 0.4, 0.25, 1] as const;
 
 export default function Hero() {
   return (
-    <section className="relative bg-bg-light overflow-hidden">
+    <section className="relative bg-bg-light">
       {/* Soft gold glow accent */}
       <div className="pointer-events-none absolute -top-24 -right-24 w-[520px] h-[520px] rounded-full bg-[radial-gradient(circle,rgba(198,169,98,0.12)_0%,transparent_70%)]" />
 
-      <div className="relative max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 pt-28 sm:pt-32 lg:pt-28 pb-16 lg:pb-16">
+      <div className="relative max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 pt-24 sm:pt-28 lg:pt-28 pb-10 lg:pb-16">
         <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 items-center">
-          {/* ── VISUAL (mobile: top) ── */}
+          {/* ── VISUAL (desktop only — mobile stays clean) ── */}
           <motion.div
             initial={{ opacity: 0, scale: 0.96 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.9, ease }}
-            className="relative order-1 lg:order-2"
+            className="relative order-1 lg:order-2 hidden lg:block"
           >
             <div className="relative rounded-[28px] overflow-hidden aspect-[4/5] sm:aspect-[16/11] lg:aspect-auto lg:h-[60vh] lg:min-h-[440px] lg:max-h-[560px] shadow-[0_30px_80px_-20px_rgba(16,42,67,0.35)]">
               <video
@@ -69,72 +63,22 @@ export default function Hero() {
             </motion.div>
           </motion.div>
 
-          {/* ── TEXT (mobile: bottom) ── */}
+          {/* ── SEARCH (mobile: bottom) ── */}
           <div className="order-2 lg:order-1">
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.1, ease }}
-              className="section-label"
-            >
-              RERA Registered Consultancy
-            </motion.p>
-
-            <motion.h1
-              initial={{ opacity: 0, y: 24 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 0.2, ease }}
-              className="mt-5 font-heading text-[2.65rem] leading-[1.05] sm:text-6xl lg:text-7xl text-navy tracking-tight"
-            >
-              Find your next
-              <br />
-              address in
-              <br />
-              <span className="text-gradient-gold">Maharashtra</span>
-            </motion.h1>
-
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 0.35, ease }}
-              className="mt-6 text-lg sm:text-xl text-navy/65 max-w-md leading-relaxed"
-            >
-              Plots, homes &amp; apartments across Pune and Mumbai. Verified. Transparent.
-            </motion.p>
-
-            {/* Search */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 0.5, ease }}
-              className="mt-8 max-w-xl"
+              transition={{ duration: 0.7, delay: 0.3, ease }}
+              className="max-w-xl"
             >
               <HomeSearch />
-              <p className="mt-3.5 text-sm text-navy/55">
+              <p className="mt-4 text-sm text-navy/55">
                 or{" "}
                 <Link href="/contact" className="font-semibold text-gold-dark hover:text-gold inline-flex items-center gap-1">
                   book a free consultation
                   <ArrowRight className="w-3.5 h-3.5" />
                 </Link>
               </p>
-            </motion.div>
-
-            {/* Stats */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 0.65, ease }}
-              className="mt-10 flex border-t border-navy/10 pt-6 max-w-md"
-            >
-              {stats.map((s, i) => (
-                <div
-                  key={s.label}
-                  className={`flex-1 ${i > 0 ? "border-l border-navy/10 pl-5" : ""} ${i < stats.length - 1 ? "pr-5" : ""}`}
-                >
-                  <p className="font-heading text-3xl text-navy leading-none">{s.value}</p>
-                  <p className="text-sm text-navy/55 mt-2">{s.label}</p>
-                </div>
-              ))}
             </motion.div>
           </div>
         </div>

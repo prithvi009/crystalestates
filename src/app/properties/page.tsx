@@ -45,6 +45,8 @@ export default async function PropertiesPage({
   const initialType = pick(sp.type, propertyTypes);
   const initialLocation = pick(sp.location, locations);
   const initialBudget = pick(sp.budget, budgetRanges);
+  const rawQ = Array.isArray(sp.q) ? sp.q[0] : sp.q;
+  const initialSearch = (rawQ ?? "").toString().slice(0, 80);
 
   return (
     <>
@@ -89,6 +91,7 @@ export default async function PropertiesPage({
         initialType={initialType}
         initialLocation={initialLocation}
         initialBudget={initialBudget}
+        initialSearch={initialSearch}
       />
     </>
   );

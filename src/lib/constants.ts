@@ -12,9 +12,10 @@ export const locations = [
 
 export const budgetRanges = [
   "All",
-  "Under \u20B910L",
-  "\u20B910L - \u20B925L",
-  "\u20B925L - \u20B950L",
+  "Under \u20B950L",
   "\u20B950L - \u20B91Cr",
-  "\u20B91Cr+",
+  "\u20B91Cr - \u20B91.5Cr",
+  "\u20B91.5Cr - \u20B92Cr",
+  "\u20B92Cr - \u20B93Cr",
+  "\u20B93Cr+",
 ] as const;

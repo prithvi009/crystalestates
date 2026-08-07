@@ -29,20 +29,18 @@ const cardVariants = {
 
 function matchBudget(priceNumeric: number, budget: string): boolean {
   switch (budget) {
-    case "Under \u20B910L":
-      return priceNumeric < 1000000;
-    case "\u20B910L - \u20B925L":
-      return priceNumeric >= 1000000 && priceNumeric < 2500000;
-    case "\u20B925L - \u20B950L":
-      return priceNumeric >= 2500000 && priceNumeric < 5000000;
+    case "Under \u20B950L":
+      return priceNumeric < 5000000;
     case "\u20B950L - \u20B91Cr":
       return priceNumeric >= 5000000 && priceNumeric < 10000000;
-    case "\u20B91Cr - \u20B93Cr":
-      return priceNumeric >= 10000000 && priceNumeric < 30000000;
+    case "\u20B91Cr - \u20B91.5Cr":
+      return priceNumeric >= 10000000 && priceNumeric < 15000000;
+    case "\u20B91.5Cr - \u20B92Cr":
+      return priceNumeric >= 15000000 && priceNumeric < 20000000;
+    case "\u20B92Cr - \u20B93Cr":
+      return priceNumeric >= 20000000 && priceNumeric < 30000000;
     case "\u20B93Cr+":
       return priceNumeric >= 30000000;
-    case "\u20B91Cr+":
-      return priceNumeric >= 10000000;
     default:
       return true;
   }
@@ -53,6 +51,7 @@ interface PropertiesClientProps {
   initialType?: string;
   initialLocation?: string;
   initialBudget?: string;
+  initialSearch?: string;
 }
 
 export default function PropertiesClient({
@@ -60,12 +59,13 @@ export default function PropertiesClient({
   initialType = "All",
   initialLocation = "All",
   initialBudget = "All",
+  initialSearch = "",
 }: PropertiesClientProps) {
   const [selectedType, setSelectedType] = useState(initialType);
   const [selectedLocation, setSelectedLocation] = useState(initialLocation);
   const [selectedBudget, setSelectedBudget] = useState(initialBudget);
   const [sortBy, setSortBy] = useState("default");
-  const [search, setSearch] = useState("");
+  const [search, setSearch] = useState(initialSearch);
 
   const filtered = useMemo(() => {
     let result = [...properties];

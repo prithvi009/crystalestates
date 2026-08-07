@@ -175,20 +175,20 @@ export default function PropertyCard({ property }: PropertyCardProps) {
           )}
           <Link
             href={`/properties/${property.slug}`}
-            className={`inline-flex items-center justify-center gap-1.5 bg-navy hover:bg-gold text-white hover:text-navy rounded-full px-5 py-2.5 text-sm font-semibold transition-all duration-300 ${property.rera ? "" : "flex-1"}`}
+            className={`inline-flex items-center justify-center gap-1.5 bg-navy hover:bg-gold text-white hover:text-navy rounded-full px-4 py-2 text-[13px] sm:px-5 sm:py-2.5 sm:text-sm font-semibold transition-all duration-300 ${property.rera ? "" : "flex-1"}`}
           >
             View Details
-            <ArrowUpRight className="w-4 h-4" />
+            <ArrowUpRight className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
           </Link>
           <a
             href={whatsappUrl}
             target="_blank"
             rel="noopener noreferrer"
             aria-label="Chat on WhatsApp"
-            className="shrink-0 w-11 h-11 rounded-full bg-[#25D366] hover:bg-[#20BD5A] flex items-center justify-center text-white transition-colors"
+            className="shrink-0 w-9 h-9 sm:w-11 sm:h-11 rounded-full bg-[#25D366] hover:bg-[#20BD5A] flex items-center justify-center text-white transition-colors"
             onClick={(e) => e.stopPropagation()}
           >
-            <MessageCircle className="w-5 h-5" />
+            <MessageCircle className="w-4 h-4 sm:w-5 sm:h-5" />
           </a>
         </div>
       </div>
