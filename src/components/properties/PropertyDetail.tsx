@@ -847,16 +847,13 @@ export default function PropertyDetail({
                           </button>
                         ))}
                       </div>
-                      <div className="relative rounded-xl border border-border-subtle overflow-hidden bg-white min-h-[360px]">
-                        <img
-                          src={floorPlans[activePlan]?.url}
-                          alt={`${floorPlans[activePlan]?.title} — ${property.name}`}
-                          className={`w-full h-auto object-contain max-h-[560px] mx-auto transition-all duration-500 ${
-                            plansUnlocked ? "" : "blur-xl scale-105 select-none pointer-events-none"
-                          }`}
-                        />
-
-                        {plansUnlocked ? (
+                      {plansUnlocked ? (
+                        <div className="relative rounded-xl border border-border-subtle overflow-hidden bg-white">
+                          <img
+                            src={floorPlans[activePlan]?.url}
+                            alt={`${floorPlans[activePlan]?.title} — ${property.name}`}
+                            className="w-full h-auto object-contain max-h-[560px] mx-auto"
+                          />
                           <a
                             href={floorPlans[activePlan]?.url}
                             target="_blank"
@@ -866,9 +863,17 @@ export default function PropertyDetail({
                             <ExternalLink className="w-3.5 h-3.5" />
                             View Full Size
                           </a>
-                        ) : (
-                          /* Lock overlay + inline lead form */
-                          <div className="absolute inset-0 z-10 flex items-center justify-center bg-navy/45 backdrop-blur-[2px] p-4">
+                        </div>
+                      ) : (
+                        /* Locked — blurred preview behind, form in normal flow (never clipped) */
+                        <div className="relative rounded-2xl overflow-hidden border border-border-subtle">
+                          <img
+                            src={floorPlans[activePlan]?.url}
+                            aria-hidden
+                            className="absolute inset-0 w-full h-full object-cover blur-xl scale-110 select-none pointer-events-none"
+                          />
+                          <div className="absolute inset-0 bg-navy/55" />
+                          <div className="relative flex items-center justify-center p-4 sm:p-8">
                             <motion.div
                               initial={{ opacity: 0, y: 16 }}
                               animate={{ opacity: 1, y: 0 }}
@@ -897,8 +902,8 @@ export default function PropertyDetail({
                               />
                             </motion.div>
                           </div>
-                        )}
-                      </div>
+                        </div>
+                      )}
                     </div>
                   ) : property.floorPlanUrl ? (
                     <div className="mb-5 sm:mb-8">
@@ -1101,19 +1106,13 @@ export default function PropertyDetail({
                   {/* Location & connectivity maps (gated behind a lead form) */}
                   {locationMaps.length > 0 && (
                     <div className="mb-6">
-                      <div className="relative">
-                        <div
-                          className={`space-y-5 transition-all duration-500 ${
-                            plansUnlocked
-                              ? ""
-                              : "blur-xl pointer-events-none select-none max-h-[430px] overflow-hidden"
-                          }`}
-                        >
+                      {plansUnlocked ? (
+                        <div className="space-y-5">
                           {locationMaps.map((m) => (
                             <div key={m.url}>
                               <p className="text-sm font-semibold text-navy/70 mb-2">{m.title}</p>
                               <a
-                                href={plansUnlocked ? m.url : undefined}
+                                href={m.url}
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 className="block relative rounded-xl border border-border-subtle overflow-hidden bg-bg-cream group"
@@ -1130,9 +1129,16 @@ export default function PropertyDetail({
                             </div>
                           ))}
                         </div>
-
-                        {!plansUnlocked && (
-                          <div className="absolute inset-0 z-10 flex items-center justify-center bg-navy/45 backdrop-blur-[2px] p-4">
+                      ) : (
+                        /* Locked — blurred preview behind, form in normal flow */
+                        <div className="relative rounded-2xl overflow-hidden border border-border-subtle">
+                          <img
+                            src={locationMaps[0].url}
+                            aria-hidden
+                            className="absolute inset-0 w-full h-full object-cover blur-xl scale-110 select-none pointer-events-none"
+                          />
+                          <div className="absolute inset-0 bg-navy/55" />
+                          <div className="relative flex items-center justify-center p-4 sm:p-8">
                             <motion.div
                               initial={{ opacity: 0, y: 16 }}
                               animate={{ opacity: 1, y: 0 }}
@@ -1161,8 +1167,8 @@ export default function PropertyDetail({
                               />
                             </motion.div>
                           </div>
-                        )}
-                      </div>
+                        </div>
+                      )}
                     </div>
                   )}
 
