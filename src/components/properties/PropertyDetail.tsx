@@ -250,7 +250,7 @@ export default function PropertyDetail({
   const showSlider = !hasVideo && hasRealImages && images.length > 1;
 
   /* ---- Description formatting ---- */
-  const DESCRIPTION_WORD_LIMIT = 80;
+  const DESCRIPTION_WORD_LIMIT = 30;
   const descriptionText = property.description || "";
   const descriptionWords = descriptionText.split(/\s+/).filter(Boolean);
   const isLongDescription = descriptionWords.length > DESCRIPTION_WORD_LIMIT;
@@ -542,7 +542,7 @@ export default function PropertyDetail({
             </div>
 
             {/* Title + location */}
-            <h1 className="mt-4 font-heading text-2xl sm:text-3xl md:text-4xl font-bold text-navy leading-tight">
+            <h1 className="mt-4 font-heading text-xl sm:text-2xl md:text-3xl font-bold text-navy leading-tight">
               {property.name}
             </h1>
             <p className="mt-2.5 flex items-center gap-2 text-navy/60 text-sm sm:text-base">
@@ -556,7 +556,7 @@ export default function PropertyDetail({
                 <p className="text-[11px] uppercase tracking-[0.18em] text-navy/45 font-medium">
                   Starting Price
                 </p>
-                <p className="font-heading text-2xl sm:text-3xl font-bold text-navy leading-none mt-1.5">
+                <p className="font-heading text-xl sm:text-2xl font-bold text-navy leading-none mt-1.5">
                   {property.price}
                 </p>
               </div>
@@ -602,7 +602,7 @@ export default function PropertyDetail({
       {/* ============================================================ */}
       <div ref={tabNavRef} className="h-px" />
       <div
-        className={`${
+        className={`hidden md:block ${
           isSticky ? "fixed top-0 left-0 right-0 shadow-lg z-40" : ""
         } bg-white border-b border-gray-100 transition-shadow duration-300`}
       >
@@ -639,7 +639,7 @@ export default function PropertyDetail({
           {/* ======================================================== */}
           {/*  LEFT COLUMN                                              */}
           {/* ======================================================== */}
-          <div className="flex-1 min-w-0 space-y-4 sm:space-y-8">
+          <div className="flex-1 min-w-0 space-y-0 sm:space-y-8">
             {/* ====================================================== */}
             {/*  SECTION 3: OVERVIEW                                    */}
             {/* ====================================================== */}
@@ -648,9 +648,9 @@ export default function PropertyDetail({
               id="overview"
             >
               <FadeIn>
-                <div className="bg-white rounded-xl sm:rounded-2xl p-4 sm:p-6 md:p-7 shadow-sm border border-gray-100">
-                  <h2 className="text-lg sm:text-2xl font-bold text-charcoal mb-4 flex items-center gap-3">
-                    <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-gold/10 flex items-center justify-center">
+                <div className="sm:bg-white rounded-none sm:rounded-2xl p-0 pt-6 sm:p-6 md:p-7 sm:pt-6 sm:shadow-sm border-t sm:border border-border-subtle sm:border-gray-100">
+                  <h2 className="text-base sm:text-xl font-bold font-body text-charcoal mb-4 flex items-center gap-3">
+                    <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-gold/10 hidden sm:flex items-center justify-center">
                       <Eye className="w-5 h-5 text-gold" />
                     </div>
                     About This Property
@@ -660,7 +660,7 @@ export default function PropertyDetail({
                   <div className="mb-5 sm:mb-8">
                     {truncatedDescription ? (
                       <>
-                        <p className="text-gray-600 leading-relaxed text-[15px]">
+                        <p className="text-navy/70 leading-relaxed text-sm sm:text-[15px]">
                           {truncatedDescription}
                         </p>
                         <button
@@ -676,12 +676,12 @@ export default function PropertyDetail({
                         <div className="space-y-4">
                           {formattedParagraphs.length > 1 ? (
                             formattedParagraphs.map((para, i) => (
-                              <p key={i} className="text-gray-600 leading-relaxed text-[15px]">
+                              <p key={i} className="text-navy/70 leading-relaxed text-sm sm:text-[15px]">
                                 {para}
                               </p>
                             ))
                           ) : (
-                            <p className="text-gray-600 leading-relaxed text-[15px]">
+                            <p className="text-navy/70 leading-relaxed text-sm sm:text-[15px]">
                               {descriptionText}
                             </p>
                           )}
@@ -702,32 +702,28 @@ export default function PropertyDetail({
                   {/* Key Highlights */}
                   {highlights.length > 0 && (
                     <div className="mb-5 sm:mb-8">
-                      <h3 className="text-lg font-bold text-charcoal mb-4 flex items-center gap-2">
+                      <h3 className="text-sm sm:text-base font-bold font-body text-charcoal mb-3 flex items-center gap-2">
                         <TrendingUp className="w-5 h-5 text-gold" />
                         Key Highlights
                       </h3>
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-2.5 sm:gap-3">
                         {highlights.map((h, i) => (
-                          <motion.div
+                          <div
                             key={i}
-                            initial={{ opacity: 0, x: -10 }}
-                            whileInView={{ opacity: 1, x: 0 }}
-                            viewport={{ once: true }}
-                            transition={{ delay: i * 0.05 }}
-                            className="flex items-start gap-3 p-3 rounded-xl bg-gradient-to-r from-emerald/5 to-transparent border border-emerald/10"
+                            className="flex items-start gap-2.5 sm:p-3 sm:rounded-xl sm:bg-gradient-to-r sm:from-emerald/5 sm:to-transparent sm:border sm:border-emerald/10"
                           >
-                            <CheckCircle className="w-5 h-5 text-emerald shrink-0 mt-0.5" />
-                            <span className="text-sm text-gray-700">{h}</span>
-                          </motion.div>
+                            <CheckCircle className="w-4 h-4 sm:w-5 sm:h-5 text-emerald shrink-0 mt-0.5" />
+                            <span className="text-[13px] sm:text-sm text-navy/75">{h}</span>
+                          </div>
                         ))}
                       </div>
                     </div>
                   )}
 
-                  {/* Property Details Table */}
+                  {/* Property Details Table (desktop only — specs already shown above) */}
                   {detailRows.length > 0 && (
-                    <div>
-                      <h3 className="text-lg font-bold text-charcoal mb-4 flex items-center gap-2">
+                    <div className="hidden sm:block">
+                      <h3 className="text-sm sm:text-base font-bold font-body text-charcoal mb-3 flex items-center gap-2">
                         <FileText className="w-5 h-5 text-gold" />
                         Property Details
                       </h3>
@@ -765,11 +761,12 @@ export default function PropertyDetail({
               <section
                 ref={setSectionRef("gallery")}
                 id="gallery"
+                className="hidden md:block"
               >
                 <FadeIn>
-                  <div className="bg-white rounded-xl sm:rounded-2xl p-4 sm:p-6 md:p-7 shadow-sm border border-gray-100">
-                    <h2 className="text-lg sm:text-lg sm:text-2xl font-bold text-charcoal mb-4 flex items-center gap-3">
-                      <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-gold/10 flex items-center justify-center">
+                  <div className="sm:bg-white rounded-none sm:rounded-2xl p-0 pt-6 sm:p-6 md:p-7 sm:pt-6 sm:shadow-sm border-t sm:border border-border-subtle sm:border-gray-100">
+                    <h2 className="text-base sm:text-xl font-bold font-body text-charcoal mb-4 flex items-center gap-3">
+                      <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-gold/10 hidden sm:flex items-center justify-center">
                         <ImageIcon className="w-5 h-5 text-gold" />
                       </div>
                       Gallery
@@ -820,9 +817,9 @@ export default function PropertyDetail({
               id="floorplans"
             >
               <FadeIn>
-                <div className="bg-white rounded-xl sm:rounded-2xl p-4 sm:p-6 md:p-7 shadow-sm border border-gray-100">
-                  <h2 className="text-lg sm:text-lg sm:text-2xl font-bold text-charcoal mb-4 flex items-center gap-3">
-                    <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-gold/10 flex items-center justify-center">
+                <div className="sm:bg-white rounded-none sm:rounded-2xl p-0 pt-6 sm:p-6 md:p-7 sm:pt-6 sm:shadow-sm border-t sm:border border-border-subtle sm:border-gray-100">
+                  <h2 className="text-base sm:text-xl font-bold font-body text-charcoal mb-4 flex items-center gap-3">
+                    <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-gold/10 hidden sm:flex items-center justify-center">
                       <Maximize2 className="w-5 h-5 text-gold" />
                     </div>
                     Floor Plans & Pricing
@@ -949,7 +946,7 @@ export default function PropertyDetail({
 
                   {/* Area Statement / Configurations Table */}
                   <div>
-                    <h3 className="text-lg font-bold text-charcoal mb-4 flex items-center gap-2">
+                    <h3 className="text-sm sm:text-base font-bold font-body text-charcoal mb-3 flex items-center gap-2">
                       <FileText className="w-5 h-5 text-gold" />
                       Area & Configuration
                     </h3>
@@ -1053,32 +1050,26 @@ export default function PropertyDetail({
                 id="amenities"
               >
                 <FadeIn>
-                  <div className="bg-white rounded-xl sm:rounded-2xl p-4 sm:p-6 md:p-7 shadow-sm border border-gray-100">
-                    <h2 className="text-lg sm:text-lg sm:text-2xl font-bold text-charcoal mb-4 flex items-center gap-3">
-                      <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-gold/10 flex items-center justify-center">
+                  <div className="sm:bg-white rounded-none sm:rounded-2xl p-0 pt-6 sm:p-6 md:p-7 sm:pt-6 sm:shadow-sm border-t sm:border border-border-subtle sm:border-gray-100">
+                    <h2 className="text-base sm:text-xl font-bold font-body text-charcoal mb-4 flex items-center gap-3">
+                      <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-gold/10 hidden sm:flex items-center justify-center">
                         <ShieldCheck className="w-5 h-5 text-gold" />
                       </div>
                       Amenities & Features
                     </h2>
-                    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
-                      {amenities.map((amenity, i) => {
+                    <div className="flex flex-wrap gap-2 sm:grid sm:grid-cols-3 lg:grid-cols-4 sm:gap-3">
+                      {amenities.map((amenity) => {
                         const Icon = getAmenityIcon(amenity);
                         return (
-                          <motion.div
+                          <div
                             key={amenity}
-                            initial={{ opacity: 0, scale: 0.95 }}
-                            whileInView={{ opacity: 1, scale: 1 }}
-                            viewport={{ once: true }}
-                            transition={{ delay: i * 0.03 }}
-                            className="flex items-center gap-3 rounded-xl border border-gray-100 p-3.5 hover:border-gold/40 hover:shadow-sm transition-all group"
+                            className="inline-flex items-center gap-2 rounded-full sm:rounded-xl border border-border-subtle sm:border-gray-100 px-3 py-1.5 sm:px-4 sm:py-3 sm:hover:border-gold/40 transition-colors"
                           >
-                            <div className="flex items-center justify-center w-10 h-10 rounded-xl bg-gold/10 group-hover:bg-gold/20 transition-colors shrink-0">
-                              <Icon className="w-5 h-5 text-gold-dark" />
-                            </div>
-                            <span className="text-sm text-charcoal font-medium leading-tight">
+                            <Icon className="w-4 h-4 text-gold-dark shrink-0" />
+                            <span className="text-[13px] sm:text-sm text-navy/80 font-medium leading-tight">
                               {amenity}
                             </span>
-                          </motion.div>
+                          </div>
                         );
                       })}
                     </div>
@@ -1095,9 +1086,9 @@ export default function PropertyDetail({
               id="location"
             >
               <FadeIn>
-                <div className="bg-white rounded-xl sm:rounded-2xl p-4 sm:p-6 md:p-7 shadow-sm border border-gray-100">
-                  <h2 className="text-lg sm:text-lg sm:text-2xl font-bold text-charcoal mb-4 flex items-center gap-3">
-                    <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-gold/10 flex items-center justify-center">
+                <div className="sm:bg-white rounded-none sm:rounded-2xl p-0 pt-6 sm:p-6 md:p-7 sm:pt-6 sm:shadow-sm border-t sm:border border-border-subtle sm:border-gray-100">
+                  <h2 className="text-base sm:text-xl font-bold font-body text-charcoal mb-4 flex items-center gap-3">
+                    <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-gold/10 hidden sm:flex items-center justify-center">
                       <MapPinned className="w-5 h-5 text-gold" />
                     </div>
                     Location & Nearby
@@ -1289,11 +1280,12 @@ export default function PropertyDetail({
               <section
                 ref={setSectionRef("documents")}
                 id="documents"
+                className="hidden md:block"
               >
                 <FadeIn>
-                  <div className="bg-white rounded-xl sm:rounded-2xl p-4 sm:p-6 md:p-7 shadow-sm border border-gray-100">
-                    <h2 className="text-lg sm:text-lg sm:text-2xl font-bold text-charcoal mb-4 flex items-center gap-3">
-                      <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-gold/10 flex items-center justify-center">
+                  <div className="sm:bg-white rounded-none sm:rounded-2xl p-0 pt-6 sm:p-6 md:p-7 sm:pt-6 sm:shadow-sm border-t sm:border border-border-subtle sm:border-gray-100">
+                    <h2 className="text-base sm:text-xl font-bold font-body text-charcoal mb-4 flex items-center gap-3">
+                      <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-gold/10 hidden sm:flex items-center justify-center">
                         <FileCheck className="w-5 h-5 text-gold" />
                       </div>
                       Documents & Verification
@@ -1532,7 +1524,7 @@ export default function PropertyDetail({
           <FadeIn className="mt-16">
             <div>
               <div className="flex items-center gap-3 mb-8">
-                <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-gold/10 flex items-center justify-center">
+                <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-gold/10 hidden sm:flex items-center justify-center">
                   <Home className="w-5 h-5 text-gold" />
                 </div>
                 <div>
