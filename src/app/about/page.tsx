@@ -96,7 +96,7 @@ export default function AboutPage() {
   return (
     <main className="min-h-screen overflow-hidden">
       {/* ========== HERO ========== */}
-      <section className="relative bg-bg-light pt-32 pb-20 md:pb-24">
+      <section className="relative bg-bg-light pt-20 pb-12 md:pt-28 md:pb-24">
         <div className="mx-auto max-w-4xl px-6 text-center">
           <motion.p
             initial={{ opacity: 0, y: 10 }}
@@ -110,7 +110,7 @@ export default function AboutPage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="font-heading text-5xl font-bold leading-tight tracking-tight text-navy md:text-6xl"
+            className="font-heading text-3xl sm:text-4xl font-bold leading-tight tracking-tight text-navy md:text-5xl"
           >
             Built Different
           </motion.h1>
@@ -138,7 +138,7 @@ export default function AboutPage() {
             transition={{ duration: 0.5 }}
             className="text-center"
           >
-            <h2 className="font-heading text-3xl font-bold text-text-dark md:text-4xl">
+            <h2 className="font-heading text-2xl sm:text-3xl font-bold text-text-dark md:text-4xl">
               Our Approach
             </h2>
             <div className="mx-auto mt-4 h-1 w-16 rounded-full bg-gold" />
@@ -188,7 +188,7 @@ export default function AboutPage() {
             transition={{ duration: 0.5 }}
             className="text-center"
           >
-            <h2 className="font-heading text-3xl font-bold text-white md:text-4xl">
+            <h2 className="font-heading text-2xl sm:text-3xl font-bold text-white md:text-4xl">
               Our Values
             </h2>
             <div className="mx-auto mt-4 h-1 w-16 rounded-full bg-gold" />
@@ -238,7 +238,7 @@ export default function AboutPage() {
             transition={{ duration: 0.5 }}
             className="text-center"
           >
-            <h2 className="font-heading text-3xl font-bold text-text-dark md:text-4xl">
+            <h2 className="font-heading text-2xl sm:text-3xl font-bold text-text-dark md:text-4xl">
               Where We Operate
             </h2>
             <div className="mx-auto mt-4 h-1 w-16 rounded-full bg-gold" />
@@ -283,7 +283,7 @@ export default function AboutPage() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
-            className="font-heading text-3xl font-bold text-primary-black md:text-4xl"
+            className="font-heading text-2xl sm:text-3xl font-bold text-primary-black md:text-4xl"
           >
             Ready to find your dream property?
           </motion.h2>

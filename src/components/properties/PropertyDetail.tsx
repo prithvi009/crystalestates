@@ -542,7 +542,7 @@ export default function PropertyDetail({
             </div>
 
             {/* Title + location */}
-            <h1 className="mt-5 font-heading text-3xl sm:text-4xl md:text-5xl font-bold text-navy leading-tight">
+            <h1 className="mt-4 font-heading text-2xl sm:text-3xl md:text-4xl font-bold text-navy leading-tight">
               {property.name}
             </h1>
             <p className="mt-2.5 flex items-center gap-2 text-navy/60 text-sm sm:text-base">
@@ -556,7 +556,7 @@ export default function PropertyDetail({
                 <p className="text-[11px] uppercase tracking-[0.18em] text-navy/45 font-medium">
                   Starting Price
                 </p>
-                <p className="font-heading text-3xl sm:text-4xl font-bold text-navy leading-none mt-1.5">
+                <p className="font-heading text-2xl sm:text-3xl font-bold text-navy leading-none mt-1.5">
                   {property.price}
                 </p>
               </div>

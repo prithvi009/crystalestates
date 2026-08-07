@@ -134,36 +134,36 @@ export default function PropertyCard({ property }: PropertyCardProps) {
       </Link>
 
       {/* ── Body ── */}
-      <div className="flex flex-col flex-1 p-5 sm:p-6">
+      <div className="flex flex-col flex-1 p-4 sm:p-5">
         <Link href={`/properties/${property.slug}`} className="block group/link">
-          <h3 className="font-heading text-[1.35rem] leading-tight font-bold text-navy line-clamp-1 group-hover/link:text-gold-dark transition-colors">
+          <h3 className="font-heading text-lg sm:text-xl leading-tight font-bold text-navy line-clamp-1 group-hover/link:text-gold-dark transition-colors">
             {property.name}
           </h3>
-          <p className="flex items-center gap-1.5 text-navy/55 text-sm mt-2">
-            <MapPin className="w-4 h-4 shrink-0 text-gold" />
+          <p className="flex items-center gap-1.5 text-navy/55 text-[13px] sm:text-sm mt-1.5">
+            <MapPin className="w-3.5 h-3.5 sm:w-4 sm:h-4 shrink-0 text-gold" />
             <span className="truncate">{property.location}</span>
           </p>
         </Link>
 
         {/* Price */}
-        <div className="mt-4">
-          <p className="text-[11px] text-navy/45 uppercase tracking-[0.18em]">Starting from</p>
-          <p className="font-heading text-3xl font-bold text-navy leading-none mt-1">
+        <div className="mt-3">
+          <p className="text-[10px] text-navy/45 uppercase tracking-[0.18em]">Starting from</p>
+          <p className="font-heading text-xl sm:text-2xl font-bold text-navy leading-none mt-1">
             {property.price}
           </p>
         </div>
 
         {/* Specs */}
-        <div className="flex flex-wrap items-center gap-x-4 gap-y-2 mt-4 text-sm text-navy/70">
+        <div className="flex flex-wrap items-center gap-x-3.5 gap-y-1.5 mt-3 text-[13px] sm:text-sm text-navy/70">
           {specs.map((s, i) => (
             <span key={i} className="flex items-center gap-1.5">
-              <s.icon className="w-4 h-4 text-gold" />
+              <s.icon className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-gold" />
               {s.label}
             </span>
           ))}
         </div>
 
-        <div className="my-4 border-t border-border-subtle" />
+        <div className="my-3.5 border-t border-border-subtle" />
 
         {/* Footer */}
         <div className="mt-auto flex items-center gap-3">

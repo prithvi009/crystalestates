@@ -1,25 +1,28 @@
 import type { Metadata } from "next";
-import { Playfair_Display, DM_Sans, JetBrains_Mono } from "next/font/google";
+import { Fraunces, Plus_Jakarta_Sans, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import SiteShell from "@/components/layout/SiteShell";
 import GoogleAds from "@/components/analytics/GoogleAds";
 
-const playfair = Playfair_Display({
-  variable: "--font-playfair",
+// Headings — a contemporary luxury serif with optical character
+const fraunces = Fraunces({
+  variable: "--ff-serif",
   subsets: ["latin"],
   display: "swap",
-  weight: ["400", "600", "700"],
+  weight: ["400", "500", "600", "700"],
+  style: ["normal", "italic"],
 });
 
-const dmSans = DM_Sans({
-  variable: "--font-dm-sans",
+// Body / UI — clean, modern, premium sans
+const jakarta = Plus_Jakarta_Sans({
+  variable: "--ff-sans",
   subsets: ["latin"],
   display: "swap",
-  weight: ["300", "400", "500", "600"],
+  weight: ["300", "400", "500", "600", "700"],
 });
 
 const jetbrainsMono = JetBrains_Mono({
-  variable: "--font-jetbrains",
+  variable: "--ff-mono",
   subsets: ["latin"],
   display: "swap",
   weight: ["400", "500"],
@@ -95,7 +98,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${playfair.variable} ${dmSans.variable} ${jetbrainsMono.variable}`}>
+    <html lang="en" className={`${fraunces.variable} ${jakarta.variable} ${jetbrainsMono.variable}`}>
       <head>
         <script
           type="application/ld+json"

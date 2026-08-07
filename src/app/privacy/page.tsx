@@ -38,7 +38,7 @@ export default function PrivacyPolicyPage() {
   return (
     <main className="min-h-screen bg-bg-light">
       {/* Hero */}
-      <section className="pt-28 sm:pt-32 pb-10">
+      <section className="pt-20 sm:pt-28 pb-8">
         <div className="mx-auto max-w-3xl px-5 sm:px-6">
           <nav className="flex items-center gap-2 text-sm text-navy/50 mb-6">
             <Link href="/" className="flex items-center gap-1 hover:text-gold-dark transition-colors">
@@ -55,7 +55,7 @@ export default function PrivacyPolicyPage() {
             </span>
             <p className="section-label">Legal</p>
           </div>
-          <h1 className="font-heading text-4xl sm:text-5xl text-navy">Privacy Policy</h1>
+          <h1 className="font-heading text-2xl sm:text-4xl text-navy">Privacy Policy</h1>
           <p className="mt-4 text-navy/60">
             Last updated: <span className="font-medium text-navy/80">{LAST_UPDATED}</span>
           </p>

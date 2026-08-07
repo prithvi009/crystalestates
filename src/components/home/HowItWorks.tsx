@@ -64,7 +64,7 @@ export default function HowItWorks() {
   return (
     <section
       ref={sectionRef}
-      className="relative py-20 sm:py-32 bg-bg-cream overflow-hidden"
+      className="relative py-14 sm:py-28 bg-bg-cream overflow-hidden"
     >
       {/* Subtle radial glow */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-[radial-gradient(ellipse_at_center,rgba(198,169,98,0.10)_0%,transparent_70%)] pointer-events-none" />
@@ -84,7 +84,7 @@ export default function HowItWorks() {
             initial={{ opacity: 0, y: 20 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.6 }}
-            className="font-heading text-4xl sm:text-5xl text-navy mb-4"
+            className="font-heading text-2xl sm:text-4xl text-navy mb-4"
           >
             How It Works
           </motion.h2>

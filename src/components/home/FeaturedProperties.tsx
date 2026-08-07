@@ -42,15 +42,14 @@ export default function FeaturedProperties({
       : properties.filter((p) => p.type === activeTab);
 
   return (
-    <section id="properties" className="py-20 sm:py-28 bg-white">
+    <section id="properties" className="py-14 sm:py-28 bg-white">
       <div className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8">
         {/* Section header */}
-        <div className="mb-12">
-          <p className="section-label mb-4">Featured</p>
-          <h2 className="font-heading text-4xl sm:text-5xl text-navy mb-4">
+        <div className="mb-7 sm:mb-10">
+          <h2 className="font-heading text-2xl sm:text-4xl text-navy">
             Featured Projects
           </h2>
-          <p className="font-body text-base sm:text-lg text-navy/60">
+          <p className="font-body text-sm sm:text-lg text-navy/60 mt-1.5 sm:mt-3">
             Handpicked developments across Maharashtra
           </p>
         </div>
@@ -74,18 +73,22 @@ export default function FeaturedProperties({
           </div>
         </div>
 
-        {/* Project cards grid — uses the same PropertyCard */}
+        {/* Cards — horizontal snap carousel on mobile, grid on desktop */}
         <AnimatePresence mode="wait">
           <motion.div
             key={activeTab}
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+            className="flex md:grid md:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-6 overflow-x-auto md:overflow-visible snap-x snap-mandatory scrollbar-hide -mx-5 px-5 sm:-mx-6 sm:px-6 md:mx-0 md:px-0"
             variants={containerVariants}
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, margin: "-50px" }}
           >
             {filtered.map((property) => (
-              <motion.div key={property.id} variants={cardVariants}>
+              <motion.div
+                key={property.id}
+                variants={cardVariants}
+                className="snap-start shrink-0 w-[82%] sm:w-[46%] md:w-auto"
+              >
                 <PropertyCard property={property} />
               </motion.div>
             ))}

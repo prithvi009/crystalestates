@@ -53,11 +53,11 @@ export default function Testimonials() {
   };
 
   return (
-    <section className="py-20 sm:py-28 bg-bg-light relative overflow-hidden">
+    <section className="py-14 sm:py-24 bg-bg-light relative overflow-hidden">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section header */}
         <div className="text-center mb-16">
-          <h2 className="font-heading text-4xl md:text-5xl text-text-dark mb-4">
+          <h2 className="font-heading text-2xl sm:text-4xl text-text-dark mb-4">
             What Our Clients Say
           </h2>
           <motion.div

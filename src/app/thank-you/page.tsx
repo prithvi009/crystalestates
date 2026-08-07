@@ -56,7 +56,7 @@ export default function ThankYouPage() {
   }, []);
 
   return (
-    <main className="min-h-screen bg-bg-light pt-32 pb-20">
+    <main className="min-h-screen bg-bg-light pt-20 pb-16">
       <div className="mx-auto max-w-3xl px-6 text-center">
         {/* ---- Success Icon ---- */}
         <motion.div
@@ -74,7 +74,7 @@ export default function ThankYouPage() {
           initial="hidden"
           animate="visible"
           custom={0}
-          className="font-heading text-4xl md:text-5xl text-navy mb-4"
+          className="font-heading text-3xl sm:text-4xl md:text-5xl text-navy mb-4"
         >
           We&rsquo;ve Got Your Request
         </motion.h1>

@@ -100,7 +100,7 @@ export default function EMICalculatorPage() {
 
       <main className="min-h-screen bg-bg-light">
         {/* ---- Hero ---- */}
-        <section className="pt-32 pb-12 px-6 text-center">
+        <section className="pt-20 pb-8 px-6 text-center">
           <motion.div
             variants={fadeUp}
             initial="hidden"
@@ -116,7 +116,7 @@ export default function EMICalculatorPage() {
             initial="hidden"
             animate="visible"
             custom={1}
-            className="font-heading text-4xl md:text-5xl text-navy mb-4"
+            className="font-heading text-3xl sm:text-4xl md:text-5xl text-navy mb-4"
           >
             EMI Calculator
           </motion.h1>

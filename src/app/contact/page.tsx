@@ -163,7 +163,7 @@ export default function ContactPage() {
       <FAQSchema />
       <main className="min-h-screen overflow-hidden">
         {/* ========== MAIN 2-COLUMN SECTION ========== */}
-        <section className="bg-bg-light pt-32 pb-20 md:pt-40 md:pb-28">
+        <section className="bg-bg-light pt-20 pb-12 md:pt-36 md:pb-24">
           <div className="mx-auto max-w-7xl px-6">
             <div className="grid gap-12 lg:grid-cols-[3fr_2fr] lg:gap-16">
               {/* ---------- LEFT: HEADING + FORM ---------- */}
@@ -173,7 +173,7 @@ export default function ContactPage() {
                 transition={{ duration: 0.6 }}
               >
                 <p className="section-label mb-4">Contact</p>
-                <h1 className="font-heading text-4xl font-bold leading-tight text-navy md:text-5xl">
+                <h1 className="font-heading text-3xl sm:text-4xl font-bold leading-tight text-navy md:text-5xl">
                   Let&apos;s Talk Property
                 </h1>
                 <p className="mt-4 text-lg text-navy/60">
@@ -504,7 +504,7 @@ export default function ContactPage() {
               transition={{ duration: 0.5 }}
               className="text-center"
             >
-              <h2 className="font-heading text-3xl font-bold text-navy md:text-4xl">
+              <h2 className="font-heading text-2xl sm:text-3xl font-bold text-navy md:text-4xl">
                 Frequently Asked Questions
               </h2>
               <div className="mx-auto mt-4 h-1 w-16 rounded-full bg-gold" />
@@ -581,7 +581,7 @@ export default function ContactPage() {
               viewport={{ once: true }}
               transition={{ duration: 0.5 }}
             >
-              <h2 className="font-heading text-3xl font-bold text-white md:text-4xl">
+              <h2 className="font-heading text-2xl sm:text-3xl font-bold text-white md:text-4xl">
                 Prefer WhatsApp?
               </h2>
 

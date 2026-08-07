@@ -80,11 +80,11 @@ export default function InvestmentCorridors() {
   const [reportName, setReportName] = useState("");
 
   return (
-    <section className="py-20 sm:py-24 bg-bg-light">
+    <section className="py-14 sm:py-24 bg-bg-light">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section header */}
         <div className="text-center mb-14">
-          <h2 className="font-heading text-4xl md:text-5xl text-text-dark mb-4">
+          <h2 className="font-heading text-2xl sm:text-4xl text-text-dark mb-4">
             Where Smart Money Is Moving
           </h2>
           <div className="flex justify-center">

@@ -111,9 +111,9 @@ export default function PropertiesClient({
   return (
     <section className="min-h-screen bg-bg-light">
       {/* ── Hero / Breadcrumb ── */}
-      <div className="bg-bg-light pt-28 sm:pt-32 pb-10 sm:pb-12">
+      <div className="bg-bg-light pt-20 sm:pt-28 pb-6 sm:pb-10">
         <div className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8">
-          <nav className="flex items-center gap-2 text-sm text-navy/50 mb-6">
+          <nav className="flex items-center gap-2 text-[13px] text-navy/50 mb-3">
             <Link
               href="/"
               className="flex items-center gap-1 text-navy/60 hover:text-gold-dark transition-colors"
@@ -129,7 +129,7 @@ export default function PropertiesClient({
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
-            className="font-heading text-4xl sm:text-5xl text-navy"
+            className="font-heading text-2xl sm:text-4xl text-navy"
           >
             Explore Properties
           </motion.h1>
@@ -138,7 +138,7 @@ export default function PropertiesClient({
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.1 }}
-            className="mt-4 text-navy/60 text-base sm:text-lg max-w-xl"
+            className="mt-2 text-navy/60 text-sm sm:text-base max-w-xl"
           >
             Premium plots, homes &amp; commercial spaces across Pune &amp; Mumbai.
           </motion.p>
@@ -148,7 +148,7 @@ export default function PropertiesClient({
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}
-            className="mt-7 max-w-xl"
+            className="mt-5 max-w-xl"
           >
             <div className="relative">
               <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-navy/40 pointer-events-none" />

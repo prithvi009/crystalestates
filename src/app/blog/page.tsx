@@ -126,11 +126,11 @@ export default function BlogPage() {
   return (
     <main className="min-h-screen bg-bg-light">
       {/* ---- Hero ---- */}
-      <section className="pt-32 pb-14 px-6 text-center">
+      <section className="pt-20 pb-10 px-6 text-center">
         <p className="section-label mb-4">
           Crystal Estates Blog
         </p>
-        <h1 className="font-heading text-5xl md:text-6xl text-navy mb-4">
+        <h1 className="font-heading text-3xl sm:text-4xl md:text-5xl text-navy mb-4">
           Insights &amp; Guides
         </h1>
         <p className="font-body text-lg text-navy/60 max-w-2xl mx-auto">

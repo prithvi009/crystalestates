@@ -73,7 +73,7 @@ export default function MarketReportCTA() {
     "w-full px-4 py-3 rounded-lg border border-border-medium bg-white text-text-dark text-sm placeholder:text-text-dark-muted focus:outline-none focus:ring-2 focus:ring-gold/50 focus:border-gold transition-colors";
 
   return (
-    <section className="py-20 sm:py-28 bg-bg-light">
+    <section className="py-14 sm:py-24 bg-bg-light">
       <motion.div
         className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8"
         variants={containerVariants}

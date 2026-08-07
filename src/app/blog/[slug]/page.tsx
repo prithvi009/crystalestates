@@ -183,7 +183,7 @@ export default async function BlogPostPage({ params }: Props) {
   return (
     <main className="min-h-screen bg-bg-light">
       {/* ---- Article Header ---- */}
-      <section className="pt-32 pb-12 px-6">
+      <section className="pt-20 pb-8 px-6">
         <div className="mx-auto max-w-3xl">
           {/* Breadcrumb */}
           <nav className="flex items-center gap-2 font-body text-sm text-navy/55 mb-8">
@@ -206,7 +206,7 @@ export default async function BlogPostPage({ params }: Props) {
           </span>
 
           {/* Title */}
-          <h1 className="font-heading text-3xl md:text-4xl lg:text-5xl text-navy mb-6 leading-tight">
+          <h1 className="font-heading text-2xl sm:text-3xl md:text-4xl lg:text-5xl text-navy mb-5 leading-tight">
             {post.title}
           </h1>
 

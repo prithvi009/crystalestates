@@ -43,10 +43,10 @@
   --color-emerald: #16A34A;
   --color-emerald-light: #20BD5A;
 
-  /* ---- Fonts ---- */
-  --font-heading: "Playfair Display", serif;
-  --font-body: "DM Sans", sans-serif;
-  --font-mono: "JetBrains Mono", monospace;
+  /* ---- Fonts (wired to next/font variables) ---- */
+  --font-heading: var(--ff-serif), Georgia, "Times New Roman", serif;
+  --font-body: var(--ff-sans), system-ui, -apple-system, sans-serif;
+  --font-mono: var(--ff-mono), monospace;
 }
 
 html {

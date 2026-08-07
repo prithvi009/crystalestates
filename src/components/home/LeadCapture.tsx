@@ -133,7 +133,7 @@ export default function LeadCapture() {
   const errorBase = "text-error text-xs mt-1";
 
   return (
-    <section className="relative py-20 sm:py-28 bg-bg-light overflow-hidden">
+    <section className="relative py-14 sm:py-24 bg-bg-light overflow-hidden">
       {/* Gold gradient overlay */}
       <div
         className="absolute inset-0 pointer-events-none"
@@ -153,7 +153,7 @@ export default function LeadCapture() {
         {/* Header */}
         <motion.div variants={itemVariants} className="text-center mb-8">
           <p className="section-label mb-4">Get Started</p>
-          <h2 className="font-heading text-4xl sm:text-5xl text-navy mb-4">
+          <h2 className="font-heading text-2xl sm:text-4xl text-navy mb-4">
             Find your perfect property
           </h2>
           <p className="text-base sm:text-lg text-navy/60">
