@@ -1,4 +1,4 @@
-export const propertyTypes = ["All", "Plot", "Row House", "Flat", "Commercial", "Land"] as const;
+export const propertyTypes = ["All", "Flat", "Commercial", "Row House", "Land"] as const;
 
 export const locations = [
   "All",

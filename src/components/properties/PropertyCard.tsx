@@ -1,30 +1,13 @@
 "use client";
 
 import Link from "next/link";
-import { useState, useMemo } from "react";
-import { motion } from "framer-motion";
-import {
-  MapPin,
-  Maximize2,
-  Bed,
-  Bath,
-  MessageCircle,
-  ShieldCheck,
-  ChevronLeft,
-  ChevronRight,
-  ArrowUpRight,
-} from "lucide-react";
+import { useState } from "react";
+import { ChevronLeft, ChevronRight, Heart, MapPin } from "lucide-react";
 import type { Property } from "@/lib/db/schema";
 
 interface PropertyCardProps {
   property: Property;
 }
-
-const badgeConfig: Record<string, { label: string; bg: string }> = {
-  "High Demand": { label: "HIGH DEMAND", bg: "bg-red-500" },
-  "New Listing": { label: "NEW LAUNCH", bg: "bg-navy" },
-  "Price Rising": { label: "PRICE RISING", bg: "bg-emerald" },
-};
 
 function optimizeImg(url: string, opts: { w?: number; h?: number } = {}): string {
   if (!url || !url.includes("cloudinary.com")) return url;
@@ -38,160 +21,98 @@ function optimizeImg(url: string, opts: { w?: number; h?: number } = {}): string
 
 export default function PropertyCard({ property }: PropertyCardProps) {
   const [imgIndex, setImgIndex] = useState(0);
-
-  const whatsappUrl = useMemo(() => {
-    const msg = encodeURIComponent(
-      "Hi, I am interested in " + property.name + " (" + property.price + "). Please share more details."
-    );
-    return "https://wa.me/917666229818?text=" + msg;
-  }, [property.name, property.price]);
+  const [liked, setLiked] = useState(false);
 
   const images = (property.images ?? []) as string[];
   const hasImages = images.length > 0 && images[0] !== "/placeholder-property.jpg";
 
-  const handlePrev = (e: React.MouseEvent) => {
+  const stop = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
+  };
+  const prev = (e: React.MouseEvent) => {
+    stop(e);
     setImgIndex((i) => (i - 1 + images.length) % images.length);
   };
-  const handleNext = (e: React.MouseEvent) => {
-    e.preventDefault();
-    e.stopPropagation();
+  const next = (e: React.MouseEvent) => {
+    stop(e);
     setImgIndex((i) => (i + 1) % images.length);
   };
 
-  const specs = [
-    property.bedrooms ? { icon: Bed, label: `${property.bedrooms} BHK` } : null,
-    property.bathrooms ? { icon: Bath, label: `${property.bathrooms} Bath` } : null,
-    property.area ? { icon: Maximize2, label: property.area } : null,
-  ].filter(Boolean) as { icon: React.ElementType; label: string }[];
-
   return (
-    <motion.article
-      className="group relative flex flex-col rounded-3xl overflow-hidden bg-white border border-border-subtle card-elevate card-elevate-hover hover:border-gold/40 transition-all duration-500"
-      whileHover={{ y: -5 }}
-      transition={{ duration: 0.3, ease: "easeOut" }}
-    >
+    <article className="group">
       {/* ── Image ── */}
-      <Link href={`/properties/${property.slug}`} className="block">
-        <div className="relative aspect-[4/3] overflow-hidden bg-bg-cream">
-          {hasImages ? (
-            <>
+      <div className="relative">
+        <Link href={`/properties/${property.slug}`} className="block">
+          <div className="relative aspect-square overflow-hidden rounded-2xl bg-bg-cream">
+            {hasImages ? (
               <img
-                src={optimizeImg(images[imgIndex], { w: 760, h: 570 })}
+                src={optimizeImg(images[imgIndex], { w: 700, h: 700 })}
                 alt={property.name}
-                className="w-full h-full object-cover transition-transform duration-[800ms] ease-out group-hover:scale-[1.06]"
+                className="w-full h-full object-cover transition-transform duration-[600ms] ease-out group-hover:scale-[1.04]"
               />
-              {images.length > 1 && (
-                <>
-                  <button
-                    onClick={handlePrev}
-                    aria-label="Previous photo"
-                    className="absolute left-3 top-1/2 -translate-y-1/2 z-20 w-9 h-9 rounded-full bg-white/85 backdrop-blur-sm flex items-center justify-center text-navy opacity-0 group-hover:opacity-100 transition-opacity hover:bg-white shadow-sm"
-                  >
-                    <ChevronLeft className="w-4 h-4" />
-                  </button>
-                  <button
-                    onClick={handleNext}
-                    aria-label="Next photo"
-                    className="absolute right-3 top-1/2 -translate-y-1/2 z-20 w-9 h-9 rounded-full bg-white/85 backdrop-blur-sm flex items-center justify-center text-navy opacity-0 group-hover:opacity-100 transition-opacity hover:bg-white shadow-sm"
-                  >
-                    <ChevronRight className="w-4 h-4" />
-                  </button>
-                  <div className="absolute bottom-3 left-1/2 -translate-x-1/2 z-20 flex gap-1.5">
-                    {images.slice(0, 5).map((_, i) => (
-                      <span
-                        key={i}
-                        className={`h-1.5 rounded-full transition-all duration-300 ${imgIndex === i ? "bg-white w-5" : "bg-white/60 w-1.5"}`}
-                      />
-                    ))}
-                  </div>
-                </>
-              )}
-            </>
-          ) : (
-            <div className="absolute inset-0 bg-gradient-to-br from-navy via-navy to-navy-light flex items-center justify-center">
-              <div className="text-center z-10">
-                <div className="w-16 h-16 rounded-2xl bg-gold/15 flex items-center justify-center mx-auto mb-2.5">
-                  <MapPin className="w-7 h-7 text-gold" />
-                </div>
-                <p className="text-xs text-white/70 font-medium tracking-[0.2em] uppercase">{property.type}</p>
+            ) : (
+              <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-navy to-navy-light">
+                <MapPin className="w-8 h-8 text-gold/70" />
               </div>
-            </div>
-          )}
-
-          {/* Badge */}
-          {property.badge && badgeConfig[property.badge] && (
-            <span className={`absolute top-4 left-4 z-20 ${badgeConfig[property.badge].bg} text-white text-[10px] font-bold px-3 py-1.5 rounded-full tracking-wider uppercase shadow-lg`}>
-              {badgeConfig[property.badge].label}
-            </span>
-          )}
-          {/* Type chip */}
-          <span className="absolute top-4 right-4 z-20 bg-white/90 backdrop-blur-sm text-navy text-[11px] font-semibold px-3 py-1.5 rounded-full shadow-sm">
-            {property.type}
-          </span>
-        </div>
-      </Link>
-
-      {/* ── Body ── */}
-      <div className="flex flex-col flex-1 p-4 sm:p-5">
-        <Link href={`/properties/${property.slug}`} className="block group/link">
-          <h3 className="font-heading text-lg sm:text-xl leading-tight font-bold text-navy line-clamp-1 group-hover/link:text-gold-dark transition-colors">
-            {property.name}
-          </h3>
-          <p className="flex items-center gap-1.5 text-navy/55 text-[13px] sm:text-sm mt-1.5">
-            <MapPin className="w-3.5 h-3.5 sm:w-4 sm:h-4 shrink-0 text-gold" />
-            <span className="truncate">{property.location}</span>
-          </p>
+            )}
+          </div>
         </Link>
 
-        {/* Price */}
-        <div className="mt-3">
-          <p className="text-[10px] text-navy/45 uppercase tracking-[0.18em]">Starting from</p>
-          <p className="font-heading text-xl sm:text-2xl font-bold text-navy leading-none mt-1">
-            {property.price}
-          </p>
-        </div>
+        {/* Wishlist heart */}
+        <button
+          onClick={(e) => { stop(e); setLiked((v) => !v); }}
+          aria-label={liked ? "Remove from saved" : "Save"}
+          className="absolute top-3 right-3 z-20 transition-transform active:scale-90"
+        >
+          <Heart
+            className={`w-6 h-6 drop-shadow-[0_1px_3px_rgba(0,0,0,0.4)] ${
+              liked ? "fill-gold text-gold" : "fill-black/25 text-white"
+            }`}
+          />
+        </button>
 
-        {/* Specs */}
-        <div className="flex flex-wrap items-center gap-x-3.5 gap-y-1.5 mt-3 text-[13px] sm:text-sm text-navy/70">
-          {specs.map((s, i) => (
-            <span key={i} className="flex items-center gap-1.5">
-              <s.icon className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-gold" />
-              {s.label}
-            </span>
-          ))}
-        </div>
-
-        <div className="my-3.5 border-t border-border-subtle" />
-
-        {/* Footer */}
-        <div className="mt-auto flex items-center gap-3">
-          {property.rera && (
-            <span className="inline-flex items-center gap-1.5 text-xs text-emerald font-medium mr-auto">
-              <ShieldCheck className="w-4 h-4 shrink-0" />
-              RERA Verified
-            </span>
-          )}
-          <Link
-            href={`/properties/${property.slug}`}
-            className={`inline-flex items-center justify-center gap-1.5 bg-navy hover:bg-gold text-white hover:text-navy rounded-full px-4 py-2 text-[13px] sm:px-5 sm:py-2.5 sm:text-sm font-semibold transition-all duration-300 ${property.rera ? "" : "flex-1"}`}
-          >
-            View Details
-            <ArrowUpRight className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
-          </Link>
-          <a
-            href={whatsappUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="Chat on WhatsApp"
-            className="shrink-0 w-9 h-9 sm:w-11 sm:h-11 rounded-full bg-[#25D366] hover:bg-[#20BD5A] flex items-center justify-center text-white transition-colors"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <MessageCircle className="w-4 h-4 sm:w-5 sm:h-5" />
-          </a>
-        </div>
+        {/* Carousel controls */}
+        {hasImages && images.length > 1 && (
+          <>
+            <button
+              onClick={prev}
+              aria-label="Previous photo"
+              className="absolute left-2.5 top-1/2 -translate-y-1/2 z-20 w-7 h-7 rounded-full bg-white/90 flex items-center justify-center text-navy shadow opacity-0 group-hover:opacity-100 transition-opacity hover:scale-105"
+            >
+              <ChevronLeft className="w-4 h-4" />
+            </button>
+            <button
+              onClick={next}
+              aria-label="Next photo"
+              className="absolute right-2.5 top-1/2 -translate-y-1/2 z-20 w-7 h-7 rounded-full bg-white/90 flex items-center justify-center text-navy shadow opacity-0 group-hover:opacity-100 transition-opacity hover:scale-105"
+            >
+              <ChevronRight className="w-4 h-4" />
+            </button>
+            <div className="absolute bottom-2.5 left-1/2 -translate-x-1/2 z-20 flex gap-1.5">
+              {images.slice(0, 5).map((_, i) => (
+                <span
+                  key={i}
+                  className={`h-1.5 w-1.5 rounded-full transition-all ${
+                    imgIndex === i ? "bg-white" : "bg-white/60"
+                  }`}
+                />
+              ))}
+            </div>
+          </>
+        )}
       </div>
-    </motion.article>
+
+      {/* ── Minimal caption ── */}
+      <Link href={`/properties/${property.slug}`} className="block mt-3">
+        <h3 className="text-[15px] font-semibold text-navy truncate">
+          {property.name}
+        </h3>
+        <p className="text-[15px] text-navy/60 mt-0.5">
+          <span className="text-navy">{property.price}</span>
+          <span className="text-navy/50"> onwards</span>
+        </p>
+      </Link>
+    </article>
   );
 }

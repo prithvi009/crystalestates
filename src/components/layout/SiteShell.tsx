@@ -6,7 +6,6 @@ import Footer from "@/components/layout/Footer";
 import WhatsAppButton from "@/components/ui/WhatsAppButton";
 import CallButton from "@/components/ui/CallButton";
 import ScrollToTop from "@/components/ui/ScrollToTop";
-import ExitIntentPopup from "@/components/ui/ExitIntentPopup";
 
 export default function SiteShell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
@@ -32,7 +31,6 @@ export default function SiteShell({ children }: { children: React.ReactNode }) {
         </>
       )}
       <ScrollToTop />
-      <ExitIntentPopup />
     </>
   );
 }

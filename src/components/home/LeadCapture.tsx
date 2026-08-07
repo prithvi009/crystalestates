@@ -25,10 +25,9 @@ const leadSchema = z.object({
 type LeadFormData = z.infer<typeof leadSchema>;
 
 const propertyTypeOptions = [
-  "Plot",
   "Flat",
-  "Row House",
   "Commercial",
+  "Row House",
   "Land",
   "Not Sure",
 ];
