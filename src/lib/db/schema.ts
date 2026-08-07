@@ -56,6 +56,8 @@ export const properties = pgTable("properties", {
   documents: jsonb("documents").notNull().default([]),
   badge: badgeEnum("badge"),
   images: jsonb("images").notNull().default([]),
+  floorPlans: jsonb("floor_plans").notNull().default([]),
+  locationMaps: jsonb("location_maps").notNull().default([]),
   // Extended fields for world-class detail page
   floorPlanUrl: text("floor_plan_url"),
   brochureUrl: text("brochure_url"),

@@ -246,6 +246,7 @@ export default function PropertyDetail({
 
   // Image gallery state
   const [heroImageIndex, setHeroImageIndex] = useState(0);
+  const [activePlan, setActivePlan] = useState(0);
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [lightboxIndex, setLightboxIndex] = useState(0);
   const [descriptionExpanded, setDescriptionExpanded] = useState(false);
@@ -266,6 +267,8 @@ export default function PropertyDetail({
   const priceBreakdown = (property.priceBreakdown ?? {}) as PriceBreakdown;
   const documents = (property.documents ?? []) as DocItem[];
   const images = (property.images ?? []) as string[];
+  const floorPlans = (property.floorPlans ?? []) as { title: string; url: string }[];
+  const locationMaps = (property.locationMaps ?? []) as { title: string; url: string }[];
   const hasRealImages = images.length > 0 && images[0] !== "/placeholder-property.jpg";
 
   /* ---- Hero video (Cloudinary-optimized for instant HD playback) ---- */
@@ -881,8 +884,43 @@ export default function PropertyDetail({
                     Floor Plans & Pricing
                   </h2>
 
-                  {/* Floor Plan Image */}
-                  {property.floorPlanUrl ? (
+                  {/* Floor Plans — multi-plan tabbed viewer */}
+                  {floorPlans.length > 0 ? (
+                    <div className="mb-8">
+                      {/* Plan tabs */}
+                      <div className="flex gap-2 overflow-x-auto scrollbar-hide pb-3 -mx-1 px-1">
+                        {floorPlans.map((fp, i) => (
+                          <button
+                            key={fp.url}
+                            onClick={() => setActivePlan(i)}
+                            className={`whitespace-nowrap rounded-full px-4 py-2 text-sm font-medium transition-colors ${
+                              activePlan === i
+                                ? "bg-navy text-white"
+                                : "bg-bg-cream text-navy/70 border border-border-subtle hover:border-gold hover:text-gold-dark"
+                            }`}
+                          >
+                            {fp.title}
+                          </button>
+                        ))}
+                      </div>
+                      <div className="relative rounded-xl border border-border-subtle overflow-hidden bg-white">
+                        <img
+                          src={floorPlans[activePlan]?.url}
+                          alt={`${floorPlans[activePlan]?.title} — ${property.name}`}
+                          className="w-full h-auto object-contain max-h-[560px] mx-auto"
+                        />
+                        <a
+                          href={floorPlans[activePlan]?.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="absolute bottom-4 right-4 inline-flex items-center gap-2 bg-navy/90 backdrop-blur-sm text-white text-xs font-semibold px-4 py-2.5 rounded-lg hover:bg-navy transition-colors"
+                        >
+                          <ExternalLink className="w-3.5 h-3.5" />
+                          View Full Size
+                        </a>
+                      </div>
+                    </div>
+                  ) : property.floorPlanUrl ? (
                     <div className="mb-8">
                       <div className="relative rounded-xl border-2 border-gray-100 overflow-hidden bg-gray-50">
                         <img
@@ -1325,6 +1363,32 @@ export default function PropertyDetail({
                     </div>
                     Location & Nearby
                   </h2>
+
+                  {/* Location maps (from brochure) */}
+                  {locationMaps.length > 0 && (
+                    <div className="mb-6 space-y-5">
+                      {locationMaps.map((m) => (
+                        <div key={m.url}>
+                          <p className="text-sm font-semibold text-navy/70 mb-2">{m.title}</p>
+                          <a
+                            href={m.url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="block relative rounded-xl border border-border-subtle overflow-hidden bg-bg-cream group"
+                          >
+                            <img
+                              src={m.url}
+                              alt={`${m.title} — ${property.name}`}
+                              className="w-full h-auto object-contain"
+                            />
+                            <span className="absolute bottom-3 right-3 inline-flex items-center gap-1.5 bg-navy/85 text-white text-xs px-3 py-1.5 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity">
+                              <ExternalLink className="w-3 h-3" /> Full size
+                            </span>
+                          </a>
+                        </div>
+                      ))}
+                    </div>
+                  )}
 
                   {/* Google Maps link */}
                   {property.latitude && property.longitude && (
