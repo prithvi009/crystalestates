@@ -428,7 +428,7 @@ export default function PropertyDetail({
       {/* ============================================================ */}
       {/*  SECTION 1: HERO / GALLERY AREA                              */}
       {/* ============================================================ */}
-      <div className="relative h-[440px] sm:h-[470px] md:h-[540px] bg-bg-cream overflow-hidden">
+      <div className="relative h-[300px] sm:h-[420px] md:h-[520px] bg-bg-cream overflow-hidden">
         {/* Clean hero media: video loop → image slider → pattern. No text overlay. */}
         {hasVideo ? (
           <video
@@ -634,12 +634,12 @@ export default function PropertyDetail({
       {/* ============================================================ */}
       {/*  MAIN CONTENT AREA                                            */}
       {/* ============================================================ */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-5 md:py-12">
         <div className="flex flex-col lg:flex-row gap-8">
           {/* ======================================================== */}
           {/*  LEFT COLUMN                                              */}
           {/* ======================================================== */}
-          <div className="flex-1 min-w-0 space-y-8">
+          <div className="flex-1 min-w-0 space-y-4 sm:space-y-8">
             {/* ====================================================== */}
             {/*  SECTION 3: OVERVIEW                                    */}
             {/* ====================================================== */}
@@ -648,16 +648,16 @@ export default function PropertyDetail({
               id="overview"
             >
               <FadeIn>
-                <div className="bg-white rounded-xl sm:rounded-2xl p-4 sm:p-6 md:p-8 shadow-sm border border-gray-100">
-                  <h2 className="text-2xl font-bold text-charcoal mb-4 flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-xl bg-gold/10 flex items-center justify-center">
+                <div className="bg-white rounded-xl sm:rounded-2xl p-4 sm:p-6 md:p-7 shadow-sm border border-gray-100">
+                  <h2 className="text-lg sm:text-2xl font-bold text-charcoal mb-4 flex items-center gap-3">
+                    <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-gold/10 flex items-center justify-center">
                       <Eye className="w-5 h-5 text-gold" />
                     </div>
                     About This Property
                   </h2>
 
                   {/* Auto-formatted description with Show More */}
-                  <div className="mb-8">
+                  <div className="mb-5 sm:mb-8">
                     {truncatedDescription ? (
                       <>
                         <p className="text-gray-600 leading-relaxed text-[15px]">
@@ -701,7 +701,7 @@ export default function PropertyDetail({
 
                   {/* Key Highlights */}
                   {highlights.length > 0 && (
-                    <div className="mb-8">
+                    <div className="mb-5 sm:mb-8">
                       <h3 className="text-lg font-bold text-charcoal mb-4 flex items-center gap-2">
                         <TrendingUp className="w-5 h-5 text-gold" />
                         Key Highlights
@@ -735,7 +735,7 @@ export default function PropertyDetail({
                         {detailRows.map((row, i) => (
                           <div
                             key={row.label}
-                            className={`flex items-center justify-between px-5 py-3.5 text-sm ${
+                            className={`flex items-center justify-between px-4 sm:px-5 py-2.5 sm:py-3.5 text-sm ${
                               i % 2 === 0 ? "bg-gray-50/50" : "bg-white"
                             } ${
                               i < detailRows.length - 1
@@ -767,9 +767,9 @@ export default function PropertyDetail({
                 id="gallery"
               >
                 <FadeIn>
-                  <div className="bg-white rounded-xl sm:rounded-2xl p-4 sm:p-6 md:p-8 shadow-sm border border-gray-100">
-                    <h2 className="text-2xl font-bold text-charcoal mb-6 flex items-center gap-3">
-                      <div className="w-10 h-10 rounded-xl bg-gold/10 flex items-center justify-center">
+                  <div className="bg-white rounded-xl sm:rounded-2xl p-4 sm:p-6 md:p-7 shadow-sm border border-gray-100">
+                    <h2 className="text-lg sm:text-lg sm:text-2xl font-bold text-charcoal mb-4 flex items-center gap-3">
+                      <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-gold/10 flex items-center justify-center">
                         <ImageIcon className="w-5 h-5 text-gold" />
                       </div>
                       Gallery
@@ -778,21 +778,21 @@ export default function PropertyDetail({
                       </span>
                     </h2>
 
-                    {/* Masonry-style grid */}
-                    <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+                    {/* Horizontal scroll on mobile, masonry grid on desktop */}
+                    <div className="flex md:grid md:grid-cols-3 gap-3 overflow-x-auto md:overflow-visible snap-x snap-mandatory scrollbar-hide -mx-4 px-4 sm:mx-0 sm:px-0">
                       {images.map((img, i) => (
                         <motion.button
                           key={i}
                           initial={{ opacity: 0, scale: 0.95 }}
                           whileInView={{ opacity: 1, scale: 1 }}
                           viewport={{ once: true }}
-                          transition={{ delay: i * 0.05 }}
+                          transition={{ delay: i * 0.04 }}
                           onClick={() => { setLightboxIndex(i); setLightboxOpen(true); }}
-                          className={`relative overflow-hidden rounded-lg sm:rounded-xl border border-gray-100 group cursor-pointer ${
-                            i === 0 ? "col-span-2 row-span-2" : ""
+                          className={`relative overflow-hidden rounded-xl border border-gray-100 group cursor-pointer snap-start shrink-0 w-[46%] md:w-auto ${
+                            i === 0 ? "md:col-span-2 md:row-span-2" : ""
                           }`}
                         >
-                          <div className={`${i === 0 ? "aspect-[4/3]" : "aspect-square"}`}>
+                          <div className={`${i === 0 ? "aspect-square md:aspect-[4/3]" : "aspect-square"}`}>
                             <img
                               src={optimizeImg(img, i === 0 ? { w: 800, h: 600 } : { w: 400, h: 400 })}
                               alt={`${property.name} - Photo ${i + 1}`}
@@ -820,9 +820,9 @@ export default function PropertyDetail({
               id="floorplans"
             >
               <FadeIn>
-                <div className="bg-white rounded-xl sm:rounded-2xl p-4 sm:p-6 md:p-8 shadow-sm border border-gray-100">
-                  <h2 className="text-2xl font-bold text-charcoal mb-6 flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-xl bg-gold/10 flex items-center justify-center">
+                <div className="bg-white rounded-xl sm:rounded-2xl p-4 sm:p-6 md:p-7 shadow-sm border border-gray-100">
+                  <h2 className="text-lg sm:text-lg sm:text-2xl font-bold text-charcoal mb-4 flex items-center gap-3">
+                    <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-gold/10 flex items-center justify-center">
                       <Maximize2 className="w-5 h-5 text-gold" />
                     </div>
                     Floor Plans & Pricing
@@ -830,7 +830,7 @@ export default function PropertyDetail({
 
                   {/* Floor Plans — multi-plan tabbed viewer (gated behind a lead form) */}
                   {floorPlans.length > 0 ? (
-                    <div className="mb-8">
+                    <div className="mb-5 sm:mb-8">
                       {/* Plan tabs */}
                       <div className="flex gap-2 overflow-x-auto scrollbar-hide pb-3 -mx-1 px-1">
                         {floorPlans.map((fp, i) => (
@@ -901,7 +901,7 @@ export default function PropertyDetail({
                       </div>
                     </div>
                   ) : property.floorPlanUrl ? (
-                    <div className="mb-8">
+                    <div className="mb-5 sm:mb-8">
                       <div className="relative rounded-xl border-2 border-gray-100 overflow-hidden bg-gray-50">
                         <img
                           src={property.floorPlanUrl}
@@ -1048,9 +1048,9 @@ export default function PropertyDetail({
                 id="amenities"
               >
                 <FadeIn>
-                  <div className="bg-white rounded-xl sm:rounded-2xl p-4 sm:p-6 md:p-8 shadow-sm border border-gray-100">
-                    <h2 className="text-2xl font-bold text-charcoal mb-6 flex items-center gap-3">
-                      <div className="w-10 h-10 rounded-xl bg-gold/10 flex items-center justify-center">
+                  <div className="bg-white rounded-xl sm:rounded-2xl p-4 sm:p-6 md:p-7 shadow-sm border border-gray-100">
+                    <h2 className="text-lg sm:text-lg sm:text-2xl font-bold text-charcoal mb-4 flex items-center gap-3">
+                      <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-gold/10 flex items-center justify-center">
                         <ShieldCheck className="w-5 h-5 text-gold" />
                       </div>
                       Amenities & Features
@@ -1090,9 +1090,9 @@ export default function PropertyDetail({
               id="location"
             >
               <FadeIn>
-                <div className="bg-white rounded-xl sm:rounded-2xl p-4 sm:p-6 md:p-8 shadow-sm border border-gray-100">
-                  <h2 className="text-2xl font-bold text-charcoal mb-6 flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-xl bg-gold/10 flex items-center justify-center">
+                <div className="bg-white rounded-xl sm:rounded-2xl p-4 sm:p-6 md:p-7 shadow-sm border border-gray-100">
+                  <h2 className="text-lg sm:text-lg sm:text-2xl font-bold text-charcoal mb-4 flex items-center gap-3">
+                    <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-gold/10 flex items-center justify-center">
                       <MapPinned className="w-5 h-5 text-gold" />
                     </div>
                     Location & Nearby
@@ -1285,9 +1285,9 @@ export default function PropertyDetail({
                 id="documents"
               >
                 <FadeIn>
-                  <div className="bg-white rounded-xl sm:rounded-2xl p-4 sm:p-6 md:p-8 shadow-sm border border-gray-100">
-                    <h2 className="text-2xl font-bold text-charcoal mb-6 flex items-center gap-3">
-                      <div className="w-10 h-10 rounded-xl bg-gold/10 flex items-center justify-center">
+                  <div className="bg-white rounded-xl sm:rounded-2xl p-4 sm:p-6 md:p-7 shadow-sm border border-gray-100">
+                    <h2 className="text-lg sm:text-lg sm:text-2xl font-bold text-charcoal mb-4 flex items-center gap-3">
+                      <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-gold/10 flex items-center justify-center">
                         <FileCheck className="w-5 h-5 text-gold" />
                       </div>
                       Documents & Verification
@@ -1345,7 +1345,7 @@ export default function PropertyDetail({
             {/* ====================================================== */}
             {/*  SECTION 8: TRUST SIGNALS                              */}
             {/* ====================================================== */}
-            <FadeIn>
+            <FadeIn className="hidden sm:block">
               <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
                 {[
                   {
@@ -1526,7 +1526,7 @@ export default function PropertyDetail({
           <FadeIn className="mt-16">
             <div>
               <div className="flex items-center gap-3 mb-8">
-                <div className="w-10 h-10 rounded-xl bg-gold/10 flex items-center justify-center">
+                <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-gold/10 flex items-center justify-center">
                   <Home className="w-5 h-5 text-gold" />
                 </div>
                 <div>

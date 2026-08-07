@@ -71,7 +71,7 @@ export default function HowItWorks() {
 
       <div className="relative max-w-7xl mx-auto px-5 sm:px-6 lg:px-8">
         {/* Section header */}
-        <div className="text-center mb-14 sm:mb-20">
+        <div className="text-center mb-8 sm:mb-14">
           <motion.p
             initial={{ opacity: 0, y: 10 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
@@ -126,7 +126,7 @@ export default function HowItWorks() {
                   className="relative flex flex-col items-center text-center"
                 >
                   {/* Gold number */}
-                  <span className="font-heading text-5xl text-gold mb-4 relative z-10 bg-bg-cream px-3">
+                  <span className="font-heading text-4xl text-gold mb-4 relative z-10 bg-bg-cream px-3">
                     {step.number}
                   </span>
 
@@ -156,55 +156,28 @@ export default function HowItWorks() {
           </div>
         </div>
 
-        {/* Mobile / tablet layout: vertical with dashed connecting line */}
-        <div className="lg:hidden">
-          <div className="relative">
-            {/* Vertical dashed connecting line */}
-            <div
-              className="absolute left-[28px] top-0 bottom-0 w-[1px]"
-              style={{
-                backgroundImage:
-                  "linear-gradient(to bottom, rgba(198,169,98,0.4) 6px, transparent 6px)",
-                backgroundSize: "1px 12px",
-                backgroundRepeat: "repeat-y",
-              }}
-            />
-
-            <div className="space-y-10">
-              {steps.map((step, index) => (
-                <motion.div
-                  key={step.number}
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={isInView ? { opacity: 1, x: 0 } : {}}
-                  transition={{
-                    duration: 0.5,
-                    delay: 0.2 + index * 0.15,
-                    ease: [0.25, 0.4, 0.25, 1],
-                  }}
-                  className="relative flex gap-6 items-start"
-                >
-                  {/* Number circle */}
-                  <div className="relative z-10 w-14 h-14 rounded-full bg-white border border-gold/50 shadow-sm flex items-center justify-center shrink-0">
-                    <span className="font-heading text-xl text-gold-dark">
-                      {step.number}
-                    </span>
-                  </div>
-
-                  {/* Content */}
-                  <div className="pt-1 flex-1">
-                    <h3 className="font-body text-base uppercase tracking-wider text-navy font-semibold mb-2">
-                      {step.title}
-                    </h3>
-                    <p className="text-[15px] text-navy/60 leading-relaxed font-body">
-                      {step.description}
-                    </p>
-                    {/* Gold accent line */}
-                    <div className="w-6 h-[1px] bg-gold/40 mt-3" />
-                  </div>
-                </motion.div>
-              ))}
-            </div>
-          </div>
+        {/* Mobile / tablet: compact horizontal scroll of step cards */}
+        <div className="lg:hidden -mx-5 px-5 sm:-mx-6 sm:px-6 flex gap-4 overflow-x-auto snap-x snap-mandatory scrollbar-hide">
+          {steps.map((step, index) => (
+            <motion.div
+              key={step.number}
+              initial={{ opacity: 0, y: 16 }}
+              animate={isInView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.4, delay: index * 0.08, ease: [0.25, 0.4, 0.25, 1] }}
+              className="snap-start shrink-0 w-[72%] sm:w-[44%] rounded-2xl bg-white border border-border-subtle p-5"
+            >
+              <div className="flex items-center gap-3 mb-3">
+                <span className="font-heading text-3xl text-gold leading-none">{step.number}</span>
+                <span className="h-px flex-1 bg-gold/25" />
+              </div>
+              <h3 className="font-body text-[13px] uppercase tracking-wider text-navy font-semibold mb-1.5">
+                {step.title}
+              </h3>
+              <p className="text-[13px] text-navy/60 leading-relaxed font-body">
+                {step.description}
+              </p>
+            </motion.div>
+          ))}
         </div>
       </div>
     </section>

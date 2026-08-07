@@ -98,9 +98,9 @@ export default function InvestmentCorridors() {
           </div>
         </div>
 
-        {/* Corridors grid */}
+        {/* Corridors — horizontal scroll on mobile, grid on desktop */}
         <motion.div
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5"
+          className="flex md:grid md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-5 overflow-x-auto md:overflow-visible snap-x snap-mandatory scrollbar-hide -mx-4 px-4 sm:-mx-6 sm:px-6 md:mx-0 md:px-0"
           variants={containerVariants}
           initial="hidden"
           whileInView="visible"
@@ -110,7 +110,7 @@ export default function InvestmentCorridors() {
             <motion.div
               key={corridor.name}
               variants={cardVariants}
-              className="group bg-white rounded-xl p-6 border border-gray-100 shadow-sm hover:shadow-md border-l-[3px] border-l-gold hover:border-l-[5px] transition-all duration-300 hover:-translate-y-0.5"
+              className="snap-start shrink-0 w-[75%] sm:w-[46%] md:w-auto group bg-white rounded-xl p-6 border border-gray-100 shadow-sm hover:shadow-md border-l-[3px] border-l-gold hover:border-l-[5px] transition-all duration-300 hover:-translate-y-0.5"
             >
               {/* Title & tag */}
               <h3 className="font-body text-base font-semibold text-text-dark mb-1">
